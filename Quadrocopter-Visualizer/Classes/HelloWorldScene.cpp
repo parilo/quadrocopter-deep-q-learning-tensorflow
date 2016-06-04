@@ -1,0 +1,108 @@
+#include <iostream>
+
+#include "HelloWorldScene.h"
+#include "Quadrocopter2DBrain.hpp"
+
+USING_NS_CC;
+
+HelloWorld::HelloWorld () : sim() {}
+
+Scene* HelloWorld::createScene()
+{
+    // 'scene' is an autorelease object
+    auto scene = Scene::create();
+    
+    // 'layer' is an autorelease object
+    auto layer = HelloWorld::create();
+
+    // add layer as a child to scene
+    scene->addChild(layer);
+
+    // return the scene
+    return scene;
+}
+
+// on "init" you need to initialize your instance
+bool HelloWorld::init()
+{
+    //////////////////////////////
+    // 1. super init first
+    if ( !Layer::init() )
+    {
+        return false;
+    }
+    
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    /////////////////////////////
+    // 2. add a menu item with "X" image, which is clicked to quit the program
+    //    you may modify it.
+
+    // add a "close" icon to exit the progress. it's an autorelease object
+    auto closeItem = MenuItemImage::create(
+                                           "CloseNormal.png",
+                                           "CloseSelected.png",
+                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    
+	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
+                                origin.y + closeItem->getContentSize().height/2));
+
+    // create menu, it's an autorelease object
+    auto menu = Menu::create(closeItem, NULL);
+    menu->setPosition(Vec2::ZERO);
+    this->addChild(menu, 1);
+
+	centerPos = getContentSize() * 0.5;
+
+	LayerColor* targetNode = LayerColor::create(Color4B::ORANGE);
+	targetNode->setAnchorPoint(Vec2(0.5, 0.5));
+	targetNode->setContentSize(Size(2, 80));
+	targetNode->setPosition (centerPos);
+	addChild(targetNode);
+	
+	sim.init();
+	
+	scheduleUpdate();
+
+	for (int i=0; i<quadrocoptersCount; i++) {
+	
+		LayerColor* qcopterNode = LayerColor::create(Color4B(0, 0, 255, 255));
+		qcopterNodes.push_back(qcopterNode);
+		qcopterNode->setAnchorPoint(Vec2(0.5, 0.5));
+		qcopterNode->setContentSize(Size(2, 20));
+		qcopterNode->setPosition (centerPos);
+		addChild(qcopterNode);
+	}
+
+	reset ();
+	
+    return true;
+}
+
+void HelloWorld::update(float delta) {
+
+//	sim.update();
+
+	for (int i=0; i<quadrocoptersCount; i++) {
+		LayerColor* qcopterNode = qcopterNodes [i];
+		float pos = 4 * sim.getQuadrocopterCtrl(i).getSimulationModel().getPosition();
+		qcopterNode->setPosition(centerPos + Vec2 (pos, 0));
+	}
+	
+}
+
+void HelloWorld::reset () {
+	sim.reset();
+}
+
+
+
+void HelloWorld::menuCloseCallback(Ref* pSender)
+{
+    Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
+}

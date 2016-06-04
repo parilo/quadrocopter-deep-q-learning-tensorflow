@@ -1,0 +1,84 @@
+import numpy as np
+import tempfile
+import tensorflow as tf
+
+from tf_rl.controller import DiscreteDeepQ
+#from tf_rl.simulation import KarpathyGame
+from tf_rl import simulate
+from tf_rl.models import MLP
+
+#tf.ops.reset_default_graph()
+session = tf.Session()
+
+# This little guy will let us run tensorboard
+#      tensorboard --logdir [LOG_DIR]
+journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/TensorflowLog")
+
+# Brain maps from observation to Q values for different actions.
+# Here it is a done using a multi layer perceptron with 2 hidden
+# layers
+
+# observation
+# double currentRotW,
+# double currentRotX,
+# double currentRotY,
+# double currentRotZ,
+#
+# double targetX,
+# double targetY,
+# double targetZ,
+#
+# double motor1powerVal,
+# double motor2powerVal,
+# double motor3powerVal,
+# double motor4powerVal
+observation_size = 2;
+observations_in_seq = 1;
+input_size = observation_size*observations_in_seq;
+
+# actions
+num_actions = 3;
+
+#brain = MLP([input_size,], [5, 5, 5, num_actions], 
+#            [tf.tanh, tf.tanh, tf.tanh, tf.identity])
+#brain = MLP([input_size,], [20, 20, 20, 20, num_actions], 
+#            [tf.tanh, tf.tanh, tf.tanh, tf.tanh, tf.identity])
+
+brain = MLP([input_size,], [64, num_actions], 
+            [tf.sigmoid, tf.identity])
+
+# The optimizer to use. Here we use RMSProp as recommended
+# by the publication
+#optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0001, decay=0.9)
+optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0001, decay=0.9)
+
+# DiscreteDeepQ object
+current_controller = DiscreteDeepQ(input_size, num_actions, brain, optimizer, session, discount_rate=0.95, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+
+
+
+#for model based learning
+#state + action
+model_input_size = input_size + num_actions
+#state + reward
+model_output_size = input_size + 1
+model_mlp = MLP([model_input_size,], [128, model_output_size], 
+            [tf.tanh, tf.identity], scope="env_model_mlp")
+
+model_input = tf.placeholder(tf.float32, [None, model_input_size], name="env_model_input")
+model_prediction = tf.identity( model_mlp (model_input), name="env_model_prediction")
+
+model_train_data = tf.placeholder(tf.float32, [None, model_output_size], name="env_model_train_data")
+
+model_sqerror = tf.reduce_mean(tf.square(model_prediction - model_train_data), name="env_model_prediction_error")
+
+model_optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0001, decay=0.9)
+model_gradients = model_optimizer.compute_gradients(model_sqerror)
+model_train_step = model_optimizer.apply_gradients(model_gradients, name="env_model_train_step")
+
+
+
+init_all_vars_op = tf.initialize_variables(tf.all_variables(), name='init_all_vars_op')
+
+session.run(tf.initialize_all_variables())
+tf.train.write_graph(session.graph_def, 'models/', 'graph.pb', as_text=False)

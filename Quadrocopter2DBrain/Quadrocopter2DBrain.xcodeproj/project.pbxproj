@@ -1,0 +1,533 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A13FCBA1CA7123C00B1CFD7 /* ExperienceFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A13FCB81CA7123C00B1CFD7 /* ExperienceFilter.cpp */; };
+		3A2429BC1CF1AC1900CC89D0 /* ExperienceBankRemovable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2429BA1CF1AC1900CC89D0 /* ExperienceBankRemovable.cpp */; };
+		3A2C52CE1CC39BA9002630ED /* ExperienceBank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C52CC1CC39BA9002630ED /* ExperienceBank.cpp */; };
+		3A3534081CD94C58007DBB0B /* libtensorflow.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3534071CD94C58007DBB0B /* libtensorflow.so */; };
+		3A3534091CD94C67007DBB0B /* libtensorflow.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3534071CD94C58007DBB0B /* libtensorflow.so */; };
+		3A52D3B41C942122004AEBDA /* ObservationSeqLimited.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A52D3B21C942122004AEBDA /* ObservationSeqLimited.cpp */; };
+		3A85C5361C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A85C5341C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp */; };
+		3AE420C21CD2B09900702C1A /* BrainContinousDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE0C1C8310BE00C8750E /* BrainContinousDeepQ.cpp */; };
+		3AE420C31CD2B09900702C1A /* BrainDiscreteDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE0E1C8310BE00C8750E /* BrainDiscreteDeepQ.cpp */; };
+		3AE420C41CD2B09900702C1A /* ExperienceItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE101C8310BE00C8750E /* ExperienceItem.cpp */; };
+		3AE420C51CD2B09900702C1A /* ExperienceBank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C52CC1CC39BA9002630ED /* ExperienceBank.cpp */; };
+		3AE420C61CD2B09900702C1A /* Observation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE121C8310BE00C8750E /* Observation.cpp */; };
+		3AE420C71CD2B09900702C1A /* ObservationSeqLimited.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A52D3B21C942122004AEBDA /* ObservationSeqLimited.cpp */; };
+		3AE420C81CD2B09900702C1A /* QuadrocopterBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE141C8310BE00C8750E /* QuadrocopterBrain.cpp */; };
+		3AE420C91CD2B09900702C1A /* Tensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE161C8310BE00C8750E /* Tensors.cpp */; };
+		3AE420CA1CD2B09900702C1A /* ExperienceFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A13FCB81CA7123C00B1CFD7 /* ExperienceFilter.cpp */; };
+		3AE420CB1CD2B09900702C1A /* ExpLambdaFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2C1D81CB10964003A2E84 /* ExpLambdaFilter.cpp */; };
+		3AE420CC1CD2B09900702C1A /* Lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE1F1C8310E200C8750E /* Lib.cpp */; };
+		3AEECE181C8310BE00C8750E /* BrainContinousDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE0C1C8310BE00C8750E /* BrainContinousDeepQ.cpp */; };
+		3AEECE191C8310BE00C8750E /* BrainDiscreteDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE0E1C8310BE00C8750E /* BrainDiscreteDeepQ.cpp */; };
+		3AEECE1A1C8310BE00C8750E /* ExperienceItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE101C8310BE00C8750E /* ExperienceItem.cpp */; };
+		3AEECE1B1C8310BE00C8750E /* Observation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE121C8310BE00C8750E /* Observation.cpp */; };
+		3AEECE1C1C8310BE00C8750E /* QuadrocopterBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE141C8310BE00C8750E /* QuadrocopterBrain.cpp */; };
+		3AEECE1D1C8310BE00C8750E /* Tensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE161C8310BE00C8750E /* Tensors.cpp */; };
+		3AEECE231C8310E200C8750E /* Lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE1F1C8310E200C8750E /* Lib.cpp */; };
+		3AEECE241C8310E200C8750E /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE211C8310E200C8750E /* Main.cpp */; };
+		3AEECE261C8314F000C8750E /* Unity in Resources */ = {isa = PBXBuildFile; fileRef = 3AEECE251C8314F000C8750E /* Unity */; };
+		3AF2C1DA1CB10964003A2E84 /* ExpLambdaFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2C1D81CB10964003A2E84 /* ExpLambdaFilter.cpp */; };
+		3AFC7E3A1CD3D840006C74D3 /* Quadrocopter2DBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC7E371CD3D800006C74D3 /* Quadrocopter2DBrain.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3A13FCB81CA7123C00B1CFD7 /* ExperienceFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExperienceFilter.cpp; sourceTree = "<group>"; };
+		3A13FCB91CA7123C00B1CFD7 /* ExperienceFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExperienceFilter.hpp; sourceTree = "<group>"; };
+		3A2429BA1CF1AC1900CC89D0 /* ExperienceBankRemovable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExperienceBankRemovable.cpp; sourceTree = "<group>"; };
+		3A2429BB1CF1AC1900CC89D0 /* ExperienceBankRemovable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExperienceBankRemovable.hpp; sourceTree = "<group>"; };
+		3A2C52CC1CC39BA9002630ED /* ExperienceBank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExperienceBank.cpp; sourceTree = "<group>"; };
+		3A2C52CD1CC39BA9002630ED /* ExperienceBank.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExperienceBank.hpp; sourceTree = "<group>"; };
+		3A3534071CD94C58007DBB0B /* libtensorflow.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtensorflow.so; path = "../../../../../../var/tmp/_bazel_anton/c21f8eea4a35c65df98e8983d5e17ddc/Tensorflow/bazel-out/local_darwin-fastbuild/bin/tensorflow/libtensorflow/libtensorflow.so"; sourceTree = "<group>"; };
+		3A52D3B21C942122004AEBDA /* ObservationSeqLimited.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObservationSeqLimited.cpp; sourceTree = "<group>"; };
+		3A52D3B31C942122004AEBDA /* ObservationSeqLimited.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObservationSeqLimited.hpp; sourceTree = "<group>"; };
+		3A85C5341C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ApiDiscreteDeepQ.cpp; sourceTree = "<group>"; };
+		3A85C5351C9F0B0300A5F603 /* ApiDiscreteDeepQ.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ApiDiscreteDeepQ.hpp; sourceTree = "<group>"; };
+		3AE420B91CD2B05800702C1A /* libQuadrocopter2DBrain-lib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libQuadrocopter2DBrain-lib.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AEECE021C830EE400C8750E /* Quadrocopter2DBrain.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Quadrocopter2DBrain.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AEECE051C830EE400C8750E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AEECE0C1C8310BE00C8750E /* BrainContinousDeepQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BrainContinousDeepQ.cpp; sourceTree = "<group>"; };
+		3AEECE0D1C8310BE00C8750E /* BrainContinousDeepQ.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BrainContinousDeepQ.hpp; sourceTree = "<group>"; };
+		3AEECE0E1C8310BE00C8750E /* BrainDiscreteDeepQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BrainDiscreteDeepQ.cpp; sourceTree = "<group>"; };
+		3AEECE0F1C8310BE00C8750E /* BrainDiscreteDeepQ.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BrainDiscreteDeepQ.hpp; sourceTree = "<group>"; };
+		3AEECE101C8310BE00C8750E /* ExperienceItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExperienceItem.cpp; sourceTree = "<group>"; };
+		3AEECE111C8310BE00C8750E /* ExperienceItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExperienceItem.hpp; sourceTree = "<group>"; };
+		3AEECE121C8310BE00C8750E /* Observation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Observation.cpp; sourceTree = "<group>"; };
+		3AEECE131C8310BE00C8750E /* Observation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Observation.hpp; sourceTree = "<group>"; };
+		3AEECE141C8310BE00C8750E /* QuadrocopterBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterBrain.cpp; sourceTree = "<group>"; };
+		3AEECE151C8310BE00C8750E /* QuadrocopterBrain.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterBrain.hpp; sourceTree = "<group>"; };
+		3AEECE161C8310BE00C8750E /* Tensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tensors.cpp; sourceTree = "<group>"; };
+		3AEECE171C8310BE00C8750E /* Tensors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tensors.hpp; sourceTree = "<group>"; };
+		3AEECE1F1C8310E200C8750E /* Lib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lib.cpp; sourceTree = "<group>"; };
+		3AEECE201C8310E200C8750E /* Lib.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Lib.hpp; sourceTree = "<group>"; };
+		3AEECE211C8310E200C8750E /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
+		3AEECE221C8310E200C8750E /* Main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Main.h; sourceTree = "<group>"; };
+		3AEECE251C8314F000C8750E /* Unity */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Unity; sourceTree = "<group>"; };
+		3AF2C1D81CB10964003A2E84 /* ExpLambdaFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpLambdaFilter.cpp; sourceTree = "<group>"; };
+		3AF2C1D91CB10964003A2E84 /* ExpLambdaFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExpLambdaFilter.hpp; sourceTree = "<group>"; };
+		3AFC7E371CD3D800006C74D3 /* Quadrocopter2DBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2DBrain.cpp; sourceTree = "<group>"; };
+		3AFC7E381CD3D800006C74D3 /* Quadrocopter2DBrain.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2DBrain.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3AE420B61CD2B05800702C1A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3534091CD94C67007DBB0B /* libtensorflow.so in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AEECDFF1C830EE300C8750E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3534081CD94C58007DBB0B /* libtensorflow.so in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A13FCBB1CA7292400B1CFD7 /* NotUsed */ = {
+			isa = PBXGroup;
+			children = (
+				3AEECE0C1C8310BE00C8750E /* BrainContinousDeepQ.cpp */,
+				3AEECE0D1C8310BE00C8750E /* BrainContinousDeepQ.hpp */,
+			);
+			name = NotUsed;
+			sourceTree = "<group>";
+		};
+		3AEECDF91C830EE300C8750E = {
+			isa = PBXGroup;
+			children = (
+				3AEECE271C83218E00C8750E /* tensorflow */,
+				3AEECE041C830EE400C8750E /* Quadrocopter2DBrain */,
+				3AEECE031C830EE400C8750E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3AEECE031C830EE400C8750E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AEECE021C830EE400C8750E /* Quadrocopter2DBrain.bundle */,
+				3AE420B91CD2B05800702C1A /* libQuadrocopter2DBrain-lib.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3AEECE041C830EE400C8750E /* Quadrocopter2DBrain */ = {
+			isa = PBXGroup;
+			children = (
+				3AEECE0B1C830F1D00C8750E /* src */,
+				3AEECE1F1C8310E200C8750E /* Lib.cpp */,
+				3AEECE201C8310E200C8750E /* Lib.hpp */,
+				3A85C5341C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp */,
+				3A85C5351C9F0B0300A5F603 /* ApiDiscreteDeepQ.hpp */,
+				3AFC7E371CD3D800006C74D3 /* Quadrocopter2DBrain.cpp */,
+				3AFC7E381CD3D800006C74D3 /* Quadrocopter2DBrain.hpp */,
+				3AEECE211C8310E200C8750E /* Main.cpp */,
+				3AEECE221C8310E200C8750E /* Main.h */,
+				3AEECE051C830EE400C8750E /* Info.plist */,
+			);
+			path = Quadrocopter2DBrain;
+			sourceTree = "<group>";
+		};
+		3AEECE0B1C830F1D00C8750E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3AEECE251C8314F000C8750E /* Unity */,
+				3AEECE1E1C8310CF00C8750E /* Brain */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3AEECE1E1C8310CF00C8750E /* Brain */ = {
+			isa = PBXGroup;
+			children = (
+				3A13FCBB1CA7292400B1CFD7 /* NotUsed */,
+				3AEECE0E1C8310BE00C8750E /* BrainDiscreteDeepQ.cpp */,
+				3AEECE0F1C8310BE00C8750E /* BrainDiscreteDeepQ.hpp */,
+				3AEECE101C8310BE00C8750E /* ExperienceItem.cpp */,
+				3AEECE111C8310BE00C8750E /* ExperienceItem.hpp */,
+				3A2C52CC1CC39BA9002630ED /* ExperienceBank.cpp */,
+				3A2C52CD1CC39BA9002630ED /* ExperienceBank.hpp */,
+				3A2429BA1CF1AC1900CC89D0 /* ExperienceBankRemovable.cpp */,
+				3A2429BB1CF1AC1900CC89D0 /* ExperienceBankRemovable.hpp */,
+				3AEECE121C8310BE00C8750E /* Observation.cpp */,
+				3AEECE131C8310BE00C8750E /* Observation.hpp */,
+				3A52D3B21C942122004AEBDA /* ObservationSeqLimited.cpp */,
+				3A52D3B31C942122004AEBDA /* ObservationSeqLimited.hpp */,
+				3AEECE141C8310BE00C8750E /* QuadrocopterBrain.cpp */,
+				3AEECE151C8310BE00C8750E /* QuadrocopterBrain.hpp */,
+				3AEECE161C8310BE00C8750E /* Tensors.cpp */,
+				3AEECE171C8310BE00C8750E /* Tensors.hpp */,
+				3A13FCB81CA7123C00B1CFD7 /* ExperienceFilter.cpp */,
+				3A13FCB91CA7123C00B1CFD7 /* ExperienceFilter.hpp */,
+				3AF2C1D81CB10964003A2E84 /* ExpLambdaFilter.cpp */,
+				3AF2C1D91CB10964003A2E84 /* ExpLambdaFilter.hpp */,
+			);
+			name = Brain;
+			sourceTree = "<group>";
+		};
+		3AEECE271C83218E00C8750E /* tensorflow */ = {
+			isa = PBXGroup;
+			children = (
+				3A3534071CD94C58007DBB0B /* libtensorflow.so */,
+			);
+			name = tensorflow;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3AE420B71CD2B05800702C1A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3AE420B81CD2B05800702C1A /* Quadrocopter2DBrain-lib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AE420C11CD2B05800702C1A /* Build configuration list for PBXNativeTarget "Quadrocopter2DBrain-lib" */;
+			buildPhases = (
+				3AE420B51CD2B05800702C1A /* Sources */,
+				3AE420B61CD2B05800702C1A /* Frameworks */,
+				3AE420B71CD2B05800702C1A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Quadrocopter2DBrain-lib";
+			productName = "Quadrocopter2DBrain-lib";
+			productReference = 3AE420B91CD2B05800702C1A /* libQuadrocopter2DBrain-lib.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		3AEECE011C830EE300C8750E /* Quadrocopter2DBrain */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AEECE081C830EE400C8750E /* Build configuration list for PBXNativeTarget "Quadrocopter2DBrain" */;
+			buildPhases = (
+				3AEECDFE1C830EE300C8750E /* Sources */,
+				3AEECDFF1C830EE300C8750E /* Frameworks */,
+				3AEECE001C830EE300C8750E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Quadrocopter2DBrain;
+			productName = Quadrocopter2DBrain;
+			productReference = 3AEECE021C830EE400C8750E /* Quadrocopter2DBrain.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3AEECDFA1C830EE300C8750E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = anton;
+				TargetAttributes = {
+					3AE420B81CD2B05800702C1A = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					3AEECE011C830EE300C8750E = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 3AEECDFD1C830EE300C8750E /* Build configuration list for PBXProject "Quadrocopter2DBrain" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3AEECDF91C830EE300C8750E;
+			productRefGroup = 3AEECE031C830EE400C8750E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3AEECE011C830EE300C8750E /* Quadrocopter2DBrain */,
+				3AE420B81CD2B05800702C1A /* Quadrocopter2DBrain-lib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3AEECE001C830EE300C8750E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AEECE261C8314F000C8750E /* Unity in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3AE420B51CD2B05800702C1A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFC7E3A1CD3D840006C74D3 /* Quadrocopter2DBrain.cpp in Sources */,
+				3AE420C21CD2B09900702C1A /* BrainContinousDeepQ.cpp in Sources */,
+				3AE420C31CD2B09900702C1A /* BrainDiscreteDeepQ.cpp in Sources */,
+				3AE420C41CD2B09900702C1A /* ExperienceItem.cpp in Sources */,
+				3AE420C51CD2B09900702C1A /* ExperienceBank.cpp in Sources */,
+				3AE420C61CD2B09900702C1A /* Observation.cpp in Sources */,
+				3AE420C71CD2B09900702C1A /* ObservationSeqLimited.cpp in Sources */,
+				3AE420C81CD2B09900702C1A /* QuadrocopterBrain.cpp in Sources */,
+				3AE420C91CD2B09900702C1A /* Tensors.cpp in Sources */,
+				3AE420CA1CD2B09900702C1A /* ExperienceFilter.cpp in Sources */,
+				3AE420CB1CD2B09900702C1A /* ExpLambdaFilter.cpp in Sources */,
+				3AE420CC1CD2B09900702C1A /* Lib.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AEECDFE1C830EE300C8750E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AF2C1DA1CB10964003A2E84 /* ExpLambdaFilter.cpp in Sources */,
+				3A2429BC1CF1AC1900CC89D0 /* ExperienceBankRemovable.cpp in Sources */,
+				3AEECE1D1C8310BE00C8750E /* Tensors.cpp in Sources */,
+				3A52D3B41C942122004AEBDA /* ObservationSeqLimited.cpp in Sources */,
+				3AEECE1B1C8310BE00C8750E /* Observation.cpp in Sources */,
+				3AEECE1A1C8310BE00C8750E /* ExperienceItem.cpp in Sources */,
+				3A2C52CE1CC39BA9002630ED /* ExperienceBank.cpp in Sources */,
+				3AEECE181C8310BE00C8750E /* BrainContinousDeepQ.cpp in Sources */,
+				3A85C5361C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp in Sources */,
+				3AEECE231C8310E200C8750E /* Lib.cpp in Sources */,
+				3AEECE1C1C8310BE00C8750E /* QuadrocopterBrain.cpp in Sources */,
+				3A13FCBA1CA7123C00B1CFD7 /* ExperienceFilter.cpp in Sources */,
+				3AEECE241C8310E200C8750E /* Main.cpp in Sources */,
+				3AEECE191C8310BE00C8750E /* BrainDiscreteDeepQ.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3AE420BF1CD2B05800702C1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TF_GRAPH_DIR=/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/models/",
+					"${inherited}",
+					"DEBUG=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../Tensorflow",
+					"$(SRCROOT)/../Tensorflow/google/protobuf/src",
+					"$(SRCROOT)/../Tensorflow/protobuf-generated",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow/third_party/eigen3",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow/external/eigen_archive",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow/external/eigen_archive/eigen-eigen-50812b426b7c",
+				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../installdir/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TF_GRAPH_FILE = "/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/models/graph.pb";
+			};
+			name = Debug;
+		};
+		3AE420C01CD2B05800702C1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "TF_GRAPH_DIR=/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/models/";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../Tensorflow",
+					"$(SRCROOT)/../Tensorflow/google/protobuf/src",
+					"$(SRCROOT)/../Tensorflow/protobuf-generated",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow/third_party/eigen3",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow/external/eigen_archive",
+					"$(SRCROOT)/../Tensorflow/bazel-Tensorflow/external/eigen_archive/eigen-eigen-50812b426b7c",
+				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../installdir/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TF_GRAPH_FILE = "/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/models/graph.pb";
+			};
+			name = Release;
+		};
+		3AEECE061C830EE400C8750E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TF_GRAPH_DIR=/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/models/",
+					"${inherited}",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3AEECE071C830EE400C8750E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "TF_GRAPH_DIR=/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/models/";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3AEECE091C830EE400C8750E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					/Users/anton/devel/build/tensorflow,
+					/Users/anton/devel/build/tensorflow/google/protobuf/src,
+					"/Users/anton/devel/build/tensorflow/protobuf-generated",
+					"/Users/anton/devel/build/tensorflow/bazel-tensorflow",
+					/Users/anton/devel/build/tensorflow/third_party/eigen3,
+					"/Users/anton/devel/build/tensorflow/bazel-tensorflow/external/eigen_archive/eigen-eigen-d861b41b1996",
+				);
+				INFOPLIST_FILE = Quadrocopter2DBrain/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.parilo.Quadrocopter2DBrain;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		3AEECE0A1C830EE400C8750E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					/Users/anton/devel/build/tensorflow,
+					/Users/anton/devel/build/tensorflow/google/protobuf/src,
+					"/Users/anton/devel/build/tensorflow/protobuf-generated",
+					"/Users/anton/devel/build/tensorflow/bazel-tensorflow",
+					/Users/anton/devel/build/tensorflow/third_party/eigen3,
+					"/Users/anton/devel/build/tensorflow/bazel-tensorflow/external/eigen_archive/eigen-eigen-d861b41b1996",
+				);
+				INFOPLIST_FILE = Quadrocopter2DBrain/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.parilo.Quadrocopter2DBrain;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3AE420C11CD2B05800702C1A /* Build configuration list for PBXNativeTarget "Quadrocopter2DBrain-lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AE420BF1CD2B05800702C1A /* Debug */,
+				3AE420C01CD2B05800702C1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AEECDFD1C830EE300C8750E /* Build configuration list for PBXProject "Quadrocopter2DBrain" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AEECE061C830EE400C8750E /* Debug */,
+				3AEECE071C830EE400C8750E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AEECE081C830EE400C8750E /* Build configuration list for PBXNativeTarget "Quadrocopter2DBrain" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AEECE091C830EE400C8750E /* Debug */,
+				3AEECE0A1C830EE400C8750E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3AEECDFA1C830EE300C8750E /* Project object */;
+}

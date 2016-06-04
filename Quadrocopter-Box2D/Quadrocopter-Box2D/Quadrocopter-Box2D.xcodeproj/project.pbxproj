@@ -1,0 +1,391 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A2FF9011CD010860039DC87 /* Quadrocopter1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */; };
+		3A2FF9051CD0123D0039DC87 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9031CD0123D0039DC87 /* World.cpp */; };
+		3A2FF90B1CD01AF70039DC87 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9091CD01AF70039DC87 /* Simulation.cpp */; };
+		3A786E171CCBF84D00FB9BC2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A786E161CCBF84D00FB9BC2 /* main.cpp */; };
+		3A786E231CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */; };
+		3AD49E441CF4BBA300DE121D /* Quadrocopter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */; };
+		3AD49E451CF4C86200DE121D /* Quadrocopter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */; };
+		3AE420A81CD2AB7B00702C1A /* Quadrocopter1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */; };
+		3AE420AA1CD2AB7B00702C1A /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9031CD0123D0039DC87 /* World.cpp */; };
+		3AE420AC1CD2AB7B00702C1A /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9091CD01AF70039DC87 /* Simulation.cpp */; };
+		3AE420AE1CD2AC7B00702C1A /* libBox2D.2.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3A786E111CCBF84D00FB9BC2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter1D.cpp; sourceTree = "<group>"; };
+		3A2FF9001CD010860039DC87 /* Quadrocopter1D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter1D.hpp; sourceTree = "<group>"; };
+		3A2FF9031CD0123D0039DC87 /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
+		3A2FF9041CD0123D0039DC87 /* World.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = World.hpp; sourceTree = "<group>"; };
+		3A2FF9091CD01AF70039DC87 /* Simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simulation.cpp; sourceTree = "<group>"; };
+		3A2FF90A1CD01AF70039DC87 /* Simulation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Simulation.hpp; sourceTree = "<group>"; };
+		3A786E131CCBF84D00FB9BC2 /* Quadrocopter-Box2D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Quadrocopter-Box2D"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A786E161CCBF84D00FB9BC2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBox2D.2.3.2.dylib; path = "../../box2d-install/lib/libBox2D.2.3.2.dylib"; sourceTree = "<group>"; };
+		3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2D.cpp; sourceTree = "<group>"; };
+		3AD49E431CF4BBA300DE121D /* Quadrocopter2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2D.hpp; sourceTree = "<group>"; };
+		3AE4209A1CD2AA5600702C1A /* libQuadrocopter-Box2D-lib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libQuadrocopter-Box2D-lib.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3A786E101CCBF84D00FB9BC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A786E231CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AE420971CD2AA5600702C1A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AE420AE1CD2AC7B00702C1A /* libBox2D.2.3.2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A2FF9021CD011590039DC87 /* 1D */ = {
+			isa = PBXGroup;
+			children = (
+				3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */,
+				3A2FF9001CD010860039DC87 /* Quadrocopter1D.hpp */,
+				3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */,
+				3AD49E431CF4BBA300DE121D /* Quadrocopter2D.hpp */,
+			);
+			name = 1D;
+			sourceTree = "<group>";
+		};
+		3A786E0A1CCBF84D00FB9BC2 = {
+			isa = PBXGroup;
+			children = (
+				3A786E211CCBFA0900FB9BC2 /* lib */,
+				3A786E151CCBF84D00FB9BC2 /* Quadrocopter-Box2D */,
+				3A786E141CCBF84D00FB9BC2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3A786E141CCBF84D00FB9BC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A786E131CCBF84D00FB9BC2 /* Quadrocopter-Box2D */,
+				3AE4209A1CD2AA5600702C1A /* libQuadrocopter-Box2D-lib.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A786E151CCBF84D00FB9BC2 /* Quadrocopter-Box2D */ = {
+			isa = PBXGroup;
+			children = (
+				3A2FF9021CD011590039DC87 /* 1D */,
+				3A2FF9031CD0123D0039DC87 /* World.cpp */,
+				3A2FF9041CD0123D0039DC87 /* World.hpp */,
+				3A2FF9091CD01AF70039DC87 /* Simulation.cpp */,
+				3A2FF90A1CD01AF70039DC87 /* Simulation.hpp */,
+				3A786E161CCBF84D00FB9BC2 /* main.cpp */,
+			);
+			path = "Quadrocopter-Box2D";
+			sourceTree = "<group>";
+		};
+		3A786E211CCBFA0900FB9BC2 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3AE420981CD2AA5600702C1A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3A786E121CCBF84D00FB9BC2 /* Quadrocopter-Box2D */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A786E1A1CCBF84D00FB9BC2 /* Build configuration list for PBXNativeTarget "Quadrocopter-Box2D" */;
+			buildPhases = (
+				3A786E0F1CCBF84D00FB9BC2 /* Sources */,
+				3A786E101CCBF84D00FB9BC2 /* Frameworks */,
+				3A786E111CCBF84D00FB9BC2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Quadrocopter-Box2D";
+			productName = "Quadrocopter-Box2D";
+			productReference = 3A786E131CCBF84D00FB9BC2 /* Quadrocopter-Box2D */;
+			productType = "com.apple.product-type.tool";
+		};
+		3AE420991CD2AA5600702C1A /* Quadrocopter-Box2D-lib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AE420A01CD2AA5600702C1A /* Build configuration list for PBXNativeTarget "Quadrocopter-Box2D-lib" */;
+			buildPhases = (
+				3AE420961CD2AA5600702C1A /* Sources */,
+				3AE420971CD2AA5600702C1A /* Frameworks */,
+				3AE420981CD2AA5600702C1A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Quadrocopter-Box2D-lib";
+			productName = "Quadrocopter-Box2D-lib";
+			productReference = 3AE4209A1CD2AA5600702C1A /* libQuadrocopter-Box2D-lib.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A786E0B1CCBF84D00FB9BC2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = anton;
+				TargetAttributes = {
+					3A786E121CCBF84D00FB9BC2 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					3AE420991CD2AA5600702C1A = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 3A786E0E1CCBF84D00FB9BC2 /* Build configuration list for PBXProject "Quadrocopter-Box2D" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3A786E0A1CCBF84D00FB9BC2;
+			productRefGroup = 3A786E141CCBF84D00FB9BC2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3A786E121CCBF84D00FB9BC2 /* Quadrocopter-Box2D */,
+				3AE420991CD2AA5600702C1A /* Quadrocopter-Box2D-lib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3A786E0F1CCBF84D00FB9BC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A2FF90B1CD01AF70039DC87 /* Simulation.cpp in Sources */,
+				3A786E171CCBF84D00FB9BC2 /* main.cpp in Sources */,
+				3AD49E441CF4BBA300DE121D /* Quadrocopter2D.cpp in Sources */,
+				3A2FF9011CD010860039DC87 /* Quadrocopter1D.cpp in Sources */,
+				3A2FF9051CD0123D0039DC87 /* World.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AE420961CD2AA5600702C1A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AD49E451CF4C86200DE121D /* Quadrocopter2D.cpp in Sources */,
+				3AE420A81CD2AB7B00702C1A /* Quadrocopter1D.cpp in Sources */,
+				3AE420AA1CD2AB7B00702C1A /* World.cpp in Sources */,
+				3AE420AC1CD2AB7B00702C1A /* Simulation.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3A786E181CCBF84D00FB9BC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3A786E191CCBF84D00FB9BC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3A786E1B1CCBF84D00FB9BC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/include";
+				LD_RUNPATH_SEARCH_PATHS = "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/lib";
+				LIBRARY_SEARCH_PATHS = "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REEXPORTED_LIBRARY_PATHS = "";
+			};
+			name = Debug;
+		};
+		3A786E1C1CCBF84D00FB9BC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/include";
+				LD_RUNPATH_SEARCH_PATHS = "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/lib";
+				LIBRARY_SEARCH_PATHS = "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REEXPORTED_LIBRARY_PATHS = "";
+			};
+			name = Release;
+		};
+		3AE420A11CD2AA5600702C1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../installdir/include";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../installdir/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3AE420A21CD2AA5600702C1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../installdir/include";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../installdir/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3A786E0E1CCBF84D00FB9BC2 /* Build configuration list for PBXProject "Quadrocopter-Box2D" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A786E181CCBF84D00FB9BC2 /* Debug */,
+				3A786E191CCBF84D00FB9BC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A786E1A1CCBF84D00FB9BC2 /* Build configuration list for PBXNativeTarget "Quadrocopter-Box2D" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A786E1B1CCBF84D00FB9BC2 /* Debug */,
+				3A786E1C1CCBF84D00FB9BC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AE420A01CD2AA5600702C1A /* Build configuration list for PBXNativeTarget "Quadrocopter-Box2D-lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AE420A11CD2AA5600702C1A /* Debug */,
+				3AE420A21CD2AA5600702C1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3A786E0B1CCBF84D00FB9BC2 /* Project object */;
+}
