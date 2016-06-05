@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <chrono>
+#include <algorithm>
 
 void Lib::randomize () {
     std::srand ((unsigned int)time(NULL));

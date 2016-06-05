@@ -23,6 +23,7 @@ include_directories(
 ../../Tensorflow/bazel-Tensorflow/third_party/eigen3
 ../../Tensorflow/bazel-Tensorflow/external/eigen_archive
 ../../Tensorflow/bazel-Tensorflow/external/eigen_archive/eigen-eigen-50812b426b7c
+../../Tensorflow/bazel-Tensorflow/external/eigen_archive/eigen-eigen-3f653ace7d28
 )
 
 #add_executable(QuadrocopterBox2DSimulator Quadrocopter1D.cpp Simulation.cpp World.cpp main.cpp)

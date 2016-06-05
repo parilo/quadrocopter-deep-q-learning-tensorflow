@@ -13,6 +13,9 @@
 #include <vector>
 #include <iostream>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <atomic>
 //#include "unistd.h"
 
 #include "Simulation.hpp"
