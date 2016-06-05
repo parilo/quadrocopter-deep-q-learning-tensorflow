@@ -92,7 +92,7 @@ bool Visualizer2DScene::init()
 		update (0);
 	});
 	sim.startActWorkers();
-	sim.startTrainWorkers();
+//	sim.startTrainWorkers();
 	
     return true;
 }

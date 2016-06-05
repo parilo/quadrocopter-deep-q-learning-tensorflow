@@ -16,13 +16,19 @@ class Layer(object):
 
         with tf.variable_scope(self.scope):
             self.Ws = []
+            get_W_index = 0;
             for input_idx, input_size in enumerate(input_sizes):
                 W_name = "W_%d" % (input_idx,)
                 W_initializer =  tf.random_uniform_initializer(
                         -1.0 / math.sqrt(input_size), 1.0 / math.sqrt(input_size))
                 W_var = tf.get_variable(W_name, (input_size, output_size), initializer=W_initializer)
+#                tf.identity (W_var, "get_W_" + str(get_W_index))
+#                tf.assign (W_var, tf.placeholder(tf.float32, (input_size, output_size), name="W_value"), name=("set_W_" + str(get_W_index)))
+                get_W_index += 1
                 self.Ws.append(W_var)
             self.b = tf.get_variable("b", (output_size,), initializer=tf.constant_initializer(0))
+#            tf.identity (self.b, "get_b")
+#            tf.assign (self.b, tf.placeholder(tf.float32, (output_size,), name="b_value"), name="set_b")
 
     def __call__(self, xs):
         if type(xs) != list:

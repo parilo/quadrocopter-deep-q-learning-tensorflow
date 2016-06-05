@@ -52,6 +52,10 @@ public:
 	
 private:
 
+	void initGraphState (tensorflow::GraphDef& graph_def);
+	void loadGraphState (tensorflow::GraphDef& graph_def);
+	void saveGraphState (tensorflow::GraphDef& graph_def);
+
 	int actionsExecutedSoFar = 0;
 	
 	//linear annealing parameters

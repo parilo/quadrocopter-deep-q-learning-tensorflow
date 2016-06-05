@@ -6,6 +6,8 @@
 //  Copyright © 2016 anton. All rights reserved.
 //
 
+#include <fstream>
+
 #include "BrainDiscreteDeepQ.hpp"
 #include "Lib.hpp"
 #include "Tensors.hpp"
@@ -26,8 +28,7 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 
 	// Read in the protobuf graph we exported
 	GraphDef graph_def;
-//	status = ReadBinaryProto(Env::Default(), "/Users/anton/devel/unity/QuadrocopterHabr2D/TensorflowGraph/models/graph.pb", &graph_def);
-	status = ReadBinaryProto(Env::Default(), GRAPHDIR "graph2d.pb", &graph_def);
+	status = ReadBinaryProto(Env::Default(), GRAPHDIR "/graph.pb", &graph_def);
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 	}
@@ -37,19 +38,111 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 	}
+
+	initGraphState(graph_def);
+//	saveGraphState(graph_def);
+//	loadGraphState(graph_def);
+
+}
+
+void BrainDiscreteDeepQ::initGraphState (tensorflow::GraphDef& graph_def) {
 	
-	Tensor observation (DT_FLOAT, TensorShape({1, 5}));
-	std::vector<std::pair<string, tensorflow::Tensor>> inputs = {
-		{ "taking_action/observation", observation }
-	};
 	std::vector<tensorflow::Tensor> outputs;
-	status = session->Run(inputs, {}, {"init_all_vars_op"}, &outputs);
+	Status status = session->Run({}, {}, {"init_all_vars_op"}, &outputs);
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 		return;
 	}
-	
 }
+
+void BrainDiscreteDeepQ::saveGraphState (GraphDef& graph_def) {
+
+	std::vector<tensorflow::Tensor> out;
+	std::vector<string> vNames;
+
+std::cerr << "--- begin saving variables" << std::endl;
+
+	int node_count = graph_def.node_size();
+	for (int i = 0; i < node_count; i++) {
+		auto n = graph_def.node(i);
+
+		if (
+			n.name().find("readVariable") != std::string::npos
+		) {
+			vNames.push_back(n.name());
+std::cerr << "--- variable: " << n.name () << std::endl;
+		}
+	}
+
+	Status status = session->Run({}, vNames, {}, &out);
+	if (!status.ok()) {
+		std::cout << "tf error1: " << status.ToString() << "\n";
+	}
+	
+	int variableCount = out.size ();
+std::cerr << "--- got variables: " << variableCount << std::endl;
+	std::fstream output("/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/states/graph-state", std::ios::out | std::ios::binary);
+	output.write (reinterpret_cast<const char *>(&variableCount), sizeof(int));
+	for (auto& tensor : out) {
+		int tensorSize = tensor.TotalBytes();
+std::cerr << "--- tensor: " << tensorSize << std::endl;
+		TensorProto p;
+		tensor.AsProtoField (&p);
+		
+		std::string pStr;
+		p.SerializeToString(&pStr);
+		int serializedTensorSize = pStr.size();
+		output.write (reinterpret_cast<const char *>(&serializedTensorSize), sizeof(int));
+		output.write (pStr.c_str(), serializedTensorSize);
+	}
+	output.close ();
+
+	sync ();
+}
+
+void BrainDiscreteDeepQ::loadGraphState (GraphDef& graph_def) {
+	
+	std::vector<std::pair<string, tensorflow::Tensor>> variablesValues;
+	std::vector<string> restoreOps;
+	
+	std::fstream input("/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/states/graph-state", std::ios::in | std::ios::binary);
+	
+	int variableCount;
+	input.read(reinterpret_cast<char *>(&variableCount), sizeof(int));
+	
+std::cerr << "--- stored variables: " << variableCount << std::endl;
+
+	for (int i=0; i<variableCount; i++) {
+		int serializedTensorSize;
+		input.read(reinterpret_cast<char *>(&serializedTensorSize), sizeof(int));
+		std::string pStr;
+        pStr.resize(serializedTensorSize);
+        char* begin = &*pStr.begin();
+        input.read(begin, serializedTensorSize);
+		
+		TensorProto p;
+		p.ParseFromString (pStr);
+		
+		std::string variableSuffix = (i==0?"":"_"+std::to_string(i));
+		variablesValues.push_back ({"variableValue" + variableSuffix, Tensor ()});
+		Tensor& t (variablesValues.back ().second);
+		t.FromProto (p);
+std::cerr << "--- read tensor: " << serializedTensorSize << " / " << t.TotalBytes() << std::endl;
+		
+		restoreOps.emplace_back ("resoreVariable" + variableSuffix);
+	}
+	
+	input.close ();
+	
+	std::vector<tensorflow::Tensor> out;
+	Status status = session->Run(variablesValues, {}, restoreOps, &out);
+	if (!status.ok()) {
+		std::cout << "tf error2: " << status.ToString() << "\n";
+	}
+
+};
+
+
 
 //void BrainDiscreteDeepQ::setRandomness (double randomness) {
 //	randomActionProbabilityFinal = randomness;

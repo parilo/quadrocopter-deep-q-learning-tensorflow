@@ -44,8 +44,8 @@ num_actions = 3;
 #brain = MLP([input_size,], [20, 20, 20, 20, num_actions], 
 #            [tf.tanh, tf.tanh, tf.tanh, tf.tanh, tf.identity])
 
-brain = MLP([input_size,], [64, num_actions], 
-            [tf.sigmoid, tf.identity])
+brain = MLP([input_size,], [32, 32, num_actions], 
+            [tf.nn.relu, tf.nn.relu, tf.identity])
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
@@ -81,4 +81,12 @@ model_train_step = model_optimizer.apply_gradients(model_gradients, name="env_mo
 init_all_vars_op = tf.initialize_variables(tf.all_variables(), name='init_all_vars_op')
 
 session.run(tf.initialize_all_variables())
+
+#for saving graph state, trainable variable values
+for variable in tf.trainable_variables():
+#    tensor = tf.identity(tf.constant(variable.eval(session=session)), name="saveVariables")
+#    tf.assign(variable, tensor, name="loadVariables")
+    tf.identity (variable, name="readVariable")
+    tf.assign (variable, tf.placeholder(tf.float32, variable.get_shape(), name="variableValue"), name="resoreVariable")
+
 tf.train.write_graph(session.graph_def, 'models/', 'graph.pb', as_text=False)

@@ -33,7 +33,6 @@
 		3AEECE1D1C8310BE00C8750E /* Tensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE161C8310BE00C8750E /* Tensors.cpp */; };
 		3AEECE231C8310E200C8750E /* Lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE1F1C8310E200C8750E /* Lib.cpp */; };
 		3AEECE241C8310E200C8750E /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE211C8310E200C8750E /* Main.cpp */; };
-		3AEECE261C8314F000C8750E /* Unity in Resources */ = {isa = PBXBuildFile; fileRef = 3AEECE251C8314F000C8750E /* Unity */; };
 		3AF2C1DA1CB10964003A2E84 /* ExpLambdaFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2C1D81CB10964003A2E84 /* ExpLambdaFilter.cpp */; };
 		3AFC7E3A1CD3D840006C74D3 /* Quadrocopter2DBrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC7E371CD3D800006C74D3 /* Quadrocopter2DBrain.cpp */; };
 /* End PBXBuildFile section */
@@ -69,7 +68,6 @@
 		3AEECE201C8310E200C8750E /* Lib.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Lib.hpp; sourceTree = "<group>"; };
 		3AEECE211C8310E200C8750E /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		3AEECE221C8310E200C8750E /* Main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Main.h; sourceTree = "<group>"; };
-		3AEECE251C8314F000C8750E /* Unity */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Unity; sourceTree = "<group>"; };
 		3AF2C1D81CB10964003A2E84 /* ExpLambdaFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpLambdaFilter.cpp; sourceTree = "<group>"; };
 		3AF2C1D91CB10964003A2E84 /* ExpLambdaFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExpLambdaFilter.hpp; sourceTree = "<group>"; };
 		3AFC7E371CD3D800006C74D3 /* Quadrocopter2DBrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2DBrain.cpp; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 		3AEECE0B1C830F1D00C8750E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				3AEECE251C8314F000C8750E /* Unity */,
 				3AEECE1E1C8310CF00C8750E /* Brain */,
 			);
 			name = src;
@@ -272,7 +269,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AEECE261C8314F000C8750E /* Unity in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

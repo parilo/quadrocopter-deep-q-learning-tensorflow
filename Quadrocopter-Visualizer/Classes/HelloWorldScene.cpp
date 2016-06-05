@@ -63,7 +63,7 @@ bool HelloWorld::init()
 	
 	sim.init();
 	
-	scheduleUpdate();
+//	scheduleUpdate();
 
 	for (int i=0; i<quadrocoptersCount; i++) {
 	
@@ -76,6 +76,12 @@ bool HelloWorld::init()
 	}
 
 	reset ();
+	
+	sim.setSimulationUpdateCallback([this](){
+		update (0);
+	});
+	sim.startActWorkers();
+	sim.startTrainWorkers();
 	
     return true;
 }
@@ -100,6 +106,7 @@ void HelloWorld::reset () {
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
+	sim.stop();
     Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

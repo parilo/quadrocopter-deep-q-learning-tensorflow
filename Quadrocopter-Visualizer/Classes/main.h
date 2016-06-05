@@ -11,7 +11,7 @@
 
 const int quadrocoptersCount = 20;
 const int exerciseLengthInSteps = 20 * 20 + 1;
-const int quadrocoptersWorkerThreads = 4;
+const int quadrocoptersWorkerThreads = 1;
 const int quadrocoptersTrainWorkerThreads = 1;
 
 #endif /* main_h */
