@@ -11,10 +11,31 @@
 
 #include "Simulation.hpp"
 
+class QuadrocopterDiscrete {
+
+public:
+
+	QuadrocopterDiscrete ();
+	virtual ~QuadrocopterDiscrete ();
+	
+	void createIn (World& w);
+
+	float getPosition ();
+	void setPosition (float pos);
+	void setVelocity (float v);
+	float getVelocity ();
+	void setMotorPower (float p);
+	
+	void step ();
+	
+private:
+	float position;
+};
+
 class QuadrocopterDiscreteCtrl {
 public:
 	
-	QuadrocopterDiscreteCtrl (int id);
+	QuadrocopterDiscreteCtrl (int id, QuadrocopterDiscrete& simulationModel);
 	
 	void act ();
 	void storeExperience ();
@@ -22,6 +43,7 @@ public:
 	void reset ();
 	double getReward ();
 	int getPosition ();
+	QuadrocopterDiscrete& getSimulationModel ();
 
 private:
 
@@ -29,14 +51,12 @@ private:
 	long action = -1;
 	int timeReward = 0;
 	double reward;
-//	double sumReward = 0;
 	int position = 0;
 	int prevPosition = 0;
 	std::vector<float> prevState;
 	std::vector<float> nextState;
 	
-	void readState (std::vector<float>& state);
-	float getPositionFromState (const std::vector<float>& state);
+	QuadrocopterDiscrete& simulationModel;
 
 };
 

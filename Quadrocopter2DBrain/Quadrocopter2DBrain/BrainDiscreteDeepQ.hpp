@@ -49,12 +49,13 @@ public:
 	void predictNextStateAndReward (const ObservationSeqLimited& state, long action);
 	void trainEnvModel (const std::vector<ExperienceItem>& experience);
 //	void setRandomness (double randomness);
+
+	void saveGraphState (const std::string fileSuffix);
 	
 private:
 
-	void initGraphState (tensorflow::GraphDef& graph_def);
-	void loadGraphState (tensorflow::GraphDef& graph_def);
-	void saveGraphState (tensorflow::GraphDef& graph_def);
+	void initGraphState ();
+	bool loadGraphState ();
 
 	int actionsExecutedSoFar = 0;
 	
@@ -63,6 +64,7 @@ private:
 	double randomActionProbabilityInitial = 1.0;
 //	double randomActionProbabilityFinal = 0.1;
 	
+	tensorflow::GraphDef graph_def;
 	tensorflow::Session* session;
 	
 	double linearAnnealing(double randomActionProbabilityFinal);

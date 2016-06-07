@@ -97,7 +97,7 @@ echo "installing Quadrocopter Simulator"
 BUILDDIR=${BUILDDIR}/build-simulator
 mkdir ${BUILDDIR}
 cd ${BUILDDIR}
-cmake -DCMAKE_INSTALL_PREFIX=${INSTALLDIR} -DTF_GRAPH_DIR=${BASEDIR}/TensorflowGraph/models/ ${BASEDIR}
+cmake -DCMAKE_INSTALL_PREFIX=${INSTALLDIR} -DTF_GRAPH_DIR=${BASEDIR}/TensorflowGraph/models/ -DTF_GRAPH_SAVE_DIR=${BASEDIR}/TensorflowGraph/states/ ${BASEDIR}
 #-DCMAKE_VERBOSE_MAKEFILE=ON ${BASEDIR}
 make
 make install

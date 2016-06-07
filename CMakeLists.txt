@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.1)
 set(CMAKE_CXX_STANDARD 11)
 
-add_definitions(-DTF_GRAPH_DIR=${TF_GRAPH_DIR})
+add_definitions(-DTF_GRAPH_DIR=${TF_GRAPH_DIR} -DTF_GRAPH_SAVE_DIR=${TF_GRAPH_SAVE_DIR})
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)

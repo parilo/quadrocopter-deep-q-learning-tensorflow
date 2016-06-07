@@ -84,8 +84,6 @@ session.run(tf.initialize_all_variables())
 
 #for saving graph state, trainable variable values
 for variable in tf.trainable_variables():
-#    tensor = tf.identity(tf.constant(variable.eval(session=session)), name="saveVariables")
-#    tf.assign(variable, tensor, name="loadVariables")
     tf.identity (variable, name="readVariable")
     tf.assign (variable, tf.placeholder(tf.float32, variable.get_shape(), name="variableValue"), name="resoreVariable")
 

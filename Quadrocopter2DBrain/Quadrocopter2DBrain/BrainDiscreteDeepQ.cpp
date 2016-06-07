@@ -16,6 +16,7 @@
 #define QUOTE(name) #name
 #define STR(macro) QUOTE(macro)
 #define GRAPHDIR STR(TF_GRAPH_DIR)
+#define GRAPHSAVEDIR STR(TF_GRAPH_SAVE_DIR)
 
 using namespace tensorflow;
 
@@ -27,8 +28,9 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 	}
 
 	// Read in the protobuf graph we exported
-	GraphDef graph_def;
-	status = ReadBinaryProto(Env::Default(), GRAPHDIR "/graph.pb", &graph_def);
+//	GraphDef graph_def;
+	std::string dir (GRAPHDIR);
+	status = ReadBinaryProto(Env::Default(), dir + "/graph2d.pb", &graph_def);
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 	}
@@ -39,13 +41,13 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 	}
 
-	initGraphState(graph_def);
-//	saveGraphState(graph_def);
-//	loadGraphState(graph_def);
+	if (!loadGraphState()) {
+		initGraphState();
+	}
 
 }
 
-void BrainDiscreteDeepQ::initGraphState (tensorflow::GraphDef& graph_def) {
+void BrainDiscreteDeepQ::initGraphState () {
 	
 	std::vector<tensorflow::Tensor> outputs;
 	Status status = session->Run({}, {}, {"init_all_vars_op"}, &outputs);
@@ -55,7 +57,7 @@ void BrainDiscreteDeepQ::initGraphState (tensorflow::GraphDef& graph_def) {
 	}
 }
 
-void BrainDiscreteDeepQ::saveGraphState (GraphDef& graph_def) {
+void BrainDiscreteDeepQ::saveGraphState (const std::string fileSuffix) {
 
 	std::vector<tensorflow::Tensor> out;
 	std::vector<string> vNames;
@@ -81,7 +83,8 @@ std::cerr << "--- variable: " << n.name () << std::endl;
 	
 	int variableCount = out.size ();
 std::cerr << "--- got variables: " << variableCount << std::endl;
-	std::fstream output("/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/states/graph-state", std::ios::out | std::ios::binary);
+	std::string dir (GRAPHSAVEDIR);
+	std::fstream output(dir + "/graph-state-" + fileSuffix, std::ios::out | std::ios::binary);
 	output.write (reinterpret_cast<const char *>(&variableCount), sizeof(int));
 	for (auto& tensor : out) {
 		int tensorSize = tensor.TotalBytes();
@@ -100,12 +103,15 @@ std::cerr << "--- tensor: " << tensorSize << std::endl;
 	sync ();
 }
 
-void BrainDiscreteDeepQ::loadGraphState (GraphDef& graph_def) {
+bool BrainDiscreteDeepQ::loadGraphState () {
+	
+	std::string dir (GRAPHSAVEDIR);
+	std::fstream input(dir + "/graph-state", std::ios::in | std::ios::binary);
+	
+	if (!input.good ()) return false;
 	
 	std::vector<std::pair<string, tensorflow::Tensor>> variablesValues;
 	std::vector<string> restoreOps;
-	
-	std::fstream input("/Users/anton/devel/QuadropcopterControl/console-box2d/TensorflowGraph/states/graph-state", std::ios::in | std::ios::binary);
 	
 	int variableCount;
 	input.read(reinterpret_cast<char *>(&variableCount), sizeof(int));
@@ -140,6 +146,7 @@ std::cerr << "--- read tensor: " << serializedTensorSize << " / " << t.TotalByte
 		std::cout << "tf error2: " << status.ToString() << "\n";
 	}
 
+	return true;
 };
 
 

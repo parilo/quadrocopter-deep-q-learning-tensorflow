@@ -10,59 +10,14 @@
 #include "Quadrocopter2DBrain.hpp"
 #include "Lib.h"
 
-QuadrocopterDiscreteCtrl::QuadrocopterDiscreteCtrl (int id) : id(id) {
+QuadrocopterDiscreteCtrl::QuadrocopterDiscreteCtrl (int id, QuadrocopterDiscrete& simulationModel) : id(id), simulationModel(simulationModel) {
 	prevState.resize(2);
 	nextState.resize(2);
 }
 
-const float XLimit = 2.5;
-
 void QuadrocopterDiscreteCtrl::calcReward () {
-//	reward = Lib::randFloat(0, 100);
-
-//	//рассчитывать награду за остановку
-//	//рассчитывать награду за координату
-//	//суммровать награды
-//	//таким образом максимальная награда дается за остановку
-//	//в нужном месте
-//	
-//	if (prevState [1] > 0.01 && nextState [1] < 0.01) {
-//		if (timeReward > 0) {
-//			reward = 25 * (timeReward * 1.0 / 300.0) * exp (- pow (nextState [0], 2)/150.0);
-//		} else {
-//			reward = 0;
-//		}
-//	} else {
-//		reward = 0;
-//	}
-	
-//	//награда за нахождение внутри рамок
-//	float prevX = getPositionFromState(prevState);
-//	float nextX = getPositionFromState(nextState);
-//	if (
-//		(prevX > XLimit && nextX < XLimit) ||
-//		(prevX < -XLimit && nextX > -XLimit)
-//	) {
-//		if (timeReward > 0) {
-//			reward = 10 * (timeReward * 1.0 / 200.0);
-//			timeReward = 0;
-//		} else {
-//			reward = 0;
-//		}
-////CCLOG ("--- x: %f %f %lf", prevX, nextX, reward);
-//	} else if (
-//		(prevX < XLimit && nextX > XLimit) ||
-//		(prevX > -XLimit && nextX < -XLimit)
-//	) {
-//		reward = -10;
-////CCLOG ("--- x: %f %f %lf", prevX, nextX, reward);
-//	} else {
-//		reward = 0;
-//	}
 	
 	//награда за приближение к точке
-//	float prevX = fabsf(getPositionFromState(prevState));
-//	float nextX = fabsf(getPositionFromState(nextState));
 	float prevX = fabsf(prevState [0]);
 	float nextX = fabsf(nextState [0]);
 	if (prevX > nextX) {
@@ -74,22 +29,8 @@ void QuadrocopterDiscreteCtrl::calcReward () {
 //	sumReward += reward;
 }
 
-float QuadrocopterDiscreteCtrl::getPositionFromState (const std::vector<float>& state) {
-	if (state [0] > state [1]) {
-		return state [0];
-	} else {
-		return -state [1];
-	}
-}
-
-void QuadrocopterDiscreteCtrl::readState (std::vector<float>& state) {
-	if (position > 0) {
-		state [0] = position;
-		state [1] = 0;
-	} else {
-		state [0] = 0;
-		state [1] = -position;
-	}
+QuadrocopterDiscrete& QuadrocopterDiscreteCtrl::getSimulationModel () {
+	return simulationModel;
 }
 
 void QuadrocopterDiscreteCtrl::act () {
@@ -112,6 +53,8 @@ void QuadrocopterDiscreteCtrl::act () {
 		case 2:
 		break;
 	}
+	
+	simulationModel.setPosition(position);
 	
 	timeReward--;
 }
@@ -147,3 +90,18 @@ double QuadrocopterDiscreteCtrl::getReward () {
 int QuadrocopterDiscreteCtrl::getPosition () {
 	return position;
 }
+
+
+QuadrocopterDiscrete::QuadrocopterDiscrete () {}
+QuadrocopterDiscrete::~QuadrocopterDiscrete () {}
+
+void QuadrocopterDiscrete::createIn (World& w) {}
+
+float QuadrocopterDiscrete::getPosition () { return  position; }
+void QuadrocopterDiscrete::setPosition (float pos) { position = pos; }
+void QuadrocopterDiscrete::setVelocity (float v) {}
+float QuadrocopterDiscrete::getVelocity () { return 0; }
+void QuadrocopterDiscrete::setMotorPower (float p) {}
+
+void QuadrocopterDiscrete::step () {}
+

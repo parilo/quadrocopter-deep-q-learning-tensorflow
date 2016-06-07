@@ -60,19 +60,9 @@ private:
 	std::vector<std::thread> trainWorkerThreads;
 
 	ConsumerProducerSyncronizer qcopterActSync;
-//	std::atomic<int> qcoptersThreadsDone;
-//	std::mutex mtxMainWorker;
-//    std::condition_variable cvMainWorker;
-//	
-////	std::atomic<int> qcoptersThreadsMayProceed;
-//	std::vector<bool> qcoptersThreadsMayProceed;
-//	std::mutex mtxQCoptersWorkers;
-//    std::condition_variable cvQCoptersWorkers;
 
 	
 	std::function<void ()> simulationUpdateCallback;
-	
-//	void invokeQCoptersWorkers ();
 
 };
 
@@ -247,5 +237,6 @@ void QuadrocopterSimulatorTmpl<QuadrocopterCtrlType, QuadrocopterType>::setSimul
 
 typedef QuadrocopterSimulatorTmpl<QuadrocopterCtrl, Quadrocopter1D> QuadrocopterSimulator;
 typedef QuadrocopterSimulatorTmpl<Quadrocopter2DCtrl, Quadrocopter2D> QuadrocopterSimulator2D;
+typedef QuadrocopterSimulatorTmpl<QuadrocopterDiscreteCtrl, QuadrocopterDiscrete> QuadrocopterSimulatorDiscrete;
 
 #endif /* QuadrocopterSimulator_hpp */

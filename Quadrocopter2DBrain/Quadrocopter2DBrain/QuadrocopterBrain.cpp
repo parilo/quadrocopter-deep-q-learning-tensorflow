@@ -66,7 +66,7 @@ void QuadrocopterBrain::train () {
 //		experienceMid.getSize() +
 		experienceLow.getSize();
 
-	if (expSize < trainAfter) {
+	if (expSize % 10 == 0 && expSize < trainAfter) {
 		std::cerr << "--- exp: " << " ( "
 //			<< experienceHigh.getSize() << " , "
 //			<< experienceMid.getSize() << " , "
@@ -123,16 +123,24 @@ void QuadrocopterBrain::train () {
 		}
 	}
 
-std::cerr << "--- train: " << trainExecuted++ << " ( "
-//	<< experienceHigh.getSize() << " , "
-//	<< experienceMid.getSize() << " , "
-	<< experienceLow.getSize() << " ) :";
-	
-	for (int i=0; i<countsSize; i++) {
-		std::cerr << " " << counts [i];
+	if (trainExecuted % 50 == 0) {
+		std::cerr << "--- train: " << trainExecuted << " ( "
+		//	<< experienceHigh.getSize() << " , "
+		//	<< experienceMid.getSize() << " , "
+			<< experienceLow.getSize() << " ) :";
+			
+		for (int i=0; i<countsSize; i++) {
+			std::cerr << " " << counts [i];
+		}
+		std::cerr << " err: " << err << std::endl;
 	}
-std::cerr << " err: " << err << std::endl;
 	countTrainErrorValuesMutex.unlock();
+	
+	if (trainExecuted % 20000 == 0) {
+		brain.saveGraphState (to_string(trainExecuted));
+	}
+
+	trainExecuted++;
 	
 //std::cerr << "--- train: " << trainExecuted++ << " : " << err << std::endl;
 //		brain.trainEnvModel(exp);

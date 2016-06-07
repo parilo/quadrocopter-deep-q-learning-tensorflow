@@ -22,12 +22,12 @@ public:
 	static const int observationsInSeq = 1;
 
 	//2d
-//	static const int observationSize = 7;
-//	static const int numActions = 5;
+	static const int observationSize = 7;
+	static const int numActions = 5;
 
 	//1d
-	static const int observationSize = 2;
-	static const int numActions = 3;
+//	static const int observationSize = 2;
+//	static const int numActions = 3;
 
 	QuadrocopterBrain ();
 	
