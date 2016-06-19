@@ -36,6 +36,10 @@ int ExperienceBank::getSize () const {
 	return size;
 }
 
+int ExperienceBank::getCurrentIndex () const {
+	return experienceI;
+}
+
 void ExperienceBank::setName (const std::string& name) {
 	this->name = name;
 }

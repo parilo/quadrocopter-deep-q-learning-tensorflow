@@ -70,15 +70,15 @@ namespace Quadrocopter2DBrain {
 			action
 		);
 
-		experienceFilters [quadrocopterId].storeExperience(expItem);
-	//	quadrocopterBrain.storeExperience(expItem);
+//		experienceFilters [quadrocopterId].storeExperience(expItem);
+		quadrocopterBrain.storeExperience(expItem);
 	}
 
 	void initApiDiscreteDeepQ () {
 //		currStateSeqs.resize(numOfQuadrocopters);
 //		prevStateSeqs.resize(numOfQuadrocopters);
 		experienceFilters.resize(numOfQuadrocopters);
-
+		randomnessOfQuadrocopter.clear ();
 //		Observation ob;
 //		ob.setZeros(QuadrocopterBrain::observationSize);
 //		
@@ -91,13 +91,15 @@ namespace Quadrocopter2DBrain {
 //			prevStateSeqs [i] = obs;
 			experienceFilters [i].setExperienceTarget(&quadrocopterBrain);
 			
-	//		if (i < 1) {
-	//			randomnessOfQuadrocopter.push_back(0.9);
-	//		} else if (i < 10) {
-	//			randomnessOfQuadrocopter.push_back(0.5);
-	//		} else {
+			if (i < 1) {
+				randomnessOfQuadrocopter.push_back(0.5);
+			} else
+			if (i < 5) {
+				randomnessOfQuadrocopter.push_back(0.2);
+			}
+			else {
 				randomnessOfQuadrocopter.push_back(0.05);
-	//		}
+			}
 		}
 	}
 

@@ -19,7 +19,7 @@ public:
 	
 	void init ();
 	void addTo (cocos2d::Node* parent);
-	void setCoordsFrom (const Quadrocopter2D& model, cocos2d::Vec2 centerPos, float visualizerZoom);
+	void setCoordsFrom (const QuadrocopterModel2DIFace& model, cocos2d::Vec2 centerPos, float visualizerZoom);
 
 private:
 
@@ -37,7 +37,8 @@ class Visualizer2DScene : public cocos2d::Layer
 {
 public:
 	
-	QuadrocopterSimulator2D sim;
+//	QuadrocopterSimulator2D sim;
+	QuadrocopterSimulatorDiscrete2D sim;
 	
 	std::vector<Quadrocopter2DView> qcopterViews;
 	cocos2d::Vec2 centerPos;

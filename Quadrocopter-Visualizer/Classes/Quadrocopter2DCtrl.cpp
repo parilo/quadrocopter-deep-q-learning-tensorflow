@@ -20,21 +20,25 @@ Quadrocopter2DCtrl::Quadrocopter2DCtrl (int id, Quadrocopter2D& simulationModel)
 void Quadrocopter2DCtrl::calcReward () {
 
 	//награда за приближение к точке
-	float prevX = fabsf(prevState [0]);
-	float prevY = fabsf(prevState [1]);
-	float nextX = fabsf(nextState [0]);
-	float nextY = fabsf(nextState [1]);
+	float prevX = prevState [0];
+	float prevY = prevState [1];
+	float nextX = nextState [0];
+	float nextY = nextState [1];
 	float prevLengthSq = sqrtf(prevX * prevX + prevY * prevY);
 	float nextLengthSq = sqrtf(nextX * nextX + nextY * nextY);
-	if (prevLengthSq > nextLengthSq) {
-//		reward = 10/(nextX+1);
-		reward = 10 * exp (-nextLengthSq/40);
-	} else if (prevLengthSq == nextLengthSq) {
-		reward = 0;
-	} else {
-//		reward = -10/(prevX+1);
-		reward = -10 * exp (-prevLengthSq/40);
-	}
+	float dLengthSq = prevLengthSq - nextLengthSq;
+	
+	reward = (50 * exp (-nextLengthSq/40) + 0.5) * dLengthSq;
+	
+//	if (prevLengthSq > nextLengthSq) {
+////		reward = 10/(nextX+1);
+//		reward = 10 * exp (-nextLengthSq/40);
+//	} else if (prevLengthSq == nextLengthSq) {
+//		reward = 0;
+//	} else {
+////		reward = -10/(prevX+1);
+//		reward = 10 * exp (-prevLengthSq/40);
+//	}
 
 
 //	sumReward += reward;

@@ -22,6 +22,7 @@ public:
 	void setName (const std::string& name);
 	
 	int getSize () const;
+	int getCurrentIndex () const;
 	const ExperienceItem& getRandomExp () const;
 	
 private:
@@ -32,7 +33,7 @@ private:
 	
 	int size = 0;
 	int experienceI = 0;
-	static const int maxExperience = 1000000;
+	static const int maxExperience = 400000;
 
 };
 

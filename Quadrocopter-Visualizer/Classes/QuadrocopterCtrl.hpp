@@ -33,6 +33,11 @@ private:
 //	double sumReward = 0;
 	std::vector<float> prevState;
 	std::vector<float> nextState;
+	
+	float prevX;
+	float nextX;
+
+	void readState (std::vector<float>& state);
 
 };
 

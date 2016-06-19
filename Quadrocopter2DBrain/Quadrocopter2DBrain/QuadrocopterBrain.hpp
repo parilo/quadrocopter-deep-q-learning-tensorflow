@@ -22,7 +22,7 @@ public:
 	static const int observationsInSeq = 1;
 
 	//2d
-	static const int observationSize = 7;
+	static const int observationSize = 8;
 	static const int numActions = 5;
 
 	//1d
@@ -50,10 +50,10 @@ private:
 	static const int storeEveryNth = 5;
 	static const int trainEveryNth = 15; //act
 	static const int trainCount = 1;
-	static const int trainAfter = 5000; //stored exp
+	static const int trainAfter = 15000; //stored exp
 
 	//train
-	static const int minibatchSize = 64;
+	static const int minibatchSize = 128;
 	constexpr static float probHigh = 0.55;
 	constexpr static float probMid = 0.3;
 	constexpr static float probLow = 0.15;

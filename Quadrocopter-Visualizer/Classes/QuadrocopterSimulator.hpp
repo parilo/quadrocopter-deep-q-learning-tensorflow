@@ -24,6 +24,7 @@
 #include "main.h"
 #include "Quadrocopter2DBrain.hpp"
 #include "Quadrocopter2DCtrl.hpp"
+#include "QuadrocopterDiscrete2DCtrl.hpp"
 #include "ConsumerProducerSyncronizer.hpp"
 
 template <typename QuadrocopterCtrlType, typename QuadrocopterType>
@@ -127,7 +128,12 @@ void QuadrocopterSimulatorTmpl<QuadrocopterCtrlType, QuadrocopterType>::init()
 				reset ();
 			}
 		
-			simulation.step();
+			if (
+				std::is_same<QuadrocopterCtrlType, Quadrocopter2DCtrl>::value ||
+				std::is_same<QuadrocopterCtrlType, QuadrocopterCtrl>::value
+			) {
+				simulation.step();
+			}
 			simulationUpdateCallback ();
 			stepIndex++;
 
@@ -236,7 +242,8 @@ void QuadrocopterSimulatorTmpl<QuadrocopterCtrlType, QuadrocopterType>::setSimul
 
 
 typedef QuadrocopterSimulatorTmpl<QuadrocopterCtrl, Quadrocopter1D> QuadrocopterSimulator;
-typedef QuadrocopterSimulatorTmpl<Quadrocopter2DCtrl, Quadrocopter2D> QuadrocopterSimulator2D;
 typedef QuadrocopterSimulatorTmpl<QuadrocopterDiscreteCtrl, QuadrocopterDiscrete> QuadrocopterSimulatorDiscrete;
+typedef QuadrocopterSimulatorTmpl<Quadrocopter2DCtrl, Quadrocopter2D> QuadrocopterSimulator2D;
+typedef QuadrocopterSimulatorTmpl<QuadrocopterDiscrete2DCtrl, Quadrocopter2D> QuadrocopterSimulatorDiscrete2D;
 
 #endif /* QuadrocopterSimulator_hpp */

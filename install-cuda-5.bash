@@ -17,7 +17,7 @@ git checkout tags/v0.8.0
 git submodule update --init
 TF_UNOFFICIAL_SETTING=1 ./configure
 ##bazel build -c opt --config=cuda //tensorflow/cc:tutorials_example_trainer
-bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+bazel build -c opt --config=cuda --spawn_strategy=standalone --genrule_strategy=standalone //tensorflow/tools/pip_package:build_pip_package
 cp -r bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/__main__/* bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/
 bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 sudo pip install /tmp/tensorflow_pkg/tensorflow-0.8.0-cp27-none-linux_x86_64.whl

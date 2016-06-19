@@ -243,7 +243,7 @@ class DiscreteDeepQ(object):
             # входной параметр - награды
             self.rewards                   = tf.placeholder(tf.float32, (None,), name="rewards")
             # взять максимальные оценки полезностей действий
-            target_values                  = tf.reduce_max(self.next_action_scores, reduction_indices=[1,]) * self.next_observation_mask
+            target_values                  = tf.identity(tf.reduce_max(self.next_action_scores, reduction_indices=[1,]) * self.next_observation_mask, name="target_values")
             # r + DF * MAX(Q,s) см статью о Q-learning в википедии
             #self.future_rewards            = self.rewards + self.discount_rate * target_values
             self.future_rewards            = tf.identity(self.rewards + self.discount_rate * target_values, name="future_rewards")

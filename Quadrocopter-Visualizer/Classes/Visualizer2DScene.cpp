@@ -10,6 +10,7 @@
 
 #include "Visualizer2DScene.hpp"
 #include "Quadrocopter2DBrain.hpp"
+#include "Lib.h"
 
 USING_NS_CC;
 
@@ -91,6 +92,7 @@ bool Visualizer2DScene::init()
 	sim.setSimulationUpdateCallback([this](){
 		update (0);
 	});
+	
 	sim.startActWorkers();
 	sim.startTrainWorkers();
 	
@@ -99,11 +101,9 @@ bool Visualizer2DScene::init()
 
 void Visualizer2DScene::update(float delta) {
 
-//	sim.update();
-
 	for (int i=0; i<quadrocoptersCount; i++) {
 		Quadrocopter2DView& view = qcopterViews [i];
-		view.setCoordsFrom(sim.getQuadrocopterCtrl(i).getSimulationModel(), centerPos, 4);
+		view.setCoordsFrom(sim.getQuadrocopterCtrl(i).getModel(), centerPos, 4);
 	}
 	
 }
@@ -148,7 +148,7 @@ void Quadrocopter2DView::addTo (cocos2d::Node* parent) {
 }
 
 void Quadrocopter2DView::setCoordsFrom (
-	const Quadrocopter2D& model,
+	const QuadrocopterModel2DIFace& model,
 	cocos2d::Vec2 centerPos,
 	float visualizerZoom
 ) {

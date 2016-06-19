@@ -20,11 +20,27 @@ void QuadrocopterDiscreteCtrl::calcReward () {
 	//награда за приближение к точке
 	float prevX = fabsf(prevState [0]);
 	float nextX = fabsf(nextState [0]);
-	if (prevX > nextX) {
-		reward = 10/(nextX+1);
+	if (nextX < 5) {
+		reward = exp (-nextX/40);
 	} else {
-		reward = -10/(prevX+1);
+		if (prevX > nextX) {
+	//		reward = 10/(nextX+1);
+			reward = exp (-nextX/40);
+		} else {
+	//		reward = -10/(prevX+1);
+			reward = -exp (-nextX/40);
+		}
 	}
+
+
+//	float prevX = fabsf(prevState [0]);
+//	float nextX = fabsf(nextState [0]);
+//	if (nextX < 10) {
+//		reward = exp (-nextX*nextX/40);
+//	} else {
+//		reward = 0;
+//	}
+
 
 //	sumReward += reward;
 }
@@ -56,7 +72,7 @@ void QuadrocopterDiscreteCtrl::act () {
 	
 	simulationModel.setPosition(position);
 	
-	timeReward--;
+	if (timeReward>0) timeReward--;
 }
 
 void QuadrocopterDiscreteCtrl::storeExperience () {

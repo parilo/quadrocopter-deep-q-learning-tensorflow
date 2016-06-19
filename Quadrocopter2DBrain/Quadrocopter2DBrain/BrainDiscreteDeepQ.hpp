@@ -54,13 +54,15 @@ public:
 	
 private:
 
+	std::mutex saveGraphMutex;
+
 	void initGraphState ();
 	bool loadGraphState ();
 
 	int actionsExecutedSoFar = 0;
 	
 	//linear annealing parameters
-	int explorationPeriod = 1;//90000;
+	int explorationPeriod = 1;//100000;
 	double randomActionProbabilityInitial = 1.0;
 //	double randomActionProbabilityFinal = 0.1;
 	
@@ -68,6 +70,13 @@ private:
 	tensorflow::Session* session;
 	
 	double linearAnnealing(double randomActionProbabilityFinal);
+	
+	
+//	tensorflow::Tensor observations;
+//	tensorflow::Tensor newObservations;
+//	tensorflow::Tensor actionMasks;
+//	tensorflow::Tensor newObservationsMasks;
+//	tensorflow::Tensor rewards;
 	
 
 };

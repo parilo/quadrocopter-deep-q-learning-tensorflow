@@ -90,6 +90,29 @@ class MLP(object):
     def copy(self, scope=None):
         scope = scope or self.scope + "_copy"
         nonlinearities = [self.input_nonlinearity] + self.layer_nonlinearities
-        given_layers = [self.input_layer.copy()] + [layer.copy() for layer in self.layers]
+        given_layers = [self.input_layer.copy(scope+"_input_layer")] + [layer.copy(scope+"_layer_"+str(i)) for (i,layer) in enumerate(self.layers)]
         return MLP(self.input_sizes, self.hiddens, nonlinearities, scope=scope,
                 given_layers=given_layers)
+
+    
+class SeparatedMLP(object):
+    def __init__(self, mlps):
+        self.mlps = mlps
+        
+    def __call__(self, xs):
+        res = []
+        for mlp in self.mlps:
+            res.append(mlp (xs))
+        return tf.concat(1, res)
+
+    def variables(self):
+        res = []
+        for mlp in self.mlps:
+            res.extend (mlp.variables ())
+        return res
+    
+    def copy(self, scope=None):
+        new_mlps = []
+        for (i, mlp) in enumerate(self.mlps):
+            new_mlps.append (mlp.copy(scope + "_" + str(i)))
+        return SeparatedMLP (new_mlps)

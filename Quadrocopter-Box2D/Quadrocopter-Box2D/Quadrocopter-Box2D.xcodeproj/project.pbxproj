@@ -18,6 +18,8 @@
 		3AE420AA1CD2AB7B00702C1A /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9031CD0123D0039DC87 /* World.cpp */; };
 		3AE420AC1CD2AB7B00702C1A /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9091CD01AF70039DC87 /* Simulation.cpp */; };
 		3AE420AE1CD2AC7B00702C1A /* libBox2D.2.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */; };
+		3AF86AB61D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF86AB41D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp */; };
+		3AF86AB71D15DE3E008E4D2F /* QuadrocopterModelIFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF86AB41D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +47,8 @@
 		3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2D.cpp; sourceTree = "<group>"; };
 		3AD49E431CF4BBA300DE121D /* Quadrocopter2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2D.hpp; sourceTree = "<group>"; };
 		3AE4209A1CD2AA5600702C1A /* libQuadrocopter-Box2D-lib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libQuadrocopter-Box2D-lib.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AF86AB41D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterModelIFace.cpp; sourceTree = "<group>"; };
+		3AF86AB51D15DDDB008E4D2F /* QuadrocopterModelIFace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterModelIFace.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,15 +71,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A2FF9021CD011590039DC87 /* 1D */ = {
+		3A2FF9021CD011590039DC87 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */,
 				3A2FF9001CD010860039DC87 /* Quadrocopter1D.hpp */,
 				3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */,
 				3AD49E431CF4BBA300DE121D /* Quadrocopter2D.hpp */,
+				3AF86AB41D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp */,
+				3AF86AB51D15DDDB008E4D2F /* QuadrocopterModelIFace.hpp */,
 			);
-			name = 1D;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		3A786E0A1CCBF84D00FB9BC2 = {
@@ -99,7 +105,7 @@
 		3A786E151CCBF84D00FB9BC2 /* Quadrocopter-Box2D */ = {
 			isa = PBXGroup;
 			children = (
-				3A2FF9021CD011590039DC87 /* 1D */,
+				3A2FF9021CD011590039DC87 /* Models */,
 				3A2FF9031CD0123D0039DC87 /* World.cpp */,
 				3A2FF9041CD0123D0039DC87 /* World.hpp */,
 				3A2FF9091CD01AF70039DC87 /* Simulation.cpp */,
@@ -209,6 +215,7 @@
 				3AD49E441CF4BBA300DE121D /* Quadrocopter2D.cpp in Sources */,
 				3A2FF9011CD010860039DC87 /* Quadrocopter1D.cpp in Sources */,
 				3A2FF9051CD0123D0039DC87 /* World.cpp in Sources */,
+				3AF86AB61D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AF86AB71D15DE3E008E4D2F /* QuadrocopterModelIFace.cpp in Sources */,
 				3AD49E451CF4C86200DE121D /* Quadrocopter2D.cpp in Sources */,
 				3AE420A81CD2AB7B00702C1A /* Quadrocopter1D.cpp in Sources */,
 				3AE420AA1CD2AB7B00702C1A /* World.cpp in Sources */,

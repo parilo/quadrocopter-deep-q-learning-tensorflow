@@ -30,6 +30,9 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 	// Read in the protobuf graph we exported
 //	GraphDef graph_def;
 	std::string dir (GRAPHDIR);
+//	status = ReadBinaryProto(Env::Default(), dir + "/graph-separated-1d.pb", &graph_def);
+//	status = ReadBinaryProto(Env::Default(), dir + "/graph.pb", &graph_def);
+//	status = ReadBinaryProto(Env::Default(), dir + "/graph-separated-2d.pb", &graph_def);
 	status = ReadBinaryProto(Env::Default(), dir + "/graph2d.pb", &graph_def);
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
@@ -41,9 +44,22 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 	}
 
-	if (!loadGraphState()) {
-		initGraphState();
-	}
+	initGraphState();
+	loadGraphState();
+
+//	int minibatchSize = 1;//(int) minibatch.size();
+//	int observationSize = QuadrocopterBrain::observationSize;
+//	observations = Tensor (DT_FLOAT, TensorShape({minibatchSize, observationSize}));
+//	newObservations = Tensor (DT_FLOAT, TensorShape({minibatchSize, observationSize}));
+//	actionMasks = Tensor (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::numActions}));
+//	newObservationsMasks = Tensor (DT_FLOAT, TensorShape({minibatchSize, 1}));
+//	rewards = Tensor (DT_FLOAT, TensorShape({minibatchSize, 1}));
+//	
+//	observations.matrix<float>().setZero ();
+//	newObservations.matrix<float>().setZero ();
+//	actionMasks.matrix<float>().setZero ();
+//	newObservationsMasks.matrix<float>().setZero ();
+//	actionMasks.matrix<float>().setZero();
 
 }
 
@@ -58,6 +74,7 @@ void BrainDiscreteDeepQ::initGraphState () {
 }
 
 void BrainDiscreteDeepQ::saveGraphState (const std::string fileSuffix) {
+	std::lock_guard<std::mutex> lock1 (saveGraphMutex);
 
 	std::vector<tensorflow::Tensor> out;
 	std::vector<string> vNames;
@@ -104,7 +121,7 @@ std::cerr << "--- tensor: " << tensorSize << std::endl;
 }
 
 bool BrainDiscreteDeepQ::loadGraphState () {
-	
+
 	std::string dir (GRAPHSAVEDIR);
 	std::fstream input(dir + "/graph-state", std::ios::in | std::ios::binary);
 	
@@ -177,6 +194,7 @@ DeepQ learning strategy. Does not backprop.
 управление
 */
 long BrainDiscreteDeepQ::control (const ObservationSeqLimited& obs, double randomness) {
+	
 	double explorationP = linearAnnealing (randomness);
 	long actionIndex;
 	if (Lib::randDouble(0.0, 1.0) < explorationP) {
@@ -201,10 +219,10 @@ long BrainDiscreteDeepQ::control (const ObservationSeqLimited& obs, double rando
 		// The session will initialize the outputs
 		std::vector<tensorflow::Tensor> outputs;
 
-		Status status = session->Run(inputs, {"taking_action/action_scores"}, {}, &outputs);
-		if (!status.ok()) {
-			std::cout << "tf error: " << status.ToString() << "\n";
-		}
+//		Status status = session->Run(inputs, {"taking_action/action_scores"}, {}, &outputs);
+//		if (!status.ok()) {
+//			std::cout << "tf error: " << status.ToString() << "\n";
+//		}
 		
 //		std::cerr << "--- action scores: " << std::endl;
 //		printTensor(outputs [0]);
@@ -216,7 +234,7 @@ long BrainDiscreteDeepQ::control (const ObservationSeqLimited& obs, double rando
 //		}
 
 		//getting index of max scored action
-		status = session->Run(inputs, {"taking_action/predicted_actions"}, {}, &outputs);
+		auto status = session->Run(inputs, {"taking_action/predicted_actions"}, {}, &outputs);
 		if (!status.ok()) {
 			std::cout << "tf error: " << status.ToString() << "\n";
 		}
@@ -259,6 +277,7 @@ long BrainDiscreteDeepQ::control (const ObservationSeqLimited& obs, double rando
 //}
 
 float BrainDiscreteDeepQ::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
+	std::lock_guard<std::mutex> lock (saveGraphMutex);
 
 	int minibatchSize = (int) minibatch.size();
 	int observationSize = QuadrocopterBrain::observationSize;
@@ -300,62 +319,31 @@ float BrainDiscreteDeepQ::trainOnMinibatch (std::vector<const ExperienceItem*> m
 //	}
 //std::cerr << "--- train masked_action_scores: " << outputs [0].DebugString() << std::endl;
 
-	Status status = session->Run(inputs, {"q_value_precition/prediction_error"}, {}, &outputs);
+//	Status status = session->Run(inputs, {"q_value_precition/prediction_error"}, {}, &outputs);
+//	if (!status.ok()) {
+//		std::cerr << "tf error: " << status.ToString() << "\n";
+//		return 0;
+//	}
+
+	auto status = session->Run(inputs, {
+		"q_value_precition/prediction_error"
+	}, {
+		"q_value_precition/train_op",
+		"target_network_update/target_network_update"
+	}, &outputs);
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 		return 0;
 	}
+//std::cerr << "--- train outputs: " << outputs [0].DebugString() << std::endl;
 	auto predictionError = outputs [0].scalar<float>();
 	float err = predictionError ();
-	if (isnan(err)) {
-std::cerr << std::endl << std::endl << std::endl << std::endl << "--- input tensors:" << std::endl;
-std::cerr << "--- observations" << std::endl;
-		printTensor<float>(observations);
-std::cerr << "--- actionMasks" << std::endl;
-		printTensor<float>(actionMasks);
-std::cerr << "--- rewards" << std::endl;
-		printTensor<float>(rewards);
-std::cerr << "--- newObservationsMasks" << std::endl;
-		printTensor<float>(newObservationsMasks);
-std::cerr << "--- newObservations" << std::endl;
-		printTensor<float>(newObservations);
-std::cerr << "--- tensors inside graph:" << std::endl << std::endl;
-		status = session->Run(inputs, {
-			"taking_action/predicted_actions",
-		
-			"estimating_future_rewards/future_rewards",
-			
-			"q_value_precition/masked_action_scores",
-			"q_value_precition/temp_diff"
-		}, {}, &outputs);
-		if (!status.ok()) {
-			std::cerr << "tf error: " << status.ToString() << "\n";
-			return 0;
-		}
-std::cerr << "--- taking_action/predicted_actions" << std::endl;
-		printTensorVector<int64>(outputs[0]);
 
-std::cerr << "--- estimating_future_rewards/future_rewards" << std::endl;
-		printTensor<float>(outputs[1]);
-
-std::cerr << "--- q_value_precition/masked_action_scores" << std::endl;
-		printTensorVector<float>(outputs[2]);
-std::cerr << "--- q_value_precition/temp_diff" << std::endl;
-		printTensorVector<float>(outputs[3]);
-		
-	}
-
-	status = session->Run(inputs, {}, {"q_value_precition/train_op"}, &outputs);
-	if (!status.ok()) {
-		std::cerr << "tf error: " << status.ToString() << "\n";
-		return 0;
-	}
-
-	status = session->Run(inputs, {}, {"target_network_update/target_network_update"}, &outputs);
-	if (!status.ok()) {
-		std::cerr << "tf error: " << status.ToString() << "\n";
-		return 0;
-	}
+//	status = session->Run(inputs, {}, {"target_network_update/target_network_update"}, &outputs);
+//	if (!status.ok()) {
+//		std::cerr << "tf error: " << status.ToString() << "\n";
+//		return 0;
+//	}
 
 	return err;
 }

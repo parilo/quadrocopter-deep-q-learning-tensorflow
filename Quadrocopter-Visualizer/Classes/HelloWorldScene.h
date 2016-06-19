@@ -10,7 +10,8 @@ class HelloWorld : public cocos2d::Layer
 {
 public:
 	
-	QuadrocopterSimulatorDiscrete sim;
+//	QuadrocopterSimulatorDiscrete sim;
+	QuadrocopterSimulator sim;
 	
 	std::vector<cocos2d::LayerColor*> qcopterNodes;
 	cocos2d::Vec2 centerPos;

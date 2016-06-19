@@ -12,8 +12,9 @@
 #include <vector>
 
 #include "World.hpp"
+#include "QuadrocopterModelIFace.hpp"
 
-class Quadrocopter2D {
+class Quadrocopter2D : public QuadrocopterModel2DIFace {
 
 public:
 
@@ -23,11 +24,11 @@ public:
 	void createIn (World& w);
 
 	const b2Vec2& getPosition ();
-	void setCoords (const b2Vec2& pos, float angle);
+	void setCoords (const b2Vec2& pos, float angle) override;
 	float getRotation ();
-	void setVelocity (const b2Vec2& v);
+	void setVelocity (const b2Vec2& v) override;
 	const b2Vec2& getVelocity ();
-	void setAngularVelocity (float w);
+	void setAngularVelocity (float w) override;
 	float getAngularVelocity ();
 	
 	void getPartsCoords (
@@ -37,14 +38,14 @@ public:
 		float& bodyRotation,
 		float& motor1Rotation,
 		float& motor2Rotation
-	) const;
+	) const override;
 	
 	void getState (std::vector<float>& state);
 	
 	void setMotorPower (float p1, float p2);
 	void setMotor1Power (float p1);
 	void setMotor2Power (float p2);
-	void getMotorPower (float& p1, float& p2) const;
+	void getMotorPower (float& p1, float& p2) const override;
 	
 	void step ();
 

@@ -25,9 +25,9 @@ sudo apt-get install libpng-dev libjpeg-dev libxxf86vm1 libxxf86vm-dev libxi-dev
 
 
 ##bazel
-##sudo add-apt-repository ppa:webupd8team/java
-##sudo apt-get update
-##sudo apt-get install oracle-java8-installer -y
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer -y
 ##sudo apt-get install software-properties-common -y
 ##echo "deb http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
 ##curl https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg | sudo apt-key add -
