@@ -10,7 +10,7 @@
 #include "Quadrocopter2DBrain.hpp"
 #include "Lib.h"
 
-static const int observationSize = 7;
+static const int observationSize = 8;
 
 Quadrocopter2DCtrl::Quadrocopter2DCtrl (int id, Quadrocopter2D& simulationModel) : id(id), simulationModel(simulationModel) {
 	prevState.resize(observationSize);
@@ -20,34 +20,48 @@ Quadrocopter2DCtrl::Quadrocopter2DCtrl (int id, Quadrocopter2D& simulationModel)
 void Quadrocopter2DCtrl::calcReward () {
 
 	//награда за приближение к точке
-	float prevX = prevState [0];
-	float prevY = prevState [1];
-	float nextX = nextState [0];
-	float nextY = nextState [1];
-	float prevLengthSq = sqrtf(prevX * prevX + prevY * prevY);
-	float nextLengthSq = sqrtf(nextX * nextX + nextY * nextY);
-	float dLengthSq = prevLengthSq - nextLengthSq;
+	float prevR = prevState [2];
+	float nextR = nextState [2];
 	
-	reward = (50 * exp (-nextLengthSq/40) + 0.5) * dLengthSq;
-	
-//	if (prevLengthSq > nextLengthSq) {
-////		reward = 10/(nextX+1);
-//		reward = 10 * exp (-nextLengthSq/40);
-//	} else if (prevLengthSq == nextLengthSq) {
-//		reward = 0;
-//	} else {
-////		reward = -10/(prevX+1);
-//		reward = 10 * exp (-prevLengthSq/40);
-//	}
+//	reward = (50 * exp (-nextLengthSq/40) + 0.5) * dLengthSq;
 
+//	if (nextR < 2) {
+//		reward = 5 * exp (-nextR/40);
+//	} else {
+		reward = 5 * (prevR - nextR);
+//	}
+//CCLOG("--- reward: %f %f %f %f", prevR, nextR, (prevR - nextR), reward);
 
 //	sumReward += reward;
+}
+
+void Quadrocopter2DCtrl::readState (std::vector<float>& state) {
+	auto pos = simulationModel.getPosition();
+	float angle = simulationModel.getRotation();
+	auto v = simulationModel.getVelocity();
+	float w = simulationModel.getAngularVelocity();
+	float r = sqrtf(pos.x * pos.x + pos.y * pos.y);
+	state [0] = 10 * pos.x / r;
+	state [1] = 10 * pos.y / r;
+	state [2] = r;
+	state [3] = 10 * sinf(angle);
+	state [4] = 10 * cosf(angle);
+	state [5] = v.x;
+	state [6] = v.y;
+	state [7] = w;
+
+//	std::string str ("");
+//	for (float& s : state) {
+//		str += std::to_string(s) + " ";
+//	}
+//CCLOG("--- state: %s", str.c_str());
 }
 
 void Quadrocopter2DCtrl::act () {
 
 	//getting prev state
-	simulationModel.getState(prevState);
+//	simulationModel.getState(prevState);
+	readState(prevState);
 	
 	action = Quadrocopter2DBrain::quadrocopterBrainAct(id, prevState);
 	switch (action) {
@@ -82,7 +96,8 @@ void Quadrocopter2DCtrl::storeExperience () {
 		return;
 	}
 	
-	simulationModel.getState(nextState);
+//	simulationModel.getState(nextState);
+	readState(nextState);
 	
 	calcReward();
 	
@@ -102,6 +117,6 @@ double Quadrocopter2DCtrl::getReward () {
 	return reward;
 }
 
-Quadrocopter2D& Quadrocopter2DCtrl::getSimulationModel () {
+QuadrocopterModel2DIFace& Quadrocopter2DCtrl::getModel () {
 	return simulationModel;
 }

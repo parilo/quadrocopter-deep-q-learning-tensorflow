@@ -91,10 +91,10 @@ namespace Quadrocopter2DBrain {
 //			prevStateSeqs [i] = obs;
 			experienceFilters [i].setExperienceTarget(&quadrocopterBrain);
 			
-			if (i < 1) {
+			if (i < 4) {
 				randomnessOfQuadrocopter.push_back(0.5);
 			} else
-			if (i < 5) {
+			if (i < 10) {
 				randomnessOfQuadrocopter.push_back(0.2);
 			}
 			else {

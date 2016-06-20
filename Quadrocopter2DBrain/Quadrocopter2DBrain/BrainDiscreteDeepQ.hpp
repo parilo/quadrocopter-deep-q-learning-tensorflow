@@ -62,7 +62,7 @@ private:
 	int actionsExecutedSoFar = 0;
 	
 	//linear annealing parameters
-	int explorationPeriod = 1;//100000;
+	int explorationPeriod = 100000;
 	double randomActionProbabilityInitial = 1.0;
 //	double randomActionProbabilityFinal = 0.1;
 	

@@ -41,8 +41,8 @@ void Quadrocopter2D::createIn (World& w) {
 	b2BodyDef motorDef;
 	motorDef.type = b2_dynamicBody;
 	motorDef.position.Set(-0.25f, 0.0f);
-	motorDef.linearDamping = 0.8f;
-	motorDef.angularDamping = 0.8f;
+	motorDef.linearDamping = 0.4f;
+	motorDef.angularDamping = 0.1f;
 	motor1Def = motorDef;
 
 	motor1 = w.world->CreateBody(&motorDef);

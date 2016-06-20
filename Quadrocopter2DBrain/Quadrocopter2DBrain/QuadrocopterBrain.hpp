@@ -50,7 +50,7 @@ private:
 	static const int storeEveryNth = 5;
 	static const int trainEveryNth = 15; //act
 	static const int trainCount = 1;
-	static const int trainAfter = 15000; //stored exp
+	static const int trainAfter = 5000; //stored exp
 
 	//train
 	static const int minibatchSize = 128;

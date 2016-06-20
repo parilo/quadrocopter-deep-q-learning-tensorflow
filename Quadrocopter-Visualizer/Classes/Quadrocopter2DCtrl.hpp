@@ -21,7 +21,7 @@ public:
 	void calcReward ();
 	void reset ();
 	double getReward ();
-	Quadrocopter2D& getSimulationModel ();
+	QuadrocopterModel2DIFace& getModel ();
 
 private:
 
@@ -33,6 +33,8 @@ private:
 //	double sumReward = 0;
 	std::vector<float> prevState;
 	std::vector<float> nextState;
+
+	void readState (std::vector<float>& state);
 
 };
 

@@ -38,27 +38,48 @@ void QuadrocopterDiscrete2DCtrl::calcReward () {
 	if (nextR < 5) {
 		reward = 5 * exp (-nextR/40);
 	} else {
-		reward = prevR - nextR;
+		reward = 2 * (prevR - nextR);
 //		if (prevLengthSq > nextLengthSq) {
 //			reward = ;// * exp (-nextLengthSq/40);
 //		} else {
 //			reward = -1;//-exp (-nextLengthSq/40);
 //		}
 	}
+//CCLOG ("--- reward: %f %f %f", prevR, nextR, reward);
 	
 //	sumReward += reward;
 }
 
 void QuadrocopterDiscrete2DCtrl::readState (std::vector<float>& state) {
+// sparse angles
+//	float r = sqrtf(model.posX * model.posX + model.posY * model.posY);
+//	float targetAngle = atan2(model.posY / r, model.posX / r) + M_PI;
+//	int targetSegment = int(floorf(targetAngle * 9 / M_PI));
+//	float angleLimited = fmodf(model.angle + M_PI, 2*M_PI);
+//	int angleSegment = int(floorf(angleLimited * 9 / M_PI));
+//	
+//	for (float& s : state) { s = 0; }
+//	
+//	state [0] = r;
+//	state [1 + targetSegment] = 1;
+//	state [19 + angleSegment] = 1;
+
 	float r = sqrtf(model.posX * model.posX + model.posY * model.posY);
-	state [0] = model.posX / r;
-	state [1] = model.posY / r;
+	state [0] = 10 * model.posX / r;
+	state [1] = 10 * model.posY / r;
 	state [2] = r;
-	state [3] = sin(model.angle);
-	state [4] = cos(model.angle);
+	state [3] = 10 * sin(model.angle);
+	state [4] = 10 * cos(model.angle);
 	state [5] = 0;
 	state [6] = 0;
 	state [7] = 0;
+
+//	std::string str ("");
+//	for (float& s : state) {
+//		str += std::to_string(s) + " ";
+//	}
+//CCLOG("--- state: %s", str.c_str());
+	
 }
 
 void QuadrocopterDiscrete2DCtrl::act () {
@@ -82,8 +103,8 @@ void QuadrocopterDiscrete2DCtrl::act () {
 		
 		case 2:
 			//move forward
-			model.posX += cosf (model.angle);
-			model.posY += sinf (model.angle);
+			model.posX += 2 * cosf (model.angle);
+			model.posY += 2 * sinf (model.angle);
 			model.motor1power = 10;
 			model.motor2power = 10;
 		break;

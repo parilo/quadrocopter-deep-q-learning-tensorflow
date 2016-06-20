@@ -28,7 +28,7 @@ World::~World () {
 }
 
 void World::create () {
-	world = new b2World (b2Vec2 (0.0f, 0.0f)); //gravity in the world
+	world = new b2World (b2Vec2 (0.0f, 2.0f)); //gravity in the world
 
 	b2BodyDef worldBodyDef;
 	worldBodyDef.type = b2BodyType::b2_staticBody;
