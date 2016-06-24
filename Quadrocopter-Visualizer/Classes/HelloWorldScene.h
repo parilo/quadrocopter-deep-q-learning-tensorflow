@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "QuadrocopterSimulator.hpp"
-#include "QuadrocopterDiscreteSimulator.hpp"
 #include "main.h"
 
 class HelloWorld : public cocos2d::Layer

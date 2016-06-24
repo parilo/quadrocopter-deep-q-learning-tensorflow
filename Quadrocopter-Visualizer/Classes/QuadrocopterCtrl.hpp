@@ -21,7 +21,7 @@ public:
 	void calcReward ();
 	void reset ();
 	double getReward ();
-	Quadrocopter1D& getSimulationModel ();
+	Quadrocopter1D& getModel ();
 
 private:
 

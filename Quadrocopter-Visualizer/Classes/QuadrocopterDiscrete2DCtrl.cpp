@@ -12,10 +12,11 @@
 
 static const int observationSize = 8;
 
-QuadrocopterDiscrete2DCtrl::QuadrocopterDiscrete2DCtrl (int id, Quadrocopter2D& simulationModel) :
-	id(id)//,
-//	simulationModel(simulationModel)
+QuadrocopterDiscrete2DCtrl::QuadrocopterDiscrete2DCtrl (int id, QuadrocopterDiscrete2D& simulationModel) :
+	id(id),
+	model(simulationModel)
 {
+	model.setId(id);
 	prevState.resize(observationSize);
 	nextState.resize(observationSize);
 }
@@ -35,16 +36,16 @@ void QuadrocopterDiscrete2DCtrl::calcReward () {
 	
 //	reward = (50 * exp (-nextLengthSq/40) + 0.5) * dLengthSq;
 
-	if (nextR < 5) {
-		reward = 5 * exp (-nextR/40);
-	} else {
+//	if (nextR < 5) {
+//		reward = 5 * exp (-nextR/40);
+//	} else {
 		reward = 2 * (prevR - nextR);
 //		if (prevLengthSq > nextLengthSq) {
 //			reward = ;// * exp (-nextLengthSq/40);
 //		} else {
 //			reward = -1;//-exp (-nextLengthSq/40);
 //		}
-	}
+//	}
 //CCLOG ("--- reward: %f %f %f", prevR, nextR, reward);
 	
 //	sumReward += reward;
@@ -64,9 +65,12 @@ void QuadrocopterDiscrete2DCtrl::readState (std::vector<float>& state) {
 //	state [1 + targetSegment] = 1;
 //	state [19 + angleSegment] = 1;
 
-	float r = sqrtf(model.posX * model.posX + model.posY * model.posY);
-	state [0] = 10 * model.posX / r;
-	state [1] = 10 * model.posY / r;
+	float x = model.posX - model.targetX;
+	float y = model.posY - model.targetY;
+
+	float r = sqrtf(x * x + y * y);
+	state [0] = 10 * x / r;
+	state [1] = 10 * y / r;
 	state [2] = r;
 	state [3] = 10 * sin(model.angle);
 	state [4] = 10 * cos(model.angle);
@@ -120,7 +124,7 @@ void QuadrocopterDiscrete2DCtrl::act () {
 		break;
 	}
 	
-//	simulationModel.setCoords(b2Vec2(posX, posY), angle * 180 / M_PI);
+	model.posY += 0.6;
 }
 
 void QuadrocopterDiscrete2DCtrl::storeExperience () {
@@ -145,51 +149,14 @@ void QuadrocopterDiscrete2DCtrl::reset () {
 	model.angle = Lib::randFloat(0, 2 * M_PI);
 }
 
+void QuadrocopterDiscrete2DCtrl::resetAction () {
+	action = -1;
+}
+
 double QuadrocopterDiscrete2DCtrl::getReward () {
 	return reward;
 }
 
 QuadrocopterModel2DIFace& QuadrocopterDiscrete2DCtrl::getModel () {
 	return model;
-}
-
-
-
-void QuadrocopterDiscreteModel2D::setCoords (const b2Vec2& pos, float angle) {
-	posX = pos.x;
-	posY = pos.y;
-	this->angle = angle;
-}
-
-void QuadrocopterDiscreteModel2D::setVelocity (const b2Vec2& v) {
-}
-
-void QuadrocopterDiscreteModel2D::setAngularVelocity (float w) {
-}
-
-void QuadrocopterDiscreteModel2D::getPartsCoords (
-	b2Vec2& bodyPos,
-	b2Vec2& motor1Pos,
-	b2Vec2& motor2Pos,
-	float& bodyRotation,
-	float& motor1Rotation,
-	float& motor2Rotation
-) const {
-	bodyPos.x = posX;
-	bodyPos.y = posY;
-	
-	static const float halfBodyLength = 0.2f;
-	
-	b2Vec2 posAdd (- halfBodyLength * sinf (angle), halfBodyLength * cosf(angle));
-	motor1Pos = bodyPos + posAdd;
-	motor2Pos = bodyPos - posAdd;
-	
-	bodyRotation = (angle + M_PI_2) * 180 / M_PI;
-	motor1Rotation = bodyRotation;
-	motor2Rotation = motor1Rotation;
-}
-
-void QuadrocopterDiscreteModel2D::getMotorPower (float& p1, float& p2) const {
-	p1 = motor1power;
-	p2 = motor2power;
 }

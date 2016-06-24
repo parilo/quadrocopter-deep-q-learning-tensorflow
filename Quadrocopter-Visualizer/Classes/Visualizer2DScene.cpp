@@ -64,13 +64,13 @@ bool Visualizer2DScene::init()
 
 	centerPos = getContentSize() * 0.5;
 
-	LayerColor* targetNode1 = LayerColor::create(Color4B::ORANGE);
+	targetNode1 = LayerColor::create(Color4B::ORANGE);
 	targetNode1->setAnchorPoint(Vec2(0.5, 0.5));
 	targetNode1->setContentSize(Size(2, 80));
 	targetNode1->setPosition (centerPos - targetNode1->getContentSize()/2);
 	addChild(targetNode1);
 
-	LayerColor* targetNode2 = LayerColor::create(Color4B::ORANGE);
+	targetNode2 = LayerColor::create(Color4B::ORANGE);
 	targetNode2->setAnchorPoint(Vec2(0.5, 0.5));
 	targetNode2->setContentSize(Size(80, 2));
 	targetNode2->setPosition (centerPos - targetNode2->getContentSize()/2);
@@ -78,8 +78,16 @@ bool Visualizer2DScene::init()
 	
 	sim.init();
 
-	for (int i=0; i<quadrocoptersCount; i++) {
-	
+	for (int i=0; i<obstaclesCount; i++)
+	{
+		Obstacle2DView view;
+		view.init();
+		view.addTo(this);
+		obstacleViews.push_back (view);
+	}
+
+	for (int i=0; i<quadrocoptersCount; i++)
+	{
 		Quadrocopter2DView view;
 		view.init();
 		view.addTo(this);
@@ -91,10 +99,61 @@ bool Visualizer2DScene::init()
 
 	sim.setSimulationUpdateCallback([this](){
 		update (0);
+		
+		if (simulationStep % changeTargetInSteps == 0) {
+			changeTarget ();
+		}
+		
+		simulationStep++;
 	});
 	
+//	sim.setCollideListener([this](ObstacleModel2DIFace& o, QuadrocopterModel2DIFace& q){
+//
+//		float centerX;
+//		float centerY;
+//		float a;
+//		float b;
+//		float angle;
+//
+//		o.getCoords(
+//			centerX,
+//			centerY,
+//			a,
+//			b,
+//			angle
+//		);
+//	
+//		b2Vec2 bodyPos;
+//		b2Vec2 motor1Pos;
+//		b2Vec2 motor2Pos;
+//		float bodyRotation;
+//		float motor1Rotation;
+//		float motor2Rotation;
+//		
+//		q.getPartsCoords (
+//			bodyPos,
+//			motor1Pos,
+//			motor2Pos,
+//			bodyRotation,
+//			motor1Rotation,
+//			motor2Rotation
+//		);
+//	
+//		CCLOG ("--- collide o: %f %f %f %f %f q: %d %f %f",
+//			centerX,
+//			centerY,
+//			a,
+//			b,
+//			angle,
+//			q.getId(),
+//			bodyPos.x,
+//			bodyPos.y
+//		);
+//	
+//	});
+	
 	sim.startActWorkers();
-	sim.startTrainWorkers();
+//	sim.startTrainWorkers();
 	
     return true;
 }
@@ -102,17 +161,28 @@ bool Visualizer2DScene::init()
 void Visualizer2DScene::update(float delta) {
 
 	for (int i=0; i<quadrocoptersCount; i++) {
-		Quadrocopter2DView& view = qcopterViews [i];
-		view.setCoordsFrom(sim.getQuadrocopterCtrl(i).getModel(), centerPos, 4);
+		qcopterViews [i].setCoordsFrom(sim.getQuadrocopterCtrl(i).getModel(), centerPos, 4);
+	}
+
+	for (int i=0; i<obstaclesCount; i++) {
+		obstacleViews [i].setCoordsFrom(sim.getObstacle(i), centerPos, 4);
 	}
 	
+}
+
+void Visualizer2DScene::changeTarget() {
+	b2Vec2 newTarget(Lib::randFloat(-70, 70), Lib::randFloat(-70, 70));
+	for (int i=0; i<quadrocoptersCount; i++) {
+		sim.getQuadrocopterCtrl(i).getModel().setTarget(newTarget);
+		sim.getQuadrocopterCtrl(i).resetAction();
+	}
+	targetNode1->setPosition (centerPos - targetNode1->getContentSize()/2 + 4*Vec2(newTarget.x, -newTarget.y));
+	targetNode2->setPosition (centerPos - targetNode2->getContentSize()/2 + 4*Vec2(newTarget.x, -newTarget.y));
 }
 
 void Visualizer2DScene::reset () {
 	sim.reset();
 }
-
-
 
 void Visualizer2DScene::menuCloseCallback(Ref* pSender)
 {
@@ -123,6 +193,8 @@ void Visualizer2DScene::menuCloseCallback(Ref* pSender)
     exit(0);
 #endif
 }
+
+
 
 void Quadrocopter2DView::init () {
 	body = LayerColor::create(Color4B(0, 0, 255, 255));
@@ -168,29 +240,6 @@ void Quadrocopter2DView::setCoordsFrom (
 		motor2Rotation
 	);
 
-//	body->setPosition(Vec2(bodyPos.x, -bodyPos.y) - bodyHalfCont);
-//	body->setRotation(bodyRotation);
-//	motor1->setPosition(Vec2(motor1Pos.x, -motor1Pos.y) - motor1HalfCont);
-//	motor1->setRotation(motor1Rotation);
-//	motor2->setPosition(Vec2(motor2Pos.x, -motor2Pos.y) - motor2HalfCont);
-//	motor2->setRotation(motor2Rotation);
-
-//	visualizerZoom = 1;
-//	
-//	body->setPosition(Vec2 (bodyPos.x, bodyPos.y));
-//	body->setRotation(bodyRotation);
-//
-//	Vec2 m1pos = body->convertToWorldSpace(body->convertToNodeSpace(Vec2(motor1Pos.x, motor1Pos.y)) * 1 / visualizerZoom);
-//	Vec2 m2pos = body->convertToWorldSpace(body->convertToNodeSpace(Vec2(motor2Pos.x, motor2Pos.y)) * 1 / visualizerZoom);
-//
-//	body->setPosition(body->getPosition() * visualizerZoom - bodyHalfCont + centerPos);
-//	motor1->setPosition(m1pos * visualizerZoom - motor1HalfCont + centerPos);
-//	motor1->setRotation(motor1Rotation);
-//	motor2->setPosition(m2pos * visualizerZoom - motor2HalfCont + centerPos);
-//	motor2->setRotation(motor2Rotation);
-
-
-
 	Vec2 bPos (bodyPos.x, -bodyPos.y);
 	Vec2 m1pos = (Vec2(motor1Pos.x, -motor1Pos.y) - bPos) * zoom / visualizerZoom + bPos;
 	Vec2 m2pos = (Vec2(motor2Pos.x, -motor2Pos.y) - bPos) * zoom / visualizerZoom + bPos;
@@ -207,4 +256,48 @@ void Quadrocopter2DView::setCoordsFrom (
 	model.getMotorPower(p1, p2);
 	motor1->setColor(Color3B(0, p1 > 0?255:64, 0));
 	motor2->setColor(Color3B(p2 > 0?255:64, 0, 0));
+	
+	if (model.isCollided ()) {
+		body->setColor(Color3B::RED);
+	} else {
+		body->setColor(Color3B::BLUE);
+	}
+}
+
+
+
+void Obstacle2DView::init () {
+	body = LayerColor::create(Color4B(0, 255, 255, 128));
+	body->setAnchorPoint(Vec2(0.5, 0.5));
+}
+
+void Obstacle2DView::addTo (cocos2d::Node* parent) {
+	parent->addChild(body);
+}
+
+void Obstacle2DView::setCoordsFrom (
+	const ObstacleModel2DIFace& model,
+	cocos2d::Vec2 centerPos,
+	float visualizerZoom
+) {
+
+	float centerX;
+	float centerY;
+	float a;
+	float b;
+	float angle;
+
+	model.getCoords(
+		centerX,
+		centerY,
+		a,
+		b,
+		angle
+	);
+
+	Vec2 bPos (centerX, -centerY);
+	
+	body->setContentSize(Size(a, b) * visualizerZoom);
+	body->setPosition(bPos * visualizerZoom - body->getContentSize() * 0.5 + centerPos);
+	body->setRotation(angle);
 }

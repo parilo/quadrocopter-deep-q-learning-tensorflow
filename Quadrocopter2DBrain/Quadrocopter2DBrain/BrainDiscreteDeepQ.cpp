@@ -181,10 +181,15 @@ std::cerr << "--- read tensor: " << serializedTensorSize << " / " << t.TotalByte
 	(линейный отжиг)
 */
 double BrainDiscreteDeepQ::linearAnnealing(double randomActionProbabilityFinal) {
-	if (actionsExecutedSoFar >= explorationPeriod)
+	if (explorationPeriod>0) {
+		return randomActionProbabilityInitial - ((explorationPeriodInitial-explorationPeriod) * (randomActionProbabilityInitial - randomActionProbabilityFinal)) / (explorationPeriodInitial);
+	} else {
 		return randomActionProbabilityFinal;
-	else
-		return randomActionProbabilityInitial - (actionsExecutedSoFar * (randomActionProbabilityInitial - randomActionProbabilityFinal)) / (explorationPeriod);
+	}
+//	if (actionsExecutedSoFar >= explorationPeriod)
+//		return randomActionProbabilityFinal;
+//	else
+//		return randomActionProbabilityInitial - (actionsExecutedSoFar * (randomActionProbabilityInitial - randomActionProbabilityFinal)) / (explorationPeriod);
 }
 
 /**
@@ -196,17 +201,14 @@ DeepQ learning strategy. Does not backprop.
 long BrainDiscreteDeepQ::control (const ObservationSeqLimited& obs, double randomness) {
 	
 	double explorationP = linearAnnealing (randomness);
+//std::cerr <<"--- explorationP: " << explorationP << " act: " << actionsExecutedSoFar <<  std::endl;
 	long actionIndex;
 	if (Lib::randDouble(0.0, 1.0) < explorationP) {
 		actionIndex = Lib::randInt(0, QuadrocopterBrain::numActions-1);
 	} else {
-		
+	
 		Tensor observationSeq (DT_FLOAT, TensorShape({1, obs.getSize()}));
 		
-//		int i=0;
-//		for (auto obItem : ob.data) {
-//			observationSeq.matrix<float>()(0, i++) = obItem;
-//		}
 		fillTensor (obs, observationSeq, 0);
 		
 //		std::cerr << "--- BrainDiscreteDeepQ::control" << std::endl;
@@ -234,18 +236,25 @@ long BrainDiscreteDeepQ::control (const ObservationSeqLimited& obs, double rando
 //		}
 
 		//getting index of max scored action
-		auto status = session->Run(inputs, {"taking_action/predicted_actions"}, {}, &outputs);
+		auto status = session->Run(
+			inputs, {
+//				"taking_action/action_scores",
+				"taking_action/predicted_actions"
+			}, {}, &outputs
+		);
 		if (!status.ok()) {
 			std::cout << "tf error: " << status.ToString() << "\n";
 		}
 		
-//		std::cerr << "--- predicted action: " << outputs [0].DebugString() << std::endl;
-		
+//		std::cerr << "--- action scores: " << std::endl;
+//		printTensor<float>(outputs [0]);
 		auto action = outputs [0].scalar<int>();
 		actionIndex = action ();
+//		std::cerr << "--- action: " << actionIndex << std::endl;
 	}
 
 	actionsExecutedSoFar++;
+	if (explorationPeriod>0) explorationPeriod--;
 	
 	return actionIndex;
 }
@@ -433,4 +442,9 @@ void BrainDiscreteDeepQ::predictNextStateAndReward (const ObservationSeqLimited&
 	std::cerr << "--- new state: " << action << std::endl;
 	printTensor<float>(outputs [0]);
 	
+}
+
+void BrainDiscreteDeepQ::setExplorationPeriod (int explorationPeriod) {
+//	this->explorationPeriod = explorationPeriod;
+//	this->explorationPeriodInitial = explorationPeriod;
 }

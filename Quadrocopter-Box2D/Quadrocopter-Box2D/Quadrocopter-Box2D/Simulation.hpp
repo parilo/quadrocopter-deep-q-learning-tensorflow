@@ -15,53 +15,60 @@
 #include "Quadrocopter1D.hpp"
 #include "Quadrocopter2D.hpp"
 
-template <typename QuadrocopterType>
+template <typename WorldType, typename QuadrocopterType>
 class SimulationTmpl {
 public:
 
 	SimulationTmpl (int quadrocoptersCount);
+	SimulationTmpl (int quadrocoptersCount, int obstaclesCount);
 
 	void step ();
+	
+	WorldType& getWorld () {
+		return world;
+	}
 	
 	QuadrocopterType& getQuadrocopter (int index);
 	float getQuadrocopterPosition (int index);
 	
 private:
 
-	World world;
-	std::vector<QuadrocopterType> quadrocopters;
+	WorldType world;
 	
 };
 
-template <typename QuadrocopterType>
-SimulationTmpl<QuadrocopterType>::SimulationTmpl (int quadrocoptersCount) {
+template <typename WorldType, typename QuadrocopterType>
+SimulationTmpl<WorldType, QuadrocopterType>::SimulationTmpl (int quadrocoptersCount) {
 	world.create();
 	for (int i=0; i<quadrocoptersCount; i++) {
-		QuadrocopterType q;
-		q.createIn(world);
-		quadrocopters.push_back(q);
+		world.createQuadrocopter ();
 	}
 }
 
-template <typename QuadrocopterType>
-void SimulationTmpl<QuadrocopterType>::step () {
-	for (auto q : quadrocopters) {
-		q.step();
+template <typename WorldType, typename QuadrocopterType>
+SimulationTmpl<WorldType, QuadrocopterType>::SimulationTmpl (int quadrocoptersCount, int obstaclesCount) : SimulationTmpl (quadrocoptersCount)
+{
+	for (int i=0; i<obstaclesCount; i++) {
+		world.createObstacle ();
 	}
+}
+
+template <typename WorldType, typename QuadrocopterType>
+void SimulationTmpl<WorldType, QuadrocopterType>::step () {
 	world.step();
 }
 
-template <typename QuadrocopterType>
-QuadrocopterType& SimulationTmpl<QuadrocopterType>::getQuadrocopter (int index) {
-	return quadrocopters [index];
+template <typename WorldType, typename QuadrocopterType>
+QuadrocopterType& SimulationTmpl<WorldType, QuadrocopterType>::getQuadrocopter (int index) {
+	return world.getQuadrocopters () [index];
 }
 
-template <typename QuadrocopterType>
-float SimulationTmpl<QuadrocopterType>::getQuadrocopterPosition (int index) {
-	return quadrocopters [index].getPosition();
+template <typename WorldType, typename QuadrocopterType>
+float SimulationTmpl<WorldType, QuadrocopterType>::getQuadrocopterPosition (int index) {
+	return world.getQuadrocopters () [index].getPosition();
 }
 
-typedef SimulationTmpl<Quadrocopter1D> Simulation;
-typedef SimulationTmpl<Quadrocopter2D> Simulation2D;
+typedef SimulationTmpl<World1D, Quadrocopter1D> Simulation;
+typedef SimulationTmpl<World2D, Quadrocopter2D> Simulation2D;
 
 #endif /* Simulation_hpp */

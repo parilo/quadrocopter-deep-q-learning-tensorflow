@@ -230,6 +230,6 @@ double QuadrocopterCtrl::getReward () {
 	return reward;
 }
 
-Quadrocopter1D& QuadrocopterCtrl::getSimulationModel () {
+Quadrocopter1D& QuadrocopterCtrl::getModel () {
 	return simulationModel;
 }

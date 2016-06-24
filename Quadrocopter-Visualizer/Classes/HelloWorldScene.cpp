@@ -92,7 +92,7 @@ void HelloWorld::update(float delta) {
 
 	for (int i=0; i<quadrocoptersCount; i++) {
 		LayerColor* qcopterNode = qcopterNodes [i];
-		float pos = 4 * sim.getQuadrocopterCtrl(i).getSimulationModel().getPosition();
+		float pos = 4 * sim.getQuadrocopterCtrl(i).getModel().getPosition();
 		qcopterNode->setPosition(centerPos + Vec2 (pos, 0));
 	}
 	

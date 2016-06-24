@@ -10,41 +10,19 @@
 #define QuadrocopterDiscrete2DCtrl_hpp
 
 #include "Simulation.hpp"
-
-class QuadrocopterDiscreteModel2D : public QuadrocopterModel2DIFace {
-public:
-	
-	float posX;
-	float posY;
-	float angle;
-	float motor1power;
-	float motor2power;
-	
-	virtual void setCoords (const b2Vec2& pos, float angle) override;
-	virtual void setVelocity (const b2Vec2& v) override;
-	virtual void setAngularVelocity (float w) override;
-	
-	virtual void getPartsCoords (
-		b2Vec2& bodyPos,
-		b2Vec2& motor1Pos,
-		b2Vec2& motor2Pos,
-		float& bodyRotation,
-		float& motor1Rotation,
-		float& motor2Rotation
-	) const override;
-
-	virtual void getMotorPower (float& p1, float& p2) const override;
-};
+#include "WorldDiscrete.hpp"
+#include "QuadrocopterDiscrete2D.hpp"
 
 class QuadrocopterDiscrete2DCtrl {
 public:
 	
-	QuadrocopterDiscrete2DCtrl (int id, Quadrocopter2D& simulationModel);
+	QuadrocopterDiscrete2DCtrl (int id, QuadrocopterDiscrete2D& simulationModel);
 	
 	void act ();
 	void storeExperience ();
 	void calcReward ();
 	void reset ();
+	void resetAction ();
 	double getReward ();
 	QuadrocopterModel2DIFace& getModel ();
 
@@ -58,7 +36,7 @@ private:
 	std::vector<float> prevState;
 	std::vector<float> nextState;
 	
-	QuadrocopterDiscreteModel2D model;
+	QuadrocopterDiscrete2D& model;
 	
 	void readState (std::vector<float>& state);
 

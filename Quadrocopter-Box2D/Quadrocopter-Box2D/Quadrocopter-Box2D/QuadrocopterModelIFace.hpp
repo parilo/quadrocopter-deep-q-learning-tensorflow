@@ -14,6 +14,12 @@
 class QuadrocopterModel2DIFace {
 public:
 	
+	virtual void setId (int id);
+	virtual int getId () const;
+	virtual void setCollided (bool collided);
+	virtual bool isCollided () const;
+	
+	virtual void setTarget (const b2Vec2& pos) = 0;
 	virtual void setCoords (const b2Vec2& pos, float angle) = 0;
 	virtual void setVelocity (const b2Vec2& v) = 0;
 	virtual void setAngularVelocity (float w) = 0;
@@ -28,6 +34,12 @@ public:
 	) const = 0;
 
 	virtual void getMotorPower (float& p1, float& p2) const = 0;
+	
+protected:
+
+	int id = 0;
+	bool collided = false;
+
 };
 
 #endif /* QuadrocopterModelIFace_hpp */

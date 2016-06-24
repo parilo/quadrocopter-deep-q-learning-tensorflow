@@ -49,6 +49,7 @@ public:
 	void predictNextStateAndReward (const ObservationSeqLimited& state, long action);
 	void trainEnvModel (const std::vector<ExperienceItem>& experience);
 //	void setRandomness (double randomness);
+	void setExplorationPeriod (int explorationPeriod);
 
 	void saveGraphState (const std::string fileSuffix);
 	
@@ -62,7 +63,8 @@ private:
 	int actionsExecutedSoFar = 0;
 	
 	//linear annealing parameters
-	int explorationPeriod = 100000;
+	std::atomic<int> explorationPeriod;
+	int explorationPeriodInitial;
 	double randomActionProbabilityInitial = 1.0;
 //	double randomActionProbabilityFinal = 0.1;
 	

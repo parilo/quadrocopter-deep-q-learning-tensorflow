@@ -10,27 +10,7 @@
 #define QuadrocopterDiscreteCtrl_hpp
 
 #include "Simulation.hpp"
-
-class QuadrocopterDiscrete {
-
-public:
-
-	QuadrocopterDiscrete ();
-	virtual ~QuadrocopterDiscrete ();
-	
-	void createIn (World& w);
-
-	float getPosition ();
-	void setPosition (float pos);
-	void setVelocity (float v);
-	float getVelocity ();
-	void setMotorPower (float p);
-	
-	void step ();
-	
-private:
-	float position;
-};
+#include "QuadrocopterDiscrete1D.hpp"
 
 class QuadrocopterDiscreteCtrl {
 public:
@@ -43,7 +23,7 @@ public:
 	void reset ();
 	double getReward ();
 	int getPosition ();
-	QuadrocopterDiscrete& getSimulationModel ();
+	QuadrocopterDiscrete& getModel ();
 
 private:
 

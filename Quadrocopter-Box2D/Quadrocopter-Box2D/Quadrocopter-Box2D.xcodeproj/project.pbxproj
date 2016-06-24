@@ -12,6 +12,12 @@
 		3A2FF90B1CD01AF70039DC87 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9091CD01AF70039DC87 /* Simulation.cpp */; };
 		3A786E171CCBF84D00FB9BC2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A786E161CCBF84D00FB9BC2 /* main.cpp */; };
 		3A786E231CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */; };
+		3A9AD0981D1D10C100EF75ED /* Obstacle1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD0961D1D10C100EF75ED /* Obstacle1D.cpp */; };
+		3A9AD09B1D1D10D100EF75ED /* Obstacle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD0991D1D10D100EF75ED /* Obstacle2D.cpp */; };
+		3A9AD09E1D1D172B00EF75ED /* ObstacleModelIFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD09C1D1D172B00EF75ED /* ObstacleModelIFace.cpp */; };
+		3A9AD09F1D1D179E00EF75ED /* ObstacleModelIFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD09C1D1D172B00EF75ED /* ObstacleModelIFace.cpp */; };
+		3A9AD0A21D1D1D1E00EF75ED /* WorldBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD0A01D1D1D1E00EF75ED /* WorldBase.cpp */; };
+		3A9AD0A31D1D1D3400EF75ED /* WorldBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD0A01D1D1D1E00EF75ED /* WorldBase.cpp */; };
 		3AD49E441CF4BBA300DE121D /* Quadrocopter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */; };
 		3AD49E451CF4C86200DE121D /* Quadrocopter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */; };
 		3AE420A81CD2AB7B00702C1A /* Quadrocopter1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */; };
@@ -44,6 +50,14 @@
 		3A786E131CCBF84D00FB9BC2 /* Quadrocopter-Box2D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Quadrocopter-Box2D"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A786E161CCBF84D00FB9BC2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A786E221CCBFA1C00FB9BC2 /* libBox2D.2.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBox2D.2.3.2.dylib; path = "../../box2d-install/lib/libBox2D.2.3.2.dylib"; sourceTree = "<group>"; };
+		3A9AD0961D1D10C100EF75ED /* Obstacle1D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Obstacle1D.cpp; sourceTree = "<group>"; };
+		3A9AD0971D1D10C100EF75ED /* Obstacle1D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Obstacle1D.hpp; sourceTree = "<group>"; };
+		3A9AD0991D1D10D100EF75ED /* Obstacle2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Obstacle2D.cpp; sourceTree = "<group>"; };
+		3A9AD09A1D1D10D100EF75ED /* Obstacle2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Obstacle2D.hpp; sourceTree = "<group>"; };
+		3A9AD09C1D1D172B00EF75ED /* ObstacleModelIFace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObstacleModelIFace.cpp; sourceTree = "<group>"; };
+		3A9AD09D1D1D172B00EF75ED /* ObstacleModelIFace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObstacleModelIFace.hpp; sourceTree = "<group>"; };
+		3A9AD0A01D1D1D1E00EF75ED /* WorldBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldBase.cpp; sourceTree = "<group>"; };
+		3A9AD0A11D1D1D1E00EF75ED /* WorldBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WorldBase.hpp; sourceTree = "<group>"; };
 		3AD49E421CF4BBA300DE121D /* Quadrocopter2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2D.cpp; sourceTree = "<group>"; };
 		3AD49E431CF4BBA300DE121D /* Quadrocopter2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2D.hpp; sourceTree = "<group>"; };
 		3AE4209A1CD2AA5600702C1A /* libQuadrocopter-Box2D-lib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libQuadrocopter-Box2D-lib.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +94,12 @@
 				3AD49E431CF4BBA300DE121D /* Quadrocopter2D.hpp */,
 				3AF86AB41D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp */,
 				3AF86AB51D15DDDB008E4D2F /* QuadrocopterModelIFace.hpp */,
+				3A9AD09C1D1D172B00EF75ED /* ObstacleModelIFace.cpp */,
+				3A9AD09D1D1D172B00EF75ED /* ObstacleModelIFace.hpp */,
+				3A9AD0961D1D10C100EF75ED /* Obstacle1D.cpp */,
+				3A9AD0971D1D10C100EF75ED /* Obstacle1D.hpp */,
+				3A9AD0991D1D10D100EF75ED /* Obstacle2D.cpp */,
+				3A9AD09A1D1D10D100EF75ED /* Obstacle2D.hpp */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -108,6 +128,8 @@
 				3A2FF9021CD011590039DC87 /* Models */,
 				3A2FF9031CD0123D0039DC87 /* World.cpp */,
 				3A2FF9041CD0123D0039DC87 /* World.hpp */,
+				3A9AD0A01D1D1D1E00EF75ED /* WorldBase.cpp */,
+				3A9AD0A11D1D1D1E00EF75ED /* WorldBase.hpp */,
 				3A2FF9091CD01AF70039DC87 /* Simulation.cpp */,
 				3A2FF90A1CD01AF70039DC87 /* Simulation.hpp */,
 				3A786E161CCBF84D00FB9BC2 /* main.cpp */,
@@ -211,11 +233,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A2FF90B1CD01AF70039DC87 /* Simulation.cpp in Sources */,
+				3A9AD0981D1D10C100EF75ED /* Obstacle1D.cpp in Sources */,
+				3A9AD09B1D1D10D100EF75ED /* Obstacle2D.cpp in Sources */,
 				3A786E171CCBF84D00FB9BC2 /* main.cpp in Sources */,
 				3AD49E441CF4BBA300DE121D /* Quadrocopter2D.cpp in Sources */,
 				3A2FF9011CD010860039DC87 /* Quadrocopter1D.cpp in Sources */,
 				3A2FF9051CD0123D0039DC87 /* World.cpp in Sources */,
 				3AF86AB61D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp in Sources */,
+				3A9AD09E1D1D172B00EF75ED /* ObstacleModelIFace.cpp in Sources */,
+				3A9AD0A21D1D1D1E00EF75ED /* WorldBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +249,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A9AD0A31D1D1D3400EF75ED /* WorldBase.cpp in Sources */,
+				3A9AD09F1D1D179E00EF75ED /* ObstacleModelIFace.cpp in Sources */,
 				3AF86AB71D15DE3E008E4D2F /* QuadrocopterModelIFace.cpp in Sources */,
 				3AD49E451CF4C86200DE121D /* Quadrocopter2D.cpp in Sources */,
 				3AE420A81CD2AB7B00702C1A /* Quadrocopter1D.cpp in Sources */,

@@ -11,7 +11,6 @@
 
 #include "cocos2d.h"
 #include "QuadrocopterSimulator.hpp"
-#include "QuadrocopterDiscreteSimulator.hpp"
 #include "main.h"
 
 class Quadrocopter2DView {
@@ -33,19 +32,39 @@ private:
 	cocos2d::Vec2 motor2HalfCont;
 };
 
+
+class Obstacle2DView {
+public:
+	
+	void init ();
+	void addTo (cocos2d::Node* parent);
+	void setCoordsFrom (const ObstacleModel2DIFace& model, cocos2d::Vec2 centerPos, float visualizerZoom);
+
+private:
+
+//	float zoom = 50;
+	cocos2d::LayerColor* body;
+};
+
 class Visualizer2DScene : public cocos2d::Layer
 {
 public:
 	
-	QuadrocopterSimulator2D sim;
-//	QuadrocopterSimulatorDiscrete2D sim;
+//	QuadrocopterSimulator2D sim;
+	QuadrocopterSimulatorDiscrete2D sim;
+	int simulationStep;
 	
 	std::vector<Quadrocopter2DView> qcopterViews;
+	std::vector<Obstacle2DView> obstacleViews;
 	cocos2d::Vec2 centerPos;
+
+	cocos2d::LayerColor* targetNode1;
+	cocos2d::LayerColor* targetNode2;
 
 	Visualizer2DScene ();
 	
 	void reset ();
+	void changeTarget ();
 
     static cocos2d::Scene* createScene();
 

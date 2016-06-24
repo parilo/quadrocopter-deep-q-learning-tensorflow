@@ -7,3 +7,21 @@
 //
 
 #include "QuadrocopterModelIFace.hpp"
+
+void QuadrocopterModel2DIFace::setId (int id)
+{
+	this->id = id;
+}
+
+int QuadrocopterModel2DIFace::getId () const
+{
+	return id;
+}
+
+void QuadrocopterModel2DIFace::setCollided (bool collided) {
+	this->collided =collided;
+}
+
+bool QuadrocopterModel2DIFace::isCollided () const {
+	return collided;
+}

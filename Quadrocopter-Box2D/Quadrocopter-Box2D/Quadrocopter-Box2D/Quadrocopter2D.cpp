@@ -14,7 +14,7 @@ Quadrocopter2D::Quadrocopter2D () {}
 
 Quadrocopter2D::~Quadrocopter2D () {};
 
-void Quadrocopter2D::createIn (World& w) {
+void Quadrocopter2D::createIn (World2D& w) {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -189,3 +189,5 @@ void Quadrocopter2D::getMotorPower (float& p1, float& p2) const {
 	p1 = motor1Power;
 	p2 = motor2Power;
 }
+
+void Quadrocopter2D::setTarget (const b2Vec2& pos) {}

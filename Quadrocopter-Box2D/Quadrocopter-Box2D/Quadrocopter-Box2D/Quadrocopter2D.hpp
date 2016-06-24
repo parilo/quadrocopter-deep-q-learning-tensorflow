@@ -21,9 +21,10 @@ public:
 	Quadrocopter2D ();
 	virtual ~Quadrocopter2D ();
 	
-	void createIn (World& w);
+	void createIn (World2D& w);
 
 	const b2Vec2& getPosition ();
+	void setTarget (const b2Vec2& pos) override;
 	void setCoords (const b2Vec2& pos, float angle) override;
 	float getRotation ();
 	void setVelocity (const b2Vec2& v) override;

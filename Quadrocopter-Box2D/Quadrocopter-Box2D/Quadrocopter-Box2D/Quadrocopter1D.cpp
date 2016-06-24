@@ -13,7 +13,7 @@ Quadrocopter1D::Quadrocopter1D () {}
 
 Quadrocopter1D::~Quadrocopter1D () {};
 
-void Quadrocopter1D::createIn (World& w) {
+void Quadrocopter1D::createIn (World1D& w) {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;

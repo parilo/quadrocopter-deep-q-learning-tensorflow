@@ -47,7 +47,7 @@ num_actions = 5;
 
 #brain = MLP([input_size,], [64, 64, 64, 64, 64, 64, num_actions], 
 #            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
-brain = MLP([input_size,], [128, 128, num_actions], 
+brain = MLP([input_size,], [64, 64, num_actions], 
             [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity])
 
 # The optimizer to use. Here we use RMSProp as recommended

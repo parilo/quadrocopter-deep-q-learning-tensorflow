@@ -18,7 +18,7 @@ public:
 	Quadrocopter1D ();
 	virtual ~Quadrocopter1D ();
 	
-	void createIn (World& w);
+	void createIn (World1D& w);
 
 	float getPosition ();
 	void setPosition (float pos);
