@@ -49,6 +49,9 @@ public:
 	void getMotorPower (float& p1, float& p2) const override;
 	
 	void step ();
+	std::vector<float>& getSensors () const override {
+		return sensors;
+	};
 
 private:
 
@@ -61,6 +64,9 @@ private:
 	b2Body* body;
 	b2Body* motor1;
 	b2Body* motor2;
+	
+	mutable std::vector<float> sensors;
+	
 };
 
 #endif /* Quadrocopter2D_hpp */

@@ -10,7 +10,7 @@
 #include "Quadrocopter2DBrain.hpp"
 #include "Lib.h"
 
-static const int observationSize = 8;
+static const int observationSize = 40;
 
 QuadrocopterDiscrete2DCtrl::QuadrocopterDiscrete2DCtrl (int id, QuadrocopterDiscrete2D& simulationModel) :
 	id(id),
@@ -39,7 +39,7 @@ void QuadrocopterDiscrete2DCtrl::calcReward () {
 //	if (nextR < 5) {
 //		reward = 5 * exp (-nextR/40);
 //	} else {
-		reward = 2 * (prevR - nextR);
+		reward = (prevR - nextR);
 //		if (prevLengthSq > nextLengthSq) {
 //			reward = ;// * exp (-nextLengthSq/40);
 //		} else {
@@ -47,6 +47,10 @@ void QuadrocopterDiscrete2DCtrl::calcReward () {
 //		}
 //	}
 //CCLOG ("--- reward: %f %f %f", prevR, nextR, reward);
+
+	if (model.isCollided()) {
+		reward = -0.5;
+	}
 	
 //	sumReward += reward;
 }
@@ -77,6 +81,12 @@ void QuadrocopterDiscrete2DCtrl::readState (std::vector<float>& state) {
 	state [5] = 0;
 	state [6] = 0;
 	state [7] = 0;
+	
+	int sensorI = 8;
+	for (auto& s : model.getSensors()) {
+		state [sensorI] = s;
+		sensorI++;
+	}
 
 //	std::string str ("");
 //	for (float& s : state) {

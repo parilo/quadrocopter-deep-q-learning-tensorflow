@@ -26,6 +26,7 @@ private:
 	cocos2d::LayerColor* body;
 	cocos2d::LayerColor* motor1;
 	cocos2d::LayerColor* motor2;
+	cocos2d::DrawNode* sensors;
 	
 	cocos2d::Vec2 bodyHalfCont;
 	cocos2d::Vec2 motor1HalfCont;
@@ -57,6 +58,10 @@ public:
 	std::vector<Quadrocopter2DView> qcopterViews;
 	std::vector<Obstacle2DView> obstacleViews;
 	cocos2d::Vec2 centerPos;
+
+	const int debugPointsX = 50;
+	const int debugPointsY = 50;
+	std::vector<cocos2d::LayerColor*> debugPoints;
 
 	cocos2d::LayerColor* targetNode1;
 	cocos2d::LayerColor* targetNode2;

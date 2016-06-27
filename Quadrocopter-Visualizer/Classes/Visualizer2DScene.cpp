@@ -93,6 +93,15 @@ bool Visualizer2DScene::init()
 		view.addTo(this);
 		qcopterViews.push_back (view);
 	}
+	
+//	for (int i=0; i<debugPointsX; i++) {
+//		for (int j=0; j<debugPointsY; j++) {
+//			LayerColor* dp = LayerColor::create(Color4B::BLUE, 5, 5);
+//			dp->setPosition(Vec2(i*4 - 100, 100 - j*4)*4 + centerPos);
+//			addChild(dp);
+//			debugPoints.push_back(dp);
+//		}
+//	}
 
 //	reset ();
 //	scheduleUpdate();
@@ -153,7 +162,7 @@ bool Visualizer2DScene::init()
 //	});
 	
 	sim.startActWorkers();
-//	sim.startTrainWorkers();
+	sim.startTrainWorkers();
 	
     return true;
 }
@@ -167,6 +176,23 @@ void Visualizer2DScene::update(float delta) {
 	for (int i=0; i<obstaclesCount; i++) {
 		obstacleViews [i].setCoordsFrom(sim.getObstacle(i), centerPos, 4);
 	}
+
+//	QuadrocopterDiscrete2D qq;
+//	for (int i=0; i<debugPointsX; i++) {
+//		for (int j=0; j<debugPointsY; j++) {
+//			LayerColor* dp = debugPoints [i*debugPointsX + j];
+//			Vec2 pos (i*4 - 100, j*4 - 100);
+//			for (int oi=0; oi<obstaclesCount; oi++) {
+//				qq.setCoords(b2Vec2(pos.x, pos.y), 0);
+//				if (sim.getObstacle(oi).isCollidedWith(qq)) {
+//					dp->setColor(Color3B::RED);
+//					break;
+//				} else {
+//					dp->setColor(Color3B::BLUE);
+//				}
+//			}
+//		}
+//	}
 	
 }
 
@@ -198,7 +224,7 @@ void Visualizer2DScene::menuCloseCallback(Ref* pSender)
 
 void Quadrocopter2DView::init () {
 	body = LayerColor::create(Color4B(0, 0, 255, 255));
-	body->setAnchorPoint(Vec2(0.5, 0.5));
+//	body->setAnchorPoint(Vec2(0.5, 0.5));
 	body->setContentSize(Size(0.4, 0.1) * zoom);
 	bodyHalfCont = body->getContentSize()/2;
 
@@ -211,9 +237,14 @@ void Quadrocopter2DView::init () {
 	motor2->setAnchorPoint(Vec2(0.5, 0.5));
 	motor2->setContentSize(Size(0.1, 0.2) * zoom);
 	motor2HalfCont = motor2->getContentSize()/2;
+	
+	sensors = DrawNode::create();
+//	sensors->setAnchorPoint(Vec2(0.5, 0.5));
+	sensors->setContentSize(Size(QuadrocopterModel2DIFace::sensorsLength * 2 * 4, QuadrocopterModel2DIFace::sensorsLength * 2 * 4));
 }
 
 void Quadrocopter2DView::addTo (cocos2d::Node* parent) {
+	parent->addChild(sensors);
 	parent->addChild(body);
 	parent->addChild(motor1);
 	parent->addChild(motor2);
@@ -262,6 +293,27 @@ void Quadrocopter2DView::setCoordsFrom (
 	} else {
 		body->setColor(Color3B::BLUE);
 	}
+	
+	//sensors
+	sensors->setPosition(body->getPosition() + bodyHalfCont);
+	sensors->setRotation(body->getRotation() + 180);
+	sensors->clear();
+	Vec2 origin (0, 0);
+//	float angle = bodyRotation * M_PI / 180 - M_PI_2;
+	std::vector<float>& sensorsData = model.getSensors ();
+	for (int i=0; i<QuadrocopterModel2DIFace::sensorsCount; i++) {
+		float m = sensorsData [i] * visualizerZoom * QuadrocopterModel2DIFace::sensorsLength / QuadrocopterModel2DIFace::sensorsMagnitude;
+		Vec2 S (
+			m * sinf (i * 2 * M_PI / QuadrocopterModel2DIFace::sensorsCount),
+			- m * cosf (i * 2 * M_PI / QuadrocopterModel2DIFace::sensorsCount)
+		);
+		
+		float sensorValue = sensorsData [i] / QuadrocopterModel2DIFace::sensorsMagnitude;
+		if (sensorValue < 1) {
+			sensors->drawLine(origin, S, Color4F(Color4B((1-sensorValue) * 255, 0, sensorValue * 255, 200)));
+		}
+	}
+	
 }
 
 

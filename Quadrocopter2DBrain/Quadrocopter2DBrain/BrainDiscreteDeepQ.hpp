@@ -65,7 +65,7 @@ private:
 	//linear annealing parameters
 	std::atomic<int> explorationPeriod;
 	int explorationPeriodInitial;
-	double randomActionProbabilityInitial = 1.0;
+	double randomActionProbabilityInitial = 0.6;
 //	double randomActionProbabilityFinal = 0.1;
 	
 	tensorflow::GraphDef graph_def;

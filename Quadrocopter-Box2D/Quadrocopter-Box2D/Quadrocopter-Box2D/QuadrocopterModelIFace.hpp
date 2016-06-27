@@ -9,10 +9,15 @@
 #ifndef QuadrocopterModelIFace_hpp
 #define QuadrocopterModelIFace_hpp
 
+#include <vector>
 #include <Box2D/Box2D.h>
 
 class QuadrocopterModel2DIFace {
 public:
+
+	constexpr static const float sensorsMagnitude = 10;
+	constexpr static const float sensorsLength = 20;
+	constexpr static const int sensorsCount = 32;
 	
 	virtual void setId (int id);
 	virtual int getId () const;
@@ -34,6 +39,8 @@ public:
 	) const = 0;
 
 	virtual void getMotorPower (float& p1, float& p2) const = 0;
+	
+	virtual std::vector<float>& getSensors () const = 0;
 	
 protected:
 

@@ -17,73 +17,63 @@ void ObstacleDiscrete2D::step () {
 }
 
 void ObstacleDiscrete2D::reset () {
-	a = Lib::randFloat(10, 40);
-	b = Lib::randFloat(10, 40);
+	a = Lib::randFloat(5, 40);
+	b = Lib::randFloat(5, 40);
+	a2 = a * 0.5;
+	b2 = b * 0.5;
 	x = Lib::randFloat(-100, 100);
 	y = Lib::randFloat(-100, 100);
 	angle = Lib::randFloat(0, 2 * M_PI);
 	
-	vx = Lib::randFloat(-0.05, 0.05);
-	vy = Lib::randFloat(-0.05, 0.05);
-	w = Lib::randFloat(-0.02, 0.02);
+	vx = 0;//Lib::randFloat(-0.2, 0.2);
+	vy = 0;//Lib::randFloat(-0.2, 0.2);
+	w = 0;//Lib::randFloat(-0.02, 0.02);
 }
 
 bool ObstacleDiscrete2D::isCollidedWith (const QuadrocopterDiscrete2D& q) {
 
-	b2Vec2 AA (-a/2, +b/2);
-	b2Vec2 BB (-a/2, -b/2);
-	b2Vec2 CC (+a/2, -b/2);
-	float c = cosf (angle);
-	float s = cosf (angle);
-	b2Vec2 A (AA.x * c - AA.y * s, AA.x * s + AA.y * c);
-	b2Vec2 B (BB.x * c - BB.y * s, BB.x * s + BB.y * c);
-	b2Vec2 C (CC.x * c - CC.y * s, CC.x * s + CC.y * c);
-	b2Vec2 M (q.posX - x, q.posY - y);
-	b2Vec2 AB = B - A;
-	b2Vec2 AM = M - A;
-	b2Vec2 BC = C - B;
-	b2Vec2 BM = M - B;
-
-	float ABAM = b2Dot(AB, AM);
-	float ABAB = b2Dot(AB, AB);
-	float BCBM = b2Dot(BC, BM);
-	float BCBC = b2Dot(BC, BC);
-
+	//quadrocopter point in center of rectangle
+	b2Vec2 Q (q.posX - x, q.posY - y);
+	//rotating point of quadrocopter
+	float c = cosf (-angle + M_PI_2);
+	float s = sinf (-angle + M_PI_2);
+	Q = b2Vec2 (Q.x * c - Q.y * s, Q.x * s + Q.y * c);
+	
 	if (
-		0 <= ABAM && ABAM <= ABAB &&
-		0 <= BCBM && BCBM <= BCBC
+		Q.x > -a2 && Q.x < a2 &&
+		Q.y > -b2 && Q.y < b2
 	) {
-//CCLOG ("--- collide calc: %f %f %f %f q: %f %f A: %f %f B: %f %f C: %f %f M: %f %f AB: %f %f AM: %f %f BC: %f %f BM: %f %f ABAM: %f ABAB: %f BCBM: %f BCBC: %f",
-//	x,
-//	y,
-//	a,
-//	b,
-//	q.posX,
-//	q.posY,
-//	A.x, A.y,
-//	B.x, B.y,
-//	C.x, C.y,
-//	M.x, M.y,
-//	AB.x, AB.y,
-//	AM.x, AM.y,
-//	BC.x, BC.y,
-//	BM.x, BM.y,
-//	ABAM,
-//	ABAB,
-//	BCBM,
-//	BCBC
-//);
 		return true;
-		
 	} else {
 		return false;
 	}
+}
 
-//http://stackoverflow.com/questions/2752725/finding-whether-a-point-lies-inside-a-rectangle-or-not
-//http://stackoverflow.com/questions/2259476/rotating-a-point-about-another-point-2d
-//0 <= dot(AB,AM) <= dot(AB,AB) &&
-//0 <= dot(BC,BM) <= dot(BC,BC)
-//AB is vector AB, with coordinates (Bx-Ax,By-Ay), and dot(U,V) is the dot product of vectors U and V: Ux*Vx+Uy*Vy
+void ObstacleDiscrete2D::getPoints (
+	float& x0,
+	float& y0,
+	float& x1,
+	float& y1,
+	float& x2,
+	float& y2,
+	float& x3,
+	float& y3
+) const {
+
+	float px0, py0, px1, py1, px2, py2, px3, py3;
+
+	px0 = - a2; py0 = + b2;
+	px1 = + a2; py1 = + b2;
+	px2 = + a2; py2 = - b2;
+	px3 = - a2; py3 = - b2;
+	
+	float c = cosf (angle + M_PI_2);
+	float s = sinf (angle + M_PI_2);
+	
+	x0 = px0 * c - py0 * s + x; y0 = px0 * s + py0 * c + y;
+	x1 = px1 * c - py1 * s + x; y1 = px1 * s + py1 * c + y;
+	x2 = px2 * c - py2 * s + x; y2 = px2 * s + py2 * c + y;
+	x3 = px3 * c - py3 * s + x; y3 = px3 * s + py3 * c + y;
 }
 
 void ObstacleDiscrete2D::getCoords (

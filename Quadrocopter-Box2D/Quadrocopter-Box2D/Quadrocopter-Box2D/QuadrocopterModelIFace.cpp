@@ -20,6 +20,9 @@ int QuadrocopterModel2DIFace::getId () const
 
 void QuadrocopterModel2DIFace::setCollided (bool collided) {
 	this->collided =collided;
+	for (auto& s : getSensors()) {
+		s = 0;
+	}
 }
 
 bool QuadrocopterModel2DIFace::isCollided () const {

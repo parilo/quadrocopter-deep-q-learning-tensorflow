@@ -19,6 +19,17 @@ public:
 	void reset ();
 	bool isCollidedWith (const QuadrocopterDiscrete2D& q);
 
+	void getPoints (
+		float& x0,
+		float& y0,
+		float& x1,
+		float& y1,
+		float& x2,
+		float& y2,
+		float& x3,
+		float& y3
+	) const;
+
 	void getCoords (
 		float& centerX,
 		float& centerY,
@@ -31,6 +42,8 @@ private:
 
 	float a;
 	float b;
+	float a2;
+	float b2;
 	float x;
 	float y;
 	float angle;

@@ -15,7 +15,7 @@
 static std::mutex storeExperienceMutex;
 static std::mutex countTrainErrorValuesMutex;
 
-QuadrocopterBrain::QuadrocopterBrain () : actExecuted(0), trainExecuted(0) {
+QuadrocopterBrain::QuadrocopterBrain () : actExecuted(1), trainExecuted(0) {
 	brain.setExplorationPeriod (0);
 	experienceLow.setName("low");
 //	experienceMid.setName("mid");

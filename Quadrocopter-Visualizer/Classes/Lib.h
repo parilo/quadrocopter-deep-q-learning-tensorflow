@@ -22,6 +22,15 @@ public:
 	static float degToRad (float deg);
 	static float radToDeg (float rad);
 	
+	static bool getLineSegmentsIntersection (
+		float p0_x, float p0_y, //first line points
+		float p1_x, float p1_y,
+		float p2_x, float p2_y, //sencond lise points
+		float p3_x, float p3_y,
+		float& i_x, float& i_y,
+		float& t//intersection point in part of length of first line
+	);
+	
 };
 
 //    std::string to_string(int value);

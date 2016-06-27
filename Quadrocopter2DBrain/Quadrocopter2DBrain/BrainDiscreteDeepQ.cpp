@@ -445,6 +445,6 @@ void BrainDiscreteDeepQ::predictNextStateAndReward (const ObservationSeqLimited&
 }
 
 void BrainDiscreteDeepQ::setExplorationPeriod (int explorationPeriod) {
-//	this->explorationPeriod = explorationPeriod;
-//	this->explorationPeriodInitial = explorationPeriod;
+	this->explorationPeriod = explorationPeriod;
+	this->explorationPeriodInitial = explorationPeriod;
 }

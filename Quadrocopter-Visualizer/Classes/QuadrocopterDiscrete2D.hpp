@@ -15,6 +15,7 @@
 class QuadrocopterDiscrete2D : public QuadrocopterModel2DIFace {
 public:
 	
+	QuadrocopterDiscrete2D ();
 	void createIn (WorldDiscrete2D& w);
 	void step ();
 
@@ -41,8 +42,14 @@ public:
 	) const override;
 
 	virtual void getMotorPower (float& p1, float& p2) const override;
+	
+	void sense (const ObstacleDiscrete2D& o);
+	void clearSensors ();
+	std::vector<float>& getSensors () const override;
 
 private:
+
+	mutable std::vector<float> sensors;
 
 };
 
