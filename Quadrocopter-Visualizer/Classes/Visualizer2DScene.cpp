@@ -102,9 +102,8 @@ bool Visualizer2DScene::init()
 //			debugPoints.push_back(dp);
 //		}
 //	}
-
-//	reset ();
-//	scheduleUpdate();
+	
+	changeTarget ();
 
 	sim.setSimulationUpdateCallback([this](){
 		update (0);
@@ -309,9 +308,9 @@ void Quadrocopter2DView::setCoordsFrom (
 		);
 		
 		float sensorValue = sensorsData [i] / QuadrocopterModel2DIFace::sensorsMagnitude;
-		if (sensorValue < 1) {
-			sensors->drawLine(origin, S, Color4F(Color4B((1-sensorValue) * 255, 0, sensorValue * 255, 200)));
-		}
+//		if (sensorValue < 1) {
+			sensors->drawLine(origin, S, i==0?Color4F::RED:Color4F(Color4B((1-sensorValue) * 255, 0, sensorValue * 255, 200)));
+//		}
 	}
 	
 }

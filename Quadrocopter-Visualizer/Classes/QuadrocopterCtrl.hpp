@@ -21,6 +21,7 @@ public:
 	void calcReward ();
 	void reset ();
 	double getReward ();
+	void setState (const std::vector<float> state) {}
 	Quadrocopter1D& getModel ();
 
 private:

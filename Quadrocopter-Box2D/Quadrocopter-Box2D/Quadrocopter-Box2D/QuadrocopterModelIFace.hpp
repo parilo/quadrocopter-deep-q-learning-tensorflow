@@ -12,6 +12,8 @@
 #include <vector>
 #include <Box2D/Box2D.h>
 
+#include "ObstacleModelIFace.hpp"
+
 class QuadrocopterModel2DIFace {
 public:
 
@@ -19,12 +21,15 @@ public:
 	constexpr static const float sensorsLength = 20;
 	constexpr static const int sensorsCount = 32;
 	
+	virtual ~QuadrocopterModel2DIFace () {}
+	
 	virtual void setId (int id);
 	virtual int getId () const;
 	virtual void setCollided (bool collided);
 	virtual bool isCollided () const;
 	
-	virtual void setTarget (const b2Vec2& pos) = 0;
+	virtual void setTarget (const b2Vec2& pos);
+	b2Vec2 getTarget ();
 	virtual void setCoords (const b2Vec2& pos, float angle) = 0;
 	virtual void setVelocity (const b2Vec2& v) = 0;
 	virtual void setAngularVelocity (float w) = 0;
@@ -40,12 +45,26 @@ public:
 
 	virtual void getMotorPower (float& p1, float& p2) const = 0;
 	
-	virtual std::vector<float>& getSensors () const = 0;
+	void sense (const ObstacleModel2DIFace& o);
+	virtual std::vector<float>& getSensors () const;
+	void clearSensors ();
 	
 protected:
 
 	int id = 0;
 	bool collided = false;
+	b2Vec2 target;
+
+	mutable std::vector<float> sensors;
+
+	/**
+		coords of the center of quadrotor
+	*/
+	virtual void getMainCoords (
+		float& posX,
+		float& posY,
+		float& angle
+	) const = 0;
 
 };
 

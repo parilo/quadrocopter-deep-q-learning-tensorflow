@@ -67,39 +67,12 @@ void QuadrocopterDiscrete2D::setTarget (const b2Vec2& pos) {
 	targetY = pos.y;
 }
 
-void QuadrocopterDiscrete2D::sense (const ObstacleDiscrete2D& o) {
-	float x0, y0, x1, y1, x2, y2, x3, y3;
-	o.getPoints (x0, y0, x1, y1, x2, y2, x3, y3);
-
-	for (int i=0; i<sensorsCount; i++) {
-		float sx = sensorsLength * sinf (i * 2 * M_PI / sensorsCount - angle + M_PI_2) + posX;
-		float sy = sensorsLength * cosf (i * 2 * M_PI / sensorsCount - angle + M_PI_2) + posY;
-
-		float ix, iy, t;
-		float minT = sensors [i] / sensorsMagnitude;
-		if (Lib::getLineSegmentsIntersection(posX, posY, sx, sy, x0, y0, x1, y1, ix, iy, t)) {
-			if (t < minT) minT = t;
-		}
-		if (Lib::getLineSegmentsIntersection(posX, posY, sx, sy, x1, y1, x2, y2, ix, iy, t)) {
-			if (t < minT) minT = t;
-		}
-		if (Lib::getLineSegmentsIntersection(posX, posY, sx, sy, x2, y2, x3, y3, ix, iy, t)) {
-			if (t < minT) minT = t;
-		}
-		if (Lib::getLineSegmentsIntersection(posX, posY, sx, sy, x3, y3, x0, y0, ix, iy, t)) {
-			if (t < minT) minT = t;
-		}
-		sensors [i] = sensorsMagnitude * minT;
-		
-	}
-}
-
-void QuadrocopterDiscrete2D::clearSensors () {
-	for (auto& s : sensors) {
-		s = sensorsMagnitude;
-	}
-}
-
-std::vector<float>& QuadrocopterDiscrete2D::getSensors () const {
-	return sensors;
+void QuadrocopterDiscrete2D::getMainCoords (
+	float& posX,
+	float& posY,
+	float& angle
+) const {
+	posX = this->posX;
+	posY = this->posY;
+	angle = this->angle;
 }

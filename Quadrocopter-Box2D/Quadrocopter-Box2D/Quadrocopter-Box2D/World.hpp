@@ -34,9 +34,9 @@ class World : public WorldBase<QuadrocopterType, ObstacleType> {
 public:
 
 	World ();
-	~World ();
+	~World () override;
 
-	b2World* world;
+	std::shared_ptr<b2World> world;
 	b2Body* worldBody;
 	
 	void create ();
@@ -60,13 +60,11 @@ template <typename QuadrocopterType, typename ObstacleType>
 World<QuadrocopterType, ObstacleType>::World () : world(nullptr) {}
 
 template <typename QuadrocopterType, typename ObstacleType>
-World<QuadrocopterType, ObstacleType>::~World () {
-	if (world != nullptr) delete world;
-}
+World<QuadrocopterType, ObstacleType>::~World () {}
 
 template <typename QuadrocopterType, typename ObstacleType>
 void World<QuadrocopterType, ObstacleType>::create () {
-	world = new b2World (b2Vec2 (0.0f, 2.0f)); //gravity in the world
+	world = std::shared_ptr<b2World>(new b2World (b2Vec2 (0, 0))); //gravity in the world
 
 	b2BodyDef worldBodyDef;
 	worldBodyDef.type = b2BodyType::b2_staticBody;

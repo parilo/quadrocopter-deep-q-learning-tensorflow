@@ -40,6 +40,37 @@ public:
 		}
 	}
 	
+	template <typename T>
+	static int argmax (const std::vector<T>& items) {
+		int maxIndex = 0;
+		T maxVal = items [maxIndex];
+		int index = 0;
+		for (auto& i : items) {
+			if (i > maxVal) {
+				maxVal = i;
+				maxIndex = index;
+			}
+			index++;
+		}
+		return maxIndex;
+	}
+	
+	template <typename T>
+	static int argmaxabs (const std::vector<T>& items) {
+		int maxIndex = 0;
+		T maxVal = fabs(items [maxIndex]);
+		int index = 0;
+		for (auto& i : items) {
+			float fabsi = fabs(i);
+			if (fabsi > maxVal) {
+				maxVal = fabsi;
+				maxIndex = index;
+			}
+			index++;
+		}
+		return maxIndex;
+	}
+	
 };
 
 #endif /* Lib_hpp */

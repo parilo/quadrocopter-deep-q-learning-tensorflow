@@ -42,14 +42,16 @@ public:
 	) const override;
 
 	virtual void getMotorPower (float& p1, float& p2) const override;
-	
-	void sense (const ObstacleDiscrete2D& o);
-	void clearSensors ();
-	std::vector<float>& getSensors () const override;
+
+protected:
+
+	void getMainCoords (
+		float& posX,
+		float& posY,
+		float& angle
+	) const override;
 
 private:
-
-	mutable std::vector<float> sensors;
 
 };
 

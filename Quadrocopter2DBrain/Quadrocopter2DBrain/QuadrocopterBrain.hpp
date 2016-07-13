@@ -10,6 +10,7 @@
 #define QuadrocopterBrain_hpp
 
 #include <deque>
+#include <list>
 
 #include "BrainDiscreteDeepQ.hpp"
 #include "ExperienceItem.hpp"
@@ -22,7 +23,7 @@ public:
 	static const int observationsInSeq = 1;
 
 	//2d
-	static const int observationSize = 40;
+	static const int observationSize = 50;
 	static const int numActions = 5;
 
 	//1d
@@ -37,6 +38,8 @@ public:
 	
 	void train ();
 	
+	bool getMaxErrorExp (ExperienceItem& expItem);
+	
 private:
 
 	BrainDiscreteDeepQ brain;
@@ -47,16 +50,25 @@ private:
 	std::atomic<long> actExecuted;
 	std::atomic<long> trainExecuted;
 	long storeExecuted = 0;
+	double allReward = 0;
+	
+	double averageErr = 0;
+	std::list<double> lastErrs;
+	std::list<ExperienceItem> maxErrorExp;
+	std::mutex mtxMaxErrorExp;
+	
 	static const int storeEveryNth = 5;
-	static const int trainEveryNth = 15; //act
+	static const int trainEveryNth = 1000; //act
 	static const int trainCount = 1;
-	static const int trainAfter = 15000; //stored exp
+	static const int trainAfter = 20000; //stored exp
 
 	//train
-	static const int minibatchSize = 128;
+	static const int minibatchSize = 32;
 	constexpr static float probHigh = 0.55;
 	constexpr static float probMid = 0.3;
 	constexpr static float probLow = 0.15;
+	
+	void addMaxErrorExp (const ExperienceItem& expItem);
 
 };
 

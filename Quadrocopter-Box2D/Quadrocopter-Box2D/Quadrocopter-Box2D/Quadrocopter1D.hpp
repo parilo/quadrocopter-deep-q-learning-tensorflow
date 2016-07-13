@@ -27,6 +27,9 @@ public:
 	void setMotorPower (float p);
 	
 	void step ();
+	
+	void sense (const Obstacle1D& o) {}
+	void clearSensors () {}
 
 private:
 

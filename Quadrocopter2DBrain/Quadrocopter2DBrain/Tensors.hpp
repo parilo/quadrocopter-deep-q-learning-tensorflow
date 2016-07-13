@@ -79,6 +79,19 @@ using namespace tensorflow;
 }
 
 template<typename T>
+void getTensorValues (const tensorflow::Tensor& t, std::vector<T>& values) {
+using namespace tensorflow;
+	int64 sizei = t.shape().dim_size(0);
+	int64 sizej = t.shape().dim_size(1);
+	auto m = t.matrix<T>();
+	for (int i=0; i<sizei; i++) {
+		for (int j=0; j<sizej; j++) {
+			values.push_back(m (i, j));
+		}
+	}
+}
+
+template<typename T>
 void printTensorVector (const tensorflow::Tensor& t) {
 using namespace tensorflow;
 	int64 sizei = t.shape().dim_size(0);
@@ -87,6 +100,16 @@ using namespace tensorflow;
 		std::cerr << m (i) << " ";
 	}
 	std::cerr << std::endl;
+}
+
+template<typename T>
+void getTensorVectorValues (const tensorflow::Tensor& t, std::vector<T>& values) {
+using namespace tensorflow;
+	int64 sizei = t.shape().dim_size(0);
+	auto m = t.flat<T>();
+	for (int i=0; i<sizei; i++) {
+		values.push_back (m (i));
+	}
 }
 
 #endif /* Tensors_hpp */

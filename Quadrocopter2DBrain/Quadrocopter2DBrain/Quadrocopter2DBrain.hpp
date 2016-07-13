@@ -34,6 +34,10 @@ namespace Quadrocopter2DBrain {
 		const std::vector <float>& prevState,
 		const std::vector <float>& nextState
 	);
+	
+	bool getBigErrorExp (
+		std::vector <float>& state
+	);
 
 }
 

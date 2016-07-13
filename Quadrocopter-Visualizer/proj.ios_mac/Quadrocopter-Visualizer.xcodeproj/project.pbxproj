@@ -15,6 +15,7 @@
 		3A2429BD1CF1DB6100CC89D0 /* QuadrocopterSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A58EF811CDE47AB002EABE2 /* QuadrocopterSimulator.cpp */; };
 		3A2429C21CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */; };
 		3A2429C31CF1DD7400CC89D0 /* QuadrocopterDiscreteCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */; };
+		3A2B93D21D23EDC20082438E /* libBox2D.2.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2B93D11D23EDC20082438E /* libBox2D.2.3.0.dylib */; };
 		3A58EF681CDE4337002EABE2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A58EF671CDE4337002EABE2 /* main.cpp */; };
 		3A58EF751CDE4426002EABE2 /* Lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC7E431CD40D98006C74D3 /* Lib.cpp */; };
 		3A58EF761CDE4432002EABE2 /* QuadrocopterCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC7E3B1CD3D976006C74D3 /* QuadrocopterCtrl.cpp */; };
@@ -202,6 +203,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterDiscreteCtrl.cpp; sourceTree = "<group>"; };
 		3A2429C11CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterDiscreteCtrl.hpp; sourceTree = "<group>"; };
+		3A2B93D11D23EDC20082438E /* libBox2D.2.3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBox2D.2.3.0.dylib; path = ../../installdir/lib/libBox2D.2.3.0.dylib; sourceTree = "<group>"; };
 		3A58EF671CDE4337002EABE2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A58EF691CDE439A002EABE2 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		3A58EF6E1CDE4405002EABE2 /* Quadrocopter-Simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Quadrocopter-Simulator"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +324,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A2B93D21D23EDC20082438E /* libBox2D.2.3.0.dylib in Frameworks */,
 				3AB379E71CD6620D0027DC7D /* libQuadrocopter2DBrain-lib.dylib in Frameworks */,
 				3AE420A71CD2AAA900702C1A /* libQuadrocopter-Box2D-lib.dylib in Frameworks */,
 				ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */,
@@ -396,6 +399,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A2B93D11D23EDC20082438E /* libBox2D.2.3.0.dylib */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
 				8262943D1AAF051F00CB7CF7 /* Security.framework */,
@@ -1017,9 +1021,10 @@
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 					"$(SRCROOT)/../../Quadrocopter2DBrain/Quadrocopter2DBrain",
 					"$(SRCROOT)/../../Quadrocopter-Box2D/Quadrocopter-Box2D/Quadrocopter-Box2D",
+					"$(SRCROOT)/../../installdir/include",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../installdir/lib";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
@@ -1050,9 +1055,10 @@
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 					"$(SRCROOT)/../../Quadrocopter2DBrain/Quadrocopter2DBrain",
 					"$(SRCROOT)/../../Quadrocopter-Box2D/Quadrocopter-Box2D/Quadrocopter-Box2D",
+					"$(SRCROOT)/../../installdir/include",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../installdir/lib";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",

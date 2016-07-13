@@ -33,7 +33,7 @@ journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/T
 # double motor2powerVal,
 # double motor3powerVal,
 # double motor4powerVal
-observation_size = 8+32;
+observation_size = 8+32+10;
 observations_in_seq = 1;
 input_size = observation_size*observations_in_seq;
 
@@ -47,8 +47,10 @@ num_actions = 5;
 
 #brain = MLP([input_size,], [64, 64, 64, 64, 64, 64, num_actions], 
 #            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
-brain = MLP([input_size,], [64, 64, num_actions], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity])
+brain = MLP([input_size,], [512, 64, num_actions], 
+            [tf.sigmoid, tf.sigmoid, tf.identity])
+#            [tf.nn.relu, tf.nn.relu, tf.identity])
+#            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
@@ -61,7 +63,7 @@ optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0001, decay=0.9)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.0001)
 
 # DiscreteDeepQ object
-current_controller = DiscreteDeepQ(input_size, num_actions, brain, optimizer, session, discount_rate=0.9, target_network_update_rate=0.002, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = DiscreteDeepQ(input_size, num_actions, brain, optimizer, session, discount_rate=0.95, target_network_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 
 

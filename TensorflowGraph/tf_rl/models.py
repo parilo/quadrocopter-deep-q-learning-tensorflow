@@ -79,6 +79,7 @@ class MLP(object):
             hidden = self.input_nonlinearity(self.input_layer(xs))
             for layer, nonlinearity in zip(self.layers, self.layer_nonlinearities):
                 hidden = nonlinearity(layer(hidden))
+#                hidden = tf.nn.dropout(nonlinearity(layer(hidden)), 0.5)
             return hidden
 
     def variables(self):

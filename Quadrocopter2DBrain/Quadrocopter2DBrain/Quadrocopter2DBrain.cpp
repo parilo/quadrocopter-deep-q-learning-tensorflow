@@ -48,7 +48,6 @@ namespace Quadrocopter2DBrain {
 		int quadrocopterId,
 		const std::vector<float>& state
 	) {
-		
 		return quadrocopterBrain.act (
 			ObservationSeqLimited (state),
 			randomnessOfQuadrocopter [quadrocopterId]
@@ -91,7 +90,7 @@ namespace Quadrocopter2DBrain {
 //			prevStateSeqs [i] = obs;
 			experienceFilters [i].setExperienceTarget(&quadrocopterBrain);
 			
-			if (i < 4) {
+			if (i < 5) {
 				randomnessOfQuadrocopter.push_back(0.5);
 			} else
 			if (i < 10) {
@@ -105,6 +104,18 @@ namespace Quadrocopter2DBrain {
 
 	void quadrocopterBrainTrain () {
 		quadrocopterBrain.train();
+	}
+	
+	bool getBigErrorExp (
+		std::vector <float>& state
+	) {
+		ExperienceItem expItem;
+		bool got = quadrocopterBrain.getMaxErrorExp(expItem);
+		if (got) {
+			state = expItem.prevStates.getObservation(0).data;
+			return true;
+		}
+		return false;
 	}
 
 }

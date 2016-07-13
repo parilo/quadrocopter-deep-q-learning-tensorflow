@@ -18,6 +18,8 @@ class WorldBase {
 
 public:
 
+	virtual ~WorldBase () {};
+
 	typedef std::function<void (
 		ObstacleType& obstacle,
 		QuadrocopterType& copter
@@ -36,6 +38,12 @@ public:
 		}
 		for (auto& o : obstacles) {
 			o.step();
+		}
+		for (auto& q : quadrocopters) {
+			q.clearSensors ();
+			for (auto& o : obstacles) {
+				q.sense (o);
+			}
 		}
 	}
 

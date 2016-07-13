@@ -28,7 +28,7 @@ public:
 		float& y2,
 		float& x3,
 		float& y3
-	) const;
+	) const override;
 
 	void getCoords (
 		float& centerX,

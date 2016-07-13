@@ -60,3 +60,7 @@ void fillTensor (const ObservationSeqLimited& obs, tensorflow::Tensor& t, int te
 		obIndex %= obs.limit;
 	}
 }
+
+const Observation& ObservationSeqLimited::getObservation (int index) const {
+	return observations [index];
+}

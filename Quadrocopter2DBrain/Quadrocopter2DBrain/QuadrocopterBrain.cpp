@@ -11,15 +11,18 @@
 
 #include "QuadrocopterBrain.hpp"
 #include "Lib.hpp"
+#include "Tensors.hpp"
 
 static std::mutex storeExperienceMutex;
 static std::mutex countTrainErrorValuesMutex;
 
-QuadrocopterBrain::QuadrocopterBrain () : actExecuted(1), trainExecuted(0) {
-	brain.setExplorationPeriod (0);
+QuadrocopterBrain::QuadrocopterBrain () : actExecuted(1), trainExecuted(1) {
+	brain.setExplorationPeriod (1000000);
 	experienceLow.setName("low");
 //	experienceMid.setName("mid");
 //	experienceHigh.setName("high");
+
+	lastErrs.assign (100, 0);
 }
 
 //void QuadrocopterBrain::setObservation (const Observation& state) {
@@ -47,9 +50,9 @@ long QuadrocopterBrain::act (const ObservationSeqLimited& currentState, double r
 
 //	train();
 
-	if (actExecuted % 100000 == 0) {
-		brain.setExplorationPeriod (50000);
-	}
+//	if (actExecuted % 400000 == 0) {
+//		brain.setExplorationPeriod (50000);
+//	}
 	
 	actExecuted++;
 	
@@ -102,6 +105,20 @@ void QuadrocopterBrain::train () {
 
 	float err = brain.trainOnMinibatch(minibatch);
 
+//	std::vector<tensorflow::Tensor> outputTensors;
+//	float err = brain.trainOnMinibatch(minibatch, outputTensors);
+//	lastErrs.push_back (err * 0.01);
+//	averageErr += lastErrs.back();
+//	averageErr -= lastErrs.front();
+//	lastErrs.pop_front();
+//	if (err > 5 * averageErr) {
+//		std::vector<float> itemsErrors;
+//		getTensorVectorValues<float>(outputTensors [0], itemsErrors);
+//		int maxIndex = Lib::argmaxabs<float>(itemsErrors);
+//		std::cout << "--- err: " << err << " / " << itemsErrors[maxIndex] << " / " << averageErr << std::endl;
+//		addMaxErrorExp(*minibatch[maxIndex]);
+//	}
+
 //	for (int i=0; i<10; i++) {
 //		const ExperienceItem* minibatchRndItem = minibatch [ Lib::randInt(0, minibatchSize-1) ];
 //		if (err > 2) {
@@ -139,7 +156,8 @@ void QuadrocopterBrain::train () {
 		for (int i=0; i<countsSize; i++) {
 			std::cerr << " " << counts [i];
 		}
-		std::cerr << " err: " << err << std::endl;
+		std::cerr << " err: " << err << " reward: " << allReward << std::endl;
+		allReward = 0;
 	}
 	countTrainErrorValuesMutex.unlock();
 	
@@ -157,6 +175,8 @@ void QuadrocopterBrain::train () {
 void QuadrocopterBrain::storeExperience (const ExperienceItem& expItem) {
 	std::lock_guard<std::mutex> lock(storeExperienceMutex);
 	
+	allReward += expItem.reward;
+	
 //	if (expItem.rewardLambda > 0.1 || expItem.rewardLambda < -0.1) {
 //		experienceHigh.store(expItem);
 //		return;
@@ -166,4 +186,25 @@ void QuadrocopterBrain::storeExperience (const ExperienceItem& expItem) {
 	}
 	
 	experienceLow.store(expItem);
+}
+
+void QuadrocopterBrain::addMaxErrorExp (const ExperienceItem& expItem) {
+	if (trainExecuted<100) return;
+	std::lock_guard<std::mutex> lock (mtxMaxErrorExp);
+	if (maxErrorExp.size () < 100) {
+		maxErrorExp.push_back (expItem);
+	}
+}
+
+bool QuadrocopterBrain::getMaxErrorExp (ExperienceItem& expItem) {
+	std::lock_guard<std::mutex> lock (mtxMaxErrorExp);
+	if (maxErrorExp.size () > 0) {
+		expItem = maxErrorExp.front();
+		maxErrorExp.pop_front ();
+		if (maxErrorExp.size () < 80) {
+			maxErrorExp.push_back (expItem);
+		}
+		return true;
+	}
+	return false;
 }

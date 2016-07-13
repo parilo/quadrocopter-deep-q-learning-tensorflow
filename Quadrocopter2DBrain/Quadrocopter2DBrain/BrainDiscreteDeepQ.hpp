@@ -45,6 +45,7 @@ public:
 		@return prediction error on choosed minibatch
 	*/
 	float trainOnMinibatch (std::vector<const ExperienceItem*> minibatch);
+	float trainOnMinibatch (std::vector<const ExperienceItem*> minibatch, std::vector<tensorflow::Tensor>& outputTensors);
 	
 	void predictNextStateAndReward (const ObservationSeqLimited& state, long action);
 	void trainEnvModel (const std::vector<ExperienceItem>& experience);

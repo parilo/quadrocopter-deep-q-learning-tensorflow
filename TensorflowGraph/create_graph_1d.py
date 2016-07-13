@@ -55,7 +55,7 @@ brain = MLP([input_size,], [64, 64, num_actions],
 optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0001, decay=0.9)
 
 # DiscreteDeepQ object
-current_controller = DiscreteDeepQ(input_size, num_actions, brain, optimizer, session, discount_rate=0.95, target_network_update_rate=0.005, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = DiscreteDeepQ(input_size, num_actions, brain, optimizer, session, discount_rate=0.95, target_network_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 
 

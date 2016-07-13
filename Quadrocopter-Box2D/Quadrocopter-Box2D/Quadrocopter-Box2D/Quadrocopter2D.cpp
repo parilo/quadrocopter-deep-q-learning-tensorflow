@@ -10,7 +10,9 @@
 
 #include "Quadrocopter2D.hpp"
 
-Quadrocopter2D::Quadrocopter2D () {}
+Quadrocopter2D::Quadrocopter2D () {
+	sensors.resize(sensorsCount);
+}
 
 Quadrocopter2D::~Quadrocopter2D () {};
 
@@ -25,7 +27,7 @@ void Quadrocopter2D::createIn (World2D& w) {
 
 	body = w.world->CreateBody(&bodyDef);
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(0.4f, 0.1f);
+	dynamicBox.SetAsBox(0.4, 0.1);
 	
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
@@ -41,7 +43,7 @@ void Quadrocopter2D::createIn (World2D& w) {
 	b2BodyDef motorDef;
 	motorDef.type = b2_dynamicBody;
 	motorDef.position.Set(-0.25f, 0.0f);
-	motorDef.linearDamping = 0.4f;
+	motorDef.linearDamping = 0.0f;
 	motorDef.angularDamping = 0.1f;
 	motor1Def = motorDef;
 
@@ -57,12 +59,12 @@ void Quadrocopter2D::createIn (World2D& w) {
 	motorFixtureDef.filter.categoryBits = 0x0002;
 	motorFixtureDef.filter.maskBits = 0x0004;
 	
-	motor1->CreateFixture(&fixtureDef);
+	motor1->CreateFixture(&motorFixtureDef);
 
 	motorDef.position.Set(0.25f, 0.0f);
 	motor2Def = motorDef;
 	motor2 = w.world->CreateBody(&motorDef);
-	motor2->CreateFixture(&fixtureDef);
+	motor2->CreateFixture(&motorFixtureDef);
 
 	b2WeldJointDef motor1Joint;
 	motor1Joint.Initialize(body, motor1, motor1Def.position);
@@ -73,24 +75,6 @@ void Quadrocopter2D::createIn (World2D& w) {
 	motor2Joint.Initialize(body, motor2, motor2Def.position);
 	motor2Joint.collideConnected = false;
 	w.world->CreateJoint(&motor2Joint);
-
-//	b2DistanceJointDef motor1Joint;
-//	motor1Joint.Initialize(body, motor1, b2Vec2(-0.2, 0), b2Vec2 (0.5, 0));
-//	motor1Joint.collideConnected = false;
-//	w.world->CreateJoint(&motor1Joint);
-//
-//	b2DistanceJointDef motor2Joint;
-//	motor2Joint.Initialize(body, motor2, b2Vec2(0.2, 0), b2Vec2 (-0.5, 0));
-//	motor2Joint.collideConnected = false;
-//	w.world->CreateJoint(&motor2Joint);
-	
-//	b2PrismaticJointDef lockY;
-//	lockY.localAxisA.Set(1, 0);
-//	lockY.bodyA = w.worldBody;
-//	lockY.bodyB = body;
-//	lockY.localAnchorA = w.worldBody->GetLocalPoint(bodyDef.position);
-//	lockY.localAnchorB = body->GetLocalPoint(bodyDef.position);
-//	w.world->CreateJoint(&lockY);
 }
 
 const b2Vec2& Quadrocopter2D::getPosition () {
@@ -171,8 +155,8 @@ void Quadrocopter2D::getState (std::vector<float>& state) {
 
 	state [0] = body->GetPosition().x;
 	state [1] = body->GetPosition().y;
-	state [2] = sin(body->GetAngle());
-	state [3] = cos(body->GetAngle());
+	state [2] = sinf(body->GetAngle());
+	state [3] = cosf(body->GetAngle());
 	state [4] = body->GetLinearVelocity().x;
 	state [5] = body->GetLinearVelocity().y;
 	state [6] = body->GetAngularVelocity();
@@ -190,4 +174,12 @@ void Quadrocopter2D::getMotorPower (float& p1, float& p2) const {
 	p2 = motor2Power;
 }
 
-void Quadrocopter2D::setTarget (const b2Vec2& pos) {}
+void Quadrocopter2D::getMainCoords (
+	float& posX,
+	float& posY,
+	float& angle
+) const {
+	posX = body->GetPosition ().x;
+	posY = body->GetPosition ().y;
+	angle = body->GetAngle ();
+}

@@ -19,12 +19,11 @@ class Quadrocopter2D : public QuadrocopterModel2DIFace {
 public:
 
 	Quadrocopter2D ();
-	virtual ~Quadrocopter2D ();
+	~Quadrocopter2D () override;
 	
 	void createIn (World2D& w);
 
 	const b2Vec2& getPosition ();
-	void setTarget (const b2Vec2& pos) override;
 	void setCoords (const b2Vec2& pos, float angle) override;
 	float getRotation ();
 	void setVelocity (const b2Vec2& v) override;
@@ -49,9 +48,14 @@ public:
 	void getMotorPower (float& p1, float& p2) const override;
 	
 	void step ();
-	std::vector<float>& getSensors () const override {
-		return sensors;
-	};
+
+protected:
+
+	void getMainCoords (
+		float& posX,
+		float& posY,
+		float& angle
+	) const override;
 
 private:
 
@@ -64,8 +68,6 @@ private:
 	b2Body* body;
 	b2Body* motor1;
 	b2Body* motor2;
-	
-	mutable std::vector<float> sensors;
 	
 };
 

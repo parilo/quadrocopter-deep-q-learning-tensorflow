@@ -151,7 +151,14 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 			if (stepIndex % exerciseLengthInSteps == 0) {
 				reset ();
 			}
-			
+
+//			if (stepIndex % 2 == 0) {
+//				std::vector<float> state;
+//				if (Quadrocopter2DBrain::getBigErrorExp(state)) {
+//					qcopterCtrls [Lib::randInt(0, 10)].setState (state);
+//				}
+//			}
+
 			simulation.step();
 			simulationUpdateCallback ();
 			stepIndex++;

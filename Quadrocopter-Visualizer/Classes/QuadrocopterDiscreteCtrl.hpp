@@ -23,6 +23,7 @@ public:
 	void reset ();
 	double getReward ();
 	int getPosition ();
+	void setState (const std::vector<float> state) {}
 	QuadrocopterDiscrete& getModel ();
 
 private:
