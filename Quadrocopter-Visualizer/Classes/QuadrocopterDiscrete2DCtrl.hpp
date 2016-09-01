@@ -26,6 +26,8 @@ public:
 	double getReward ();
 	void setState (const std::vector<float> state);
 	QuadrocopterModel2DIFace& getModel ();
+	void onTrainStep (int trainStepIndex) {}
+	void onSimulationStep (int stepIndex);
 
 private:
 

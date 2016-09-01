@@ -284,8 +284,8 @@ void Quadrocopter2DView::setCoordsFrom (
 	float p1;
 	float p2;
 	model.getMotorPower(p1, p2);
-	motor1->setColor(Color3B(0, p1 > 0?255:64, 0));
-	motor2->setColor(Color3B(p2 > 0?255:64, 0, 0));
+	motor1->setColor(Color3B(0, 64 + p1 * (255-64) / 20.0, 0));
+	motor2->setColor(Color3B(64 + p2 * (255-64) / 20.0, 0, 0));
 	
 	if (model.isCollided ()) {
 		body->setColor(Color3B::RED);
@@ -299,6 +299,7 @@ void Quadrocopter2DView::setCoordsFrom (
 	sensors->clear();
 	Vec2 origin (0, 0);
 //	float angle = bodyRotation * M_PI / 180 - M_PI_2;
+
 	std::vector<float>& sensorsData = model.getSensors ();
 	for (int i=0; i<QuadrocopterModel2DIFace::sensorsCount; i++) {
 		float m = sensorsData [i] * visualizerZoom * QuadrocopterModel2DIFace::sensorsLength / QuadrocopterModel2DIFace::sensorsMagnitude;
@@ -308,9 +309,12 @@ void Quadrocopter2DView::setCoordsFrom (
 		);
 		
 		float sensorValue = sensorsData [i] / QuadrocopterModel2DIFace::sensorsMagnitude;
-//		if (sensorValue < 1) {
-			sensors->drawLine(origin, S, i==0?Color4F::RED:Color4F(Color4B((1-sensorValue) * 255, 0, sensorValue * 255, 200)));
+//		if (sensorValue < 1 || i==0) {
+//			sensors->drawLine(origin, S, i==0?Color4F::RED:Color4F(Color4B((1-sensorValue) * 255, 0, sensorValue * 255, 200)));
 //		}
+		if (sensorValue < 1) {
+			sensors->drawLine(origin, S, Color4F(Color4B((1-sensorValue) * 255, 0, sensorValue * 255, 200)));
+		}
 	}
 	
 }

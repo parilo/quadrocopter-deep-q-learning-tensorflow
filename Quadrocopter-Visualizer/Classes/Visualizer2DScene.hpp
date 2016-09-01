@@ -51,8 +51,9 @@ class Visualizer2DScene : public cocos2d::Layer
 {
 public:
 	
-	QuadrocopterSimulator2D sim;
+//	QuadrocopterSimulator2D sim;
 //	QuadrocopterSimulatorDiscrete2D sim;
+	QuadrocopterSimulatorCont2D sim;
 	int simulationStep;
 	
 	std::vector<Quadrocopter2DView> qcopterViews;

@@ -11,6 +11,7 @@
 		3A2FF9011CD010860039DC87 /* Quadrocopter1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF8FF1CD010860039DC87 /* Quadrocopter1D.cpp */; };
 		3A2FF9051CD0123D0039DC87 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9031CD0123D0039DC87 /* World.cpp */; };
 		3A2FF90B1CD01AF70039DC87 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2FF9091CD01AF70039DC87 /* Simulation.cpp */; };
+		3A4E34891D63883A002F4B31 /* WorldObjectInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A4E34871D63883A002F4B31 /* WorldObjectInfo.cpp */; };
 		3A786E171CCBF84D00FB9BC2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A786E161CCBF84D00FB9BC2 /* main.cpp */; };
 		3A9AD0981D1D10C100EF75ED /* Obstacle1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD0961D1D10C100EF75ED /* Obstacle1D.cpp */; };
 		3A9AD09B1D1D10D100EF75ED /* Obstacle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A9AD0991D1D10D100EF75ED /* Obstacle2D.cpp */; };
@@ -49,6 +50,8 @@
 		3A2FF9041CD0123D0039DC87 /* World.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = World.hpp; sourceTree = "<group>"; };
 		3A2FF9091CD01AF70039DC87 /* Simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simulation.cpp; sourceTree = "<group>"; };
 		3A2FF90A1CD01AF70039DC87 /* Simulation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Simulation.hpp; sourceTree = "<group>"; };
+		3A4E34871D63883A002F4B31 /* WorldObjectInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldObjectInfo.cpp; sourceTree = "<group>"; };
+		3A4E34881D63883A002F4B31 /* WorldObjectInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WorldObjectInfo.hpp; sourceTree = "<group>"; };
 		3A786E131CCBF84D00FB9BC2 /* Quadrocopter-Box2D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Quadrocopter-Box2D"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A786E161CCBF84D00FB9BC2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A9AD0961D1D10C100EF75ED /* Obstacle1D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Obstacle1D.cpp; sourceTree = "<group>"; };
@@ -100,6 +103,8 @@
 				3A9AD0971D1D10C100EF75ED /* Obstacle1D.hpp */,
 				3A9AD0991D1D10D100EF75ED /* Obstacle2D.cpp */,
 				3A9AD09A1D1D10D100EF75ED /* Obstacle2D.hpp */,
+				3A4E34871D63883A002F4B31 /* WorldObjectInfo.cpp */,
+				3A4E34881D63883A002F4B31 /* WorldObjectInfo.hpp */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				3AF86AB61D15DDDB008E4D2F /* QuadrocopterModelIFace.cpp in Sources */,
 				3A9AD09E1D1D172B00EF75ED /* ObstacleModelIFace.cpp in Sources */,
 				3A9AD0A21D1D1D1E00EF75ED /* WorldBase.cpp in Sources */,
+				3A4E34891D63883A002F4B31 /* WorldObjectInfo.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

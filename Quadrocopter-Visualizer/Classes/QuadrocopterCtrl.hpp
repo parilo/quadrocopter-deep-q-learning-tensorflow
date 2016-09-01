@@ -16,17 +16,20 @@ public:
 	
 	QuadrocopterCtrl (int id, Quadrocopter1D& simulationModel);
 	
-	void act ();
-	void storeExperience ();
-	void calcReward ();
+	virtual void act ();
+	virtual void storeExperience ();
+	virtual void calcReward ();
 	void reset ();
 	double getReward ();
 	void setState (const std::vector<float> state) {}
 	Quadrocopter1D& getModel ();
+	void onTrainStep (int trainStepIndex) {}
+	virtual void onSimulationStep (int stepIndex) {}
 
-private:
+protected:
 
 	int id;
+	bool reseted = false;
 	Quadrocopter1D& simulationModel;
 	long action = -1;
 	int timeReward = 0;

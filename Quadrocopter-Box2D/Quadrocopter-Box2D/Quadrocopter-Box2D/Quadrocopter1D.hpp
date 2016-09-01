@@ -19,6 +19,9 @@ public:
 	virtual ~Quadrocopter1D ();
 	
 	void createIn (World1D& w);
+	void setId (int id) {}
+	void setCollided (bool collided) {}
+	bool isCollided () const { return false; }
 
 	float getPosition ();
 	void setPosition (float pos);

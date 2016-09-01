@@ -18,14 +18,18 @@ Quadrocopter2D::~Quadrocopter2D () {};
 
 void Quadrocopter2D::createIn (World2D& w) {
 
+	world = &w;
+	worldObjectInfo = std::shared_ptr<WorldObjectInfo> (new WorldObjectInfo (WorldObjectInfo::Type::Quadrocopter, id));
+
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.linearDamping = 0.8f;
-	bodyDef.angularDamping = 0.8f;
+	bodyDef.linearDamping = 0.0f;
+	bodyDef.angularDamping = 0.1f;
 //	bodyDef.fixedRotation = true;
 
 	body = w.world->CreateBody(&bodyDef);
+	body->SetUserData(worldObjectInfo.get());
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(0.4, 0.1);
 	
@@ -48,6 +52,7 @@ void Quadrocopter2D::createIn (World2D& w) {
 	motor1Def = motorDef;
 
 	motor1 = w.world->CreateBody(&motorDef);
+	motor1->SetUserData(worldObjectInfo.get());
 	b2PolygonShape motorShape;
 	motorShape.SetAsBox(0.1f, 0.2f);
 	
@@ -64,6 +69,7 @@ void Quadrocopter2D::createIn (World2D& w) {
 	motorDef.position.Set(0.25f, 0.0f);
 	motor2Def = motorDef;
 	motor2 = w.world->CreateBody(&motorDef);
+	motor2->SetUserData(worldObjectInfo.get());
 	motor2->CreateFixture(&motorFixtureDef);
 
 	b2WeldJointDef motor1Joint;
@@ -181,5 +187,29 @@ void Quadrocopter2D::getMainCoords (
 ) const {
 	posX = body->GetPosition ().x;
 	posY = body->GetPosition ().y;
-	angle = body->GetAngle ();
+	angle = body->GetAngle () - M_PI_2;
+}
+
+void Quadrocopter2D::setLinearDamping (float d) {
+	body->SetLinearDamping(d);
+}
+
+void Quadrocopter2D::setAngularDamping (float d) {
+	body->SetAngularDamping(d);
+}
+
+float Quadrocopter2D::getLinearDamping () {
+	return body->GetLinearDamping();
+}
+
+float Quadrocopter2D::getAngularDamping () {
+	return body->GetAngularDamping();
+}
+
+World2D& Quadrocopter2D::getWorld () {
+	return *world;
+}
+
+bool Quadrocopter2D::isPointInsideObstacles (const b2Vec2& point) {
+	return world->isPointInsideObstacles(point);
 }

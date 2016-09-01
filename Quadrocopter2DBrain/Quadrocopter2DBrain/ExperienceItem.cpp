@@ -35,17 +35,17 @@ action(action)
 
 {}
 
-//ExperienceItem::ExperienceItem (
-//	const ObservationSeqLimited& prevStates,
-//	const ObservationSeqLimited& nextStates,
-//	double reward,
-//	const std::vector<float>& actionsScores
-//):
-//
-//prevStates(prevStates),
-//nextStates(nextStates),
-//reward(reward),
-//rewardLambda(reward),
-//actionsScores(actionsScores)
-//
-//{}
+ExperienceItem::ExperienceItem (
+	const ObservationSeqLimited& prevStates,
+	const ObservationSeqLimited& nextStates,
+	double reward,
+	const std::vector<float>& actionCont
+):
+
+prevStates(prevStates),
+nextStates(nextStates),
+reward(reward),
+rewardLambda(reward),
+actionCont(actionCont)
+
+{}

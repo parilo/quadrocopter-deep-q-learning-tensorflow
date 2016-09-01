@@ -10,9 +10,11 @@
 #define Quadrocopter2D_hpp
 
 #include <vector>
+#include <iostream>
 
 #include "World.hpp"
 #include "QuadrocopterModelIFace.hpp"
+#include "WorldObjectInfo.hpp"
 
 class Quadrocopter2D : public QuadrocopterModel2DIFace {
 
@@ -31,6 +33,11 @@ public:
 	void setAngularVelocity (float w) override;
 	float getAngularVelocity ();
 	
+	void setLinearDamping (float d);
+	void setAngularDamping (float d);
+	float getLinearDamping ();
+	float getAngularDamping ();
+	
 	void getPartsCoords (
 		b2Vec2& bodyPos,
 		b2Vec2& motor1Pos,
@@ -48,6 +55,9 @@ public:
 	void getMotorPower (float& p1, float& p2) const override;
 	
 	void step ();
+	
+	World2D& getWorld ();
+	bool isPointInsideObstacles (const b2Vec2& point);
 
 protected:
 
@@ -68,6 +78,9 @@ private:
 	b2Body* body;
 	b2Body* motor1;
 	b2Body* motor2;
+	
+	World2D* world;
+	std::shared_ptr<WorldObjectInfo> worldObjectInfo;
 	
 };
 

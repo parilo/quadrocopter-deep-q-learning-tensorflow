@@ -1,19 +1,19 @@
 #include <iostream>
 
-#include "HelloWorldScene.h"
+#include "Visualizer1DScene.h"
 #include "Quadrocopter2DBrain.hpp"
 
 USING_NS_CC;
 
-HelloWorld::HelloWorld () : sim() {}
+Visualizer1DScene::Visualizer1DScene () : sim() {}
 
-Scene* HelloWorld::createScene()
+Scene* Visualizer1DScene::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
-    auto layer = HelloWorld::create();
+    auto layer = Visualizer1DScene::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -23,7 +23,7 @@ Scene* HelloWorld::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool Visualizer1DScene::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -43,7 +43,7 @@ bool HelloWorld::init()
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+                                           CC_CALLBACK_1(Visualizer1DScene::menuCloseCallback, this));
     
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
                                 origin.y + closeItem->getContentSize().height/2));
@@ -86,7 +86,7 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::update(float delta) {
+void Visualizer1DScene::update(float delta) {
 
 //	sim.update();
 
@@ -98,13 +98,13 @@ void HelloWorld::update(float delta) {
 	
 }
 
-void HelloWorld::reset () {
+void Visualizer1DScene::reset () {
 	sim.reset();
 }
 
 
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
+void Visualizer1DScene::menuCloseCallback(Ref* pSender)
 {
 	sim.stop();
     Director::getInstance()->end();

@@ -39,7 +39,11 @@ void Quadrocopter2DCtrl::calcReward () {
 //	if (nextR < 2) {
 //		reward = 5 * exp (-nextR/40);
 //	} else {
-		reward = (prevR - nextR);
+
+//		1 -> 0.2
+
+		reward = rewardWeight * (prevR - nextR);// * (1.1 * exp (-nextR*nextR/100) + 0.9);
+		if (reward > 0) reward *= 0.5;
 //	}
 //CCLOG("--- reward: %f %f %f %f", prevR, nextR, (prevR - nextR), reward);
 
@@ -87,6 +91,21 @@ void Quadrocopter2DCtrl::readState (std::vector<float>& state) {
 //10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
 }
 
+void Quadrocopter2DCtrl::onSimulationStep (int stepIndex) {
+
+	auto& pos = simulationModel.getPosition();
+	if (fabsf(pos.x) > 200 || fabsf(pos.y) > 200) {
+		reset();
+		return;
+	}
+	
+	if (simulationModel.isCollided()) {
+		reset();
+		return;
+	}
+	
+}
+
 void Quadrocopter2DCtrl::act () {
 
 	//getting prev state
@@ -95,33 +114,58 @@ void Quadrocopter2DCtrl::act () {
 	action = Quadrocopter2DBrain::quadrocopterBrainAct(id, prevState);
 	switch (action) {
 		case 0:
-			simulationModel.setMotor1Power(0.2);
+			simulationModel.setMotor1Power(2);
 			simulationModel.setMotor2Power(0);
 		break;
 		
 		case 1:
 			simulationModel.setMotor1Power(0);
-			simulationModel.setMotor2Power(0.2);
+			simulationModel.setMotor2Power(2);
 		break;
 		
 		case 2:
-			simulationModel.setMotor1Power(7);
-			simulationModel.setMotor2Power(7);
+			simulationModel.setMotor1Power(8);
+			simulationModel.setMotor2Power(6);
 		break;
 		
 		case 3:
+			simulationModel.setMotor1Power(6);
+			simulationModel.setMotor2Power(8);
+		break;
+		
+		case 4:
+			simulationModel.setMotor1Power(14);
+			simulationModel.setMotor2Power(12);
+		break;
+		
+		case 5:
+			simulationModel.setMotor1Power(12);
+			simulationModel.setMotor2Power(14);
+		break;
+		
+		case 6:
+			simulationModel.setMotor1Power(12);
+			simulationModel.setMotor2Power(12);
+		break;
+		
+		case 7:
 			simulationModel.setMotor1Power(0);
 			simulationModel.setMotor2Power(0);
 		break;
 		
-		case 4:
+		case 8:
 		break;
 	}
+	
+//	time += 0.01;
+//	if (time >= 10) time = 1;
+
+	reseted = false;
 }
 
 void Quadrocopter2DCtrl::storeExperience () {
 
-	if (action == -1) {
+	if (reseted) {
 		return;
 	}
 	
@@ -130,15 +174,23 @@ void Quadrocopter2DCtrl::storeExperience () {
 	calcReward();
 	
 	Quadrocopter2DBrain::storeQuadrocopterExperience(id, reward, action, prevState, nextState);
-
-//	printf("%4.2f\n", pos);
 }
 
 void Quadrocopter2DCtrl::reset () {
+	reseted = true;
 	action = -1;
+//	time = 1;
+
+	while (true) {
+		b2Vec2 p (Lib::randFloat(-100, 100), Lib::randFloat(-100, 100));
+		if (!simulationModel.isPointInsideObstacles(p)) {
+			simulationModel.setCoords(p, Lib::randFloat(0, 360));
+			break;
+		}
+	}
+
 	simulationModel.setVelocity(b2Vec2(Lib::randFloat(-10, 10), Lib::randFloat(-10, 10)));
 	simulationModel.setAngularVelocity(0);
-	simulationModel.setCoords(b2Vec2(Lib::randFloat(-100, 100), Lib::randFloat(-100, 100)), Lib::randFloat(0, 360));
 }
 
 double Quadrocopter2DCtrl::getReward () {
@@ -151,4 +203,25 @@ QuadrocopterModel2DIFace& Quadrocopter2DCtrl::getModel () {
 
 void Quadrocopter2DCtrl::resetAction () {
 	action = -1;
+}
+
+void Quadrocopter2DCtrl::onTrainStep (int trainStepIndex) {
+//	if (id != 0) return;
+//	if (trainStepIndex % 50 == 0) {
+//	
+//		gravity += 0.0002;
+//		if (gravity > 5) gravity = 5;
+//		simulationModel.getWorld().world->SetGravity(b2Vec2(0, gravity));
+//		std::cout << "--- gravity: " << gravity << std::endl;
+//	
+////		linearDamping -= 0.00002;
+////		angularDamping -= 0.00002;
+////		rewardWeight -= 0.00004;
+////		if (linearDamping < 0) linearDamping = 0;
+////		if (angularDamping < 0.1) angularDamping = 0.1;
+////		if (rewardWeight < 0.2) rewardWeight = 0.2;
+////		simulationModel.setLinearDamping(linearDamping);
+////		simulationModel.setAngularDamping(angularDamping);
+////if (id == 0) std::cout << "--- model damping: " << linearDamping << " " << angularDamping << " " << rewardWeight << std::endl;
+//	}
 }

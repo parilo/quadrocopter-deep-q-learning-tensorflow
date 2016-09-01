@@ -32,7 +32,7 @@ journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/T
 # double motor2powerVal,
 # double motor3powerVal,
 # double motor4powerVal
-observation_size = 2;
+observation_size = 4;
 observations_in_seq = 1;
 input_size = observation_size*observations_in_seq;
 

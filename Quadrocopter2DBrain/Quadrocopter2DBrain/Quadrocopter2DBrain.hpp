@@ -25,12 +25,26 @@ namespace Quadrocopter2DBrain {
 		const std::vector<float>& state
 	);
 	
-	void quadrocopterBrainTrain ();
+	void quadrocopterBrainActCont(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		std::vector<float>& action
+	);
+	
+	bool quadrocopterBrainTrain ();
 
 	void storeQuadrocopterExperience (
 		int quadrocopterId,
 		double reward,
 		long action,
+		const std::vector <float>& prevState,
+		const std::vector <float>& nextState
+	);
+
+	void storeQuadrocopterExperienceCont (
+		int quadrocopterId,
+		double reward,
+		std::vector<float>& action,
 		const std::vector <float>& prevState,
 		const std::vector <float>& nextState
 	);

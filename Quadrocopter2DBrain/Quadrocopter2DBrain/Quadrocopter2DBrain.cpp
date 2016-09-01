@@ -16,6 +16,7 @@
 
 #include "QuadrocopterBrain.hpp"
 #include "ExpLambdaFilter.hpp"
+#include "DDPG.hpp"
 
 using namespace std;
 
@@ -23,7 +24,8 @@ namespace Quadrocopter2DBrain {
 
 	const int numOfQuadrocopters = 50;
 
-	QuadrocopterBrain quadrocopterBrain;
+	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
+//	QuadrocopterBrain quadrocopterBrain;
 //	vector<ObservationSeqLimited> currStateSeqs;
 //	vector<ObservationSeqLimited> prevStateSeqs;
 	vector<ExpLambdaFilter> experienceFilters; //one filter for each quadrocopter;
@@ -54,6 +56,18 @@ namespace Quadrocopter2DBrain {
 		);
 	}
 
+	void quadrocopterBrainActCont(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		std::vector<float>& action
+	) {
+		quadrocopterBrain.actCont (
+			ObservationSeqLimited (state),
+			action,
+			randomnessOfQuadrocopter [quadrocopterId]
+		);
+	}
+
 	void storeQuadrocopterExperience (
 		int quadrocopterId,
 		double reward,
@@ -70,6 +84,23 @@ namespace Quadrocopter2DBrain {
 		);
 
 //		experienceFilters [quadrocopterId].storeExperience(expItem);
+		quadrocopterBrain.storeExperience(expItem);
+	}
+
+	void storeQuadrocopterExperienceCont (
+		int quadrocopterId,
+		double reward,
+		std::vector<float>& action,
+		const std::vector <float>& prevState,
+		const std::vector <float>& nextState
+	) {
+		ExperienceItem expItem (
+			ObservationSeqLimited (prevState),
+			ObservationSeqLimited (nextState),
+			reward,
+			action
+		);
+		
 		quadrocopterBrain.storeExperience(expItem);
 	}
 
@@ -90,7 +121,7 @@ namespace Quadrocopter2DBrain {
 //			prevStateSeqs [i] = obs;
 			experienceFilters [i].setExperienceTarget(&quadrocopterBrain);
 			
-			if (i < 5) {
+			if (i < 2) {
 				randomnessOfQuadrocopter.push_back(0.5);
 			} else
 			if (i < 10) {
@@ -102,8 +133,8 @@ namespace Quadrocopter2DBrain {
 		}
 	}
 
-	void quadrocopterBrainTrain () {
-		quadrocopterBrain.train();
+	bool quadrocopterBrainTrain () {
+		return quadrocopterBrain.train();
 	}
 	
 	bool getBigErrorExp (

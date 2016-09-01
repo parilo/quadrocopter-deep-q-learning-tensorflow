@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "Visualizer1DScene.h"
 #include "Visualizer2DScene.hpp"
 #include "Lib.h"
 
@@ -78,7 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-//    auto scene = HelloWorld::createScene();
+//    auto scene = Visualizer1DScene::createScene();
     auto scene = Visualizer2DScene::createScene();
 
     // run

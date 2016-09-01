@@ -9,8 +9,13 @@
 #ifndef Obstacle1D_hpp
 #define Obstacle1D_hpp
 
+#include "World.hpp"
+
 class Obstacle1D {
 public:
+
+	void createIn (World1D& w) {}
+	void setId (int id) {}
 
 	void step () {}
 	void reset () {}

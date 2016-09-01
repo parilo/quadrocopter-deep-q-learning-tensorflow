@@ -7,6 +7,7 @@
 //
 
 #include "World.hpp"
+#include "WorldObjectInfo.hpp"
 
 float degToRad (float deg) {
 	return M_PI * deg / 180;

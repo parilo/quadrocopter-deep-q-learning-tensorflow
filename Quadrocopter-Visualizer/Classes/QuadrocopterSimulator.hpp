@@ -28,6 +28,8 @@
 #include "ConsumerProducerSyncronizer.hpp"
 #include "WorldDiscrete.hpp"
 #include "QuadrocopterDiscrete2D.hpp"
+#include "QuadrocopterContActionCtrl.hpp"
+#include "Quadrocopter2DContActionCtrl.hpp"
 #include "Lib.h"
 
 template <
@@ -58,6 +60,10 @@ public:
 	}
 
 private:
+
+	int trainStepIndex = 1;
+	std::mutex mtxChangeQCopterParams;
+	std::mutex mtxBox2DQCopterWorkers;
 
 	SimulationTmpl<WorldType, QuadrocopterType> simulation;
 	std::atomic<int> stepIndex;
@@ -130,8 +136,12 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 			while (allowThreadsWork) {
 
 				for (int i=beginIndex; i<endIndex; i++) {
-					qcopterCtrls [i].storeExperience();
-					qcopterCtrls [i].act();
+					QuadrocopterCtrlType& q = qcopterCtrls [i];
+					q.storeExperience();
+					mtxBox2DQCopterWorkers.lock();
+					q.onSimulationStep (stepIndex);
+					mtxBox2DQCopterWorkers.unlock();
+					q.act();
 				}
 
 				qcopterActSync.reportProducerDone(workerIndex);
@@ -152,6 +162,10 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 				reset ();
 			}
 
+			if (Lib::randFloat(0, 100) < 1) {
+				qcopterCtrls [Lib::randInt(0, quadrocoptersCount-1)].reset ();
+			}
+
 //			if (stepIndex % 2 == 0) {
 //				std::vector<float> state;
 //				if (Quadrocopter2DBrain::getBigErrorExp(state)) {
@@ -159,9 +173,14 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 //				}
 //			}
 
+			std::lock_guard<std::mutex> lock (mtxChangeQCopterParams);
 			simulation.step();
 			simulationUpdateCallback ();
 			stepIndex++;
+			
+//			for (auto& q : qcopterCtrls) {
+//				q.onSimulationStep (stepIndex);
+//			}
 
 			qcopterActSync.reportConsumerDone();
         }
@@ -169,7 +188,13 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 	
 	trainWorker = [this] () {
 		while (allowThreadsWork) {
-			Quadrocopter2DBrain::quadrocopterBrainTrain();
+			if (Quadrocopter2DBrain::quadrocopterBrainTrain()) {
+				std::lock_guard<std::mutex> lock (mtxChangeQCopterParams);
+				for (auto& q : qcopterCtrls) {
+					q.onTrainStep (trainStepIndex);
+				}
+				trainStepIndex++;
+			}
 		}
 	};
 	
@@ -271,7 +296,11 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 
 typedef QuadrocopterSimulatorTmpl<World1D, QuadrocopterCtrl, Quadrocopter1D, Obstacle1D> QuadrocopterSimulator;
 typedef QuadrocopterSimulatorTmpl<WorldDiscrete1D, QuadrocopterDiscreteCtrl, QuadrocopterDiscrete, ObstacleDiscrete1D> QuadrocopterSimulatorDiscrete;
+
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulator2D;
 typedef QuadrocopterSimulatorTmpl<WorldDiscrete2D, QuadrocopterDiscrete2DCtrl, QuadrocopterDiscrete2D, ObstacleDiscrete2D> QuadrocopterSimulatorDiscrete2D;
+
+typedef QuadrocopterSimulatorTmpl<World1D, QuadrocopterContActionCtrl, Quadrocopter1D, Obstacle1D> QuadrocopterSimulatorCont1D;
+typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorCont2D;
 
 #endif /* QuadrocopterSimulator_hpp */

@@ -18,7 +18,7 @@ class QuadrocopterModel2DIFace {
 public:
 
 	constexpr static const float sensorsMagnitude = 10;
-	constexpr static const float sensorsLength = 20;
+	constexpr static const float sensorsLength = 80;
 	constexpr static const int sensorsCount = 32;
 	
 	virtual ~QuadrocopterModel2DIFace () {}

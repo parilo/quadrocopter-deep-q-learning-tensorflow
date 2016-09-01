@@ -26,6 +26,7 @@ public:
 	)> CollideListener;
 
 	std::vector<QuadrocopterType>& getQuadrocopters ();
+	QuadrocopterType& getQuadrocopter (int i) { return quadrocopters [i]; }
 	ObstacleType& getObstacle (int i);
 	
 	std::vector<ObstacleType>& getObstacles () {
@@ -39,6 +40,9 @@ public:
 		for (auto& o : obstacles) {
 			o.step();
 		}
+	}
+	
+	virtual void afterStep () {
 		for (auto& q : quadrocopters) {
 			q.clearSensors ();
 			for (auto& o : obstacles) {
@@ -76,12 +80,14 @@ ObstacleType& WorldBase<QuadrocopterType, ObstacleType>::getObstacle (int i) {
 template <typename QuadrocopterType, typename ObstacleType>
 QuadrocopterType& WorldBase<QuadrocopterType, ObstacleType>::createQuadrocopter () {
 	quadrocopters.emplace_back();
+	quadrocopters.back().setId (quadrocopters.size()-1);
 	return quadrocopters.back ();
 }
 
 template <typename QuadrocopterType, typename ObstacleType>
 ObstacleType& WorldBase<QuadrocopterType, ObstacleType>::createObstacle () {
 	obstacles.emplace_back();
+	obstacles.back().setId (obstacles.size()-1);
 	return obstacles.back ();
 }
 

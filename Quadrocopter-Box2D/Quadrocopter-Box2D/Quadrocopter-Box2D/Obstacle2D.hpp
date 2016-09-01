@@ -10,12 +10,16 @@
 #define Obstacle2D_hpp
 
 #include "ObstacleModelIFace.hpp"
+#include "World.hpp"
+#include "WorldObjectInfo.hpp"
 
-class Obstacle2D : public ObstacleModel2DIFace {
+class Obstacle2D : public ObstacleModel2DIFace, public WorldObject {
 public:
 
+	void createIn (World2D& w);
+
 	void step () {}
-	void reset () {}
+	void reset ();
 	
 	void getCoords (
 		float& centerX,
@@ -35,6 +39,17 @@ public:
 		float& x3,
 		float& y3
 	) const override;
+	
+	bool containsPoint (const b2Vec2& point);
+
+private:
+
+	b2Body* body;
+	World2D* world;
+	std::shared_ptr<WorldObjectInfo> worldObjectInfo;
+	
+	float a;
+	float b;
 	
 };
 

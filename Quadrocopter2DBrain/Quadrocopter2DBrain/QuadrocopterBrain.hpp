@@ -15,6 +15,7 @@
 #include "BrainDiscreteDeepQ.hpp"
 #include "ExperienceItem.hpp"
 #include "ExperienceBank.hpp"
+#include "BrainAlgorithm.hpp"
 
 class QuadrocopterBrain {
 
@@ -24,25 +25,30 @@ public:
 
 	//2d
 	static const int observationSize = 50;
-	static const int numActions = 5;
+	static const int numActions = 9;
+	static const int contActionSize = 2;
 
 	//1d
-//	static const int observationSize = 2;
+//	static const int observationSize = 4;
 //	static const int numActions = 3;
+//	static const int contActionSize = 1;
 
 	QuadrocopterBrain ();
+	QuadrocopterBrain (std::shared_ptr<BrainAlgorithm> algorithm);
 	
 	long act (const ObservationSeqLimited& state, double randomness);
+	void actCont (const ObservationSeqLimited& state, std::vector<float>& action, double randomness);
 	
 	void storeExperience (const ExperienceItem& expItem);
 	
-	void train ();
+	bool train ();
 	
 	bool getMaxErrorExp (ExperienceItem& expItem);
 	
 private:
 
-	BrainDiscreteDeepQ brain;
+	std::shared_ptr<BrainAlgorithm> brain;
+//	BrainDiscreteDeepQ brain;
 	ExperienceBank experienceLow;
 //	ExperienceBank experienceMid;
 //	ExperienceBank experienceHigh;
@@ -60,7 +66,7 @@ private:
 	static const int storeEveryNth = 5;
 	static const int trainEveryNth = 1000; //act
 	static const int trainCount = 1;
-	static const int trainAfter = 20000; //stored exp
+	static const int trainAfter = 200000; //stored exp
 
 	//train
 	static const int minibatchSize = 32;

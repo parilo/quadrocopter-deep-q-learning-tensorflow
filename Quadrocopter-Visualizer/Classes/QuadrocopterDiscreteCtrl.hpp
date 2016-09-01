@@ -25,6 +25,8 @@ public:
 	int getPosition ();
 	void setState (const std::vector<float> state) {}
 	QuadrocopterDiscrete& getModel ();
+	void onTrainStep (int trainStepIndex) {}
+	void onSimulationStep (int stepIndex) {}
 
 private:
 

@@ -16,6 +16,8 @@
 		3A2429C21CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */; };
 		3A2429C31CF1DD7400CC89D0 /* QuadrocopterDiscreteCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */; };
 		3A2B93D21D23EDC20082438E /* libBox2D.2.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2B93D11D23EDC20082438E /* libBox2D.2.3.0.dylib */; };
+		3A4E34751D60846D002F4B31 /* Quadrocopter2DContActionCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A4E34731D60846D002F4B31 /* Quadrocopter2DContActionCtrl.cpp */; };
+		3A4E34781D6085EA002F4B31 /* Quadrocopter2DContActionCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A4E34731D60846D002F4B31 /* Quadrocopter2DContActionCtrl.cpp */; };
 		3A58EF681CDE4337002EABE2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A58EF671CDE4337002EABE2 /* main.cpp */; };
 		3A58EF751CDE4426002EABE2 /* Lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC7E431CD40D98006C74D3 /* Lib.cpp */; };
 		3A58EF761CDE4432002EABE2 /* QuadrocopterCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AFC7E3B1CD3D976006C74D3 /* QuadrocopterCtrl.cpp */; };
@@ -43,6 +45,8 @@
 		3AD49E4B1CF4E09500DE121D /* Quadrocopter2DCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E461CF4DD7500DE121D /* Quadrocopter2DCtrl.cpp */; };
 		3AD49E4E1CF4F0D700DE121D /* Visualizer2DScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E4C1CF4F0D700DE121D /* Visualizer2DScene.cpp */; };
 		3AD49E4F1CF4FA8400DE121D /* Visualizer2DScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E4C1CF4F0D700DE121D /* Visualizer2DScene.cpp */; };
+		3ADAE8FB1D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ADAE8F91D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp */; };
+		3ADAE8FE1D5F8AA300BF80C2 /* QuadrocopterContActionCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ADAE8F91D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp */; };
 		3AE420A71CD2AAA900702C1A /* libQuadrocopter-Box2D-lib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE420A51CD2AA6100702C1A /* libQuadrocopter-Box2D-lib.dylib */; };
 		3AF86AAD1D15D082008E4D2F /* QuadrocopterDiscrete2DCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF86AAB1D15D082008E4D2F /* QuadrocopterDiscrete2DCtrl.cpp */; };
 		3AF86AB01D15D0BB008E4D2F /* QuadrocopterDiscrete2DCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AF86AAB1D15D082008E4D2F /* QuadrocopterDiscrete2DCtrl.cpp */; };
@@ -60,8 +64,8 @@
 		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
+		46880B8A19C43A87006E1F66 /* Visualizer1DScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Visualizer1DScene.cpp */; };
+		46880B8B19C43A87006E1F66 /* Visualizer1DScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* Visualizer1DScene.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -204,6 +208,8 @@
 		3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterDiscreteCtrl.cpp; sourceTree = "<group>"; };
 		3A2429C11CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterDiscreteCtrl.hpp; sourceTree = "<group>"; };
 		3A2B93D11D23EDC20082438E /* libBox2D.2.3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBox2D.2.3.0.dylib; path = ../../installdir/lib/libBox2D.2.3.0.dylib; sourceTree = "<group>"; };
+		3A4E34731D60846D002F4B31 /* Quadrocopter2DContActionCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2DContActionCtrl.cpp; sourceTree = "<group>"; };
+		3A4E34741D60846D002F4B31 /* Quadrocopter2DContActionCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2DContActionCtrl.hpp; sourceTree = "<group>"; };
 		3A58EF671CDE4337002EABE2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A58EF691CDE439A002EABE2 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		3A58EF6E1CDE4405002EABE2 /* Quadrocopter-Simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Quadrocopter-Simulator"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +233,8 @@
 		3AD49E471CF4DD7500DE121D /* Quadrocopter2DCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2DCtrl.hpp; sourceTree = "<group>"; };
 		3AD49E4C1CF4F0D700DE121D /* Visualizer2DScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visualizer2DScene.cpp; sourceTree = "<group>"; };
 		3AD49E4D1CF4F0D700DE121D /* Visualizer2DScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visualizer2DScene.hpp; sourceTree = "<group>"; };
+		3ADAE8F91D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterContActionCtrl.cpp; sourceTree = "<group>"; };
+		3ADAE8FA1D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterContActionCtrl.hpp; sourceTree = "<group>"; };
 		3AE420651CD2A1AC00702C1A /* Quadrocopter-Box2D.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Quadrocopter-Box2D.xcodeproj"; path = "../../Quadrocopter-Box2D/Quadrocopter-Box2D/Quadrocopter-Box2D.xcodeproj"; sourceTree = "<group>"; };
 		3AF86AAB1D15D082008E4D2F /* QuadrocopterDiscrete2DCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterDiscrete2DCtrl.cpp; sourceTree = "<group>"; };
 		3AF86AAC1D15D082008E4D2F /* QuadrocopterDiscrete2DCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterDiscrete2DCtrl.hpp; sourceTree = "<group>"; };
@@ -240,8 +248,8 @@
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
+		46880B8619C43A87006E1F66 /* Visualizer1DScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visualizer1DScene.cpp; sourceTree = "<group>"; };
+		46880B8719C43A87006E1F66 /* Visualizer1DScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Visualizer1DScene.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -491,14 +499,18 @@
 				3AFC7E441CD40D98006C74D3 /* Lib.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				46880B8619C43A87006E1F66 /* Visualizer1DScene.cpp */,
+				46880B8719C43A87006E1F66 /* Visualizer1DScene.h */,
 				3AD49E4C1CF4F0D700DE121D /* Visualizer2DScene.cpp */,
 				3AD49E4D1CF4F0D700DE121D /* Visualizer2DScene.hpp */,
 				3AFC7E3B1CD3D976006C74D3 /* QuadrocopterCtrl.cpp */,
 				3AFC7E3C1CD3D976006C74D3 /* QuadrocopterCtrl.hpp */,
+				3ADAE8F91D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp */,
+				3ADAE8FA1D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.hpp */,
 				3AD49E461CF4DD7500DE121D /* Quadrocopter2DCtrl.cpp */,
 				3AD49E471CF4DD7500DE121D /* Quadrocopter2DCtrl.hpp */,
+				3A4E34731D60846D002F4B31 /* Quadrocopter2DContActionCtrl.cpp */,
+				3A4E34741D60846D002F4B31 /* Quadrocopter2DContActionCtrl.hpp */,
 				3A58EF671CDE4337002EABE2 /* main.cpp */,
 				3A58EF691CDE439A002EABE2 /* main.h */,
 				3A58EF811CDE47AB002EABE2 /* QuadrocopterSimulator.cpp */,
@@ -762,15 +774,17 @@
 				3A9AD0951D1D083D00EF75ED /* ObstacleDiscrete1D.cpp in Sources */,
 				3AB305081CFB1B2F007C6188 /* ConsumerProducerSyncronizer.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				3ADAE8FB1D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp in Sources */,
 				3A9AD08F1D1D060F00EF75ED /* QuadrocopterDiscrete1D.cpp in Sources */,
 				3A58EF831CDE47AB002EABE2 /* QuadrocopterSimulator.cpp in Sources */,
 				3A2429C21CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				46880B8A19C43A87006E1F66 /* Visualizer1DScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				3A7C47CA1D1B3DDA00F8E8AA /* ObstacleDiscrete2D.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				3AFC7E451CD40D98006C74D3 /* Lib.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				3A4E34751D60846D002F4B31 /* Quadrocopter2DContActionCtrl.cpp in Sources */,
 				3A58EF681CDE4337002EABE2 /* main.cpp in Sources */,
 				3AF86AAD1D15D082008E4D2F /* QuadrocopterDiscrete2DCtrl.cpp in Sources */,
 				3A7C47CE1D1B439500F8E8AA /* QuadrocopterDiscrete2D.cpp in Sources */,
@@ -799,6 +813,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A4E34781D6085EA002F4B31 /* Quadrocopter2DContActionCtrl.cpp in Sources */,
+				3ADAE8FE1D5F8AA300BF80C2 /* QuadrocopterContActionCtrl.cpp in Sources */,
 				3A9AD0921D1D067100EF75ED /* QuadrocopterDiscrete1D.cpp in Sources */,
 				3ACF27851D1B44C60092B8F2 /* WorldDiscrete.cpp in Sources */,
 				3ACF27861D1B44C60092B8F2 /* QuadrocopterDiscrete2D.cpp in Sources */,
@@ -813,7 +829,7 @@
 				3AFC7E421CD3E4EF006C74D3 /* QuadrocopterCtrl.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				46880B8B19C43A87006E1F66 /* Visualizer1DScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,14 +16,22 @@
 static std::mutex storeExperienceMutex;
 static std::mutex countTrainErrorValuesMutex;
 
-QuadrocopterBrain::QuadrocopterBrain () : actExecuted(1), trainExecuted(1) {
-	brain.setExplorationPeriod (1000000);
+QuadrocopterBrain::QuadrocopterBrain () : QuadrocopterBrain::QuadrocopterBrain(std::shared_ptr<BrainAlgorithm> (new BrainDiscreteDeepQ ())) {
+}
+
+QuadrocopterBrain::QuadrocopterBrain (std::shared_ptr<BrainAlgorithm> algorithm) :
+	actExecuted(1),
+	trainExecuted(1)
+{
+	brain = algorithm;
+	brain->setExplorationPeriod (1);
 	experienceLow.setName("low");
 //	experienceMid.setName("mid");
 //	experienceHigh.setName("high");
 
 	lastErrs.assign (100, 0);
 }
+
 
 //void QuadrocopterBrain::setObservation (const Observation& state) {
 //	currentState.push(state);
@@ -37,7 +45,7 @@ long QuadrocopterBrain::act (const ObservationSeqLimited& currentState, double r
 //	std::lock_guard<std::mutex> lock(actMutex);
 	
 //	brain.setRandomness(randomness);
-	long choosedAction = brain.control(currentState, randomness);
+	long choosedAction = brain->control(currentState, randomness);
 
 //	if (
 //		actExecuted % trainEveryNth == 0 &&
@@ -59,6 +67,12 @@ long QuadrocopterBrain::act (const ObservationSeqLimited& currentState, double r
 	return choosedAction;
 }
 
+void QuadrocopterBrain::actCont (const ObservationSeqLimited& state, std::vector<float>& action, double randomness)
+{
+	brain->control (state, action, randomness);
+	actExecuted++;
+}
+
 std::vector<int> counts = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
@@ -67,7 +81,7 @@ std::vector<float> countsLimits = {
 };
 const int countsSize = 15;
 
-void QuadrocopterBrain::train () {
+bool QuadrocopterBrain::train () {
 
 	int expSize =
 //		experienceHigh.getSize() +
@@ -86,7 +100,7 @@ void QuadrocopterBrain::train () {
 //		actExecuted % trainEveryNth != 0 ||
 		expSize < trainAfter
 	) {
-		return;
+		return false;
 	}
 
 	std::vector<const ExperienceItem*> minibatch;
@@ -103,7 +117,7 @@ void QuadrocopterBrain::train () {
 //		minibatchSize
 //	);
 
-	float err = brain.trainOnMinibatch(minibatch);
+	float err = brain->trainOnMinibatch(minibatch);
 
 //	std::vector<tensorflow::Tensor> outputTensors;
 //	float err = brain.trainOnMinibatch(minibatch, outputTensors);
@@ -162,7 +176,7 @@ void QuadrocopterBrain::train () {
 	countTrainErrorValuesMutex.unlock();
 	
 	if (trainExecuted % 5000 == 0) {
-		brain.saveGraphState (to_string(trainExecuted));
+		brain->saveGraphState (to_string(trainExecuted));
 	}
 
 	trainExecuted++;
@@ -170,6 +184,7 @@ void QuadrocopterBrain::train () {
 //std::cerr << "--- train: " << trainExecuted++ << " : " << err << std::endl;
 //		brain.trainEnvModel(exp);
 
+	return true;
 }
 
 void QuadrocopterBrain::storeExperience (const ExperienceItem& expItem) {

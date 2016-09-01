@@ -20,7 +20,16 @@
 
 using namespace tensorflow;
 
-BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
+std::string BrainDiscreteDeepQ::getTFFilename () {
+//	return "graph.pb";
+	return "graph2d.pb";
+}
+
+BrainDiscreteDeepQ::BrainDiscreteDeepQ () :
+	BrainDiscreteDeepQ (getTFFilename ())
+{}
+
+BrainDiscreteDeepQ::BrainDiscreteDeepQ (const std::string& tfGraphFilename) {
 
 	Status status = NewSession(SessionOptions(), &session);
 	if (!status.ok()) {
@@ -30,10 +39,8 @@ BrainDiscreteDeepQ::BrainDiscreteDeepQ () {
 	// Read in the protobuf graph we exported
 //	GraphDef graph_def;
 	std::string dir (GRAPHDIR);
-//	status = ReadBinaryProto(Env::Default(), dir + "/graph-separated-1d.pb", &graph_def);
-//	status = ReadBinaryProto(Env::Default(), dir + "/graph.pb", &graph_def);
-//	status = ReadBinaryProto(Env::Default(), dir + "/graph-separated-2d.pb", &graph_def);
-	status = ReadBinaryProto(Env::Default(), dir + "/graph2d.pb", &graph_def);
+std::cout << "--- using tf graph: " << tfGraphFilename << std::endl;
+	status = ReadBinaryProto(Env::Default(), dir + "/" + tfGraphFilename, &graph_def);
 	if (!status.ok()) {
 		std::cerr << "tf error: " << status.ToString() << "\n";
 	}

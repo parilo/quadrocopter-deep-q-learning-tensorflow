@@ -14,17 +14,22 @@
 
 #include "Observation.hpp"
 #include "ExperienceItem.hpp"
+#include "BrainAlgorithm.hpp"
 
-class BrainDiscreteDeepQ {
+class BrainDiscreteDeepQ : public BrainAlgorithm {
 
 public:
 
 	BrainDiscreteDeepQ ();
+	BrainDiscreteDeepQ (const std::string& tfGraphFilename);
+
+	std::string getTFFilename ();
 
 	/**
 		@return index of action
 	*/
-	long control (const ObservationSeqLimited& ob, double randomness);
+	long control (const ObservationSeqLimited& ob, double randomness) override;
+	void control (const ObservationSeqLimited& ob, std::vector<float>& action, double randomness) override {}
 	
 //	/**
 //		@return prediction error on choosed minibatch
@@ -44,17 +49,17 @@ public:
 	/**
 		@return prediction error on choosed minibatch
 	*/
-	float trainOnMinibatch (std::vector<const ExperienceItem*> minibatch);
+	float trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) override;
 	float trainOnMinibatch (std::vector<const ExperienceItem*> minibatch, std::vector<tensorflow::Tensor>& outputTensors);
 	
 	void predictNextStateAndReward (const ObservationSeqLimited& state, long action);
 	void trainEnvModel (const std::vector<ExperienceItem>& experience);
 //	void setRandomness (double randomness);
-	void setExplorationPeriod (int explorationPeriod);
+	void setExplorationPeriod (int explorationPeriod) override;
 
-	void saveGraphState (const std::string fileSuffix);
+	void saveGraphState (const std::string fileSuffix) override;
 	
-private:
+protected:
 
 	std::mutex saveGraphMutex;
 
@@ -67,19 +72,11 @@ private:
 	std::atomic<int> explorationPeriod;
 	int explorationPeriodInitial;
 	double randomActionProbabilityInitial = 0.6;
-//	double randomActionProbabilityFinal = 0.1;
 	
 	tensorflow::GraphDef graph_def;
 	tensorflow::Session* session;
 	
 	double linearAnnealing(double randomActionProbabilityFinal);
-	
-	
-//	tensorflow::Tensor observations;
-//	tensorflow::Tensor newObservations;
-//	tensorflow::Tensor actionMasks;
-//	tensorflow::Tensor newObservationsMasks;
-//	tensorflow::Tensor rewards;
 	
 
 };

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+# DQN taken from
+# https://github.com/nivwusquorum/tensorflow-deepq
+# thank you Szymon Sidor ;)
+
 import numpy as np
 import random
 import tensorflow as tf

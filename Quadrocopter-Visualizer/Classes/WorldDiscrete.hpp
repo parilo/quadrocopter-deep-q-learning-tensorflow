@@ -45,9 +45,9 @@ void WorldDiscrete<QuadrocopterType, ObstacleType>::step () {
 	WorldBase<QuadrocopterType, ObstacleType>::step ();
 	for (auto& q : WorldBase<QuadrocopterType, ObstacleType>::quadrocopters) {
 		q.setCollided (false);
-//		q.clearSensors ();
+		q.clearSensors ();
 		for (auto& o : WorldBase<QuadrocopterType, ObstacleType>::obstacles) {
-//			q.sense (o);
+			q.sense (o);
 			if (o.isCollidedWith (q)) {
 				q.setCollided (true);
 				if (WorldBase<QuadrocopterType, ObstacleType>::collideListener) {

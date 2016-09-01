@@ -16,25 +16,33 @@ public:
 	
 	Quadrocopter2DCtrl (int id, Quadrocopter2D& simulationModel);
 	
-	void act ();
-	void storeExperience ();
-	void calcReward ();
+	virtual void act ();
+	virtual void storeExperience ();
+	virtual void calcReward ();
 	void reset ();
 	void resetAction ();
 	double getReward ();
 	void setState (const std::vector<float> state) {}
 	QuadrocopterModel2DIFace& getModel ();
+	void onTrainStep (int trainStepIndex);
+	virtual void onSimulationStep (int stepIndex);
 
-private:
+protected:
 
 	int id;
+	bool reseted = false;
 	Quadrocopter2D& simulationModel;
 	long action = -1;
-//	int timeReward = 0;
+	double time;
 	double reward;
 //	double sumReward = 0;
 	std::vector<float> prevState;
 	std::vector<float> nextState;
+	
+	double rewardWeight = 0.2;
+	double linearDamping = 0.0;
+	double angularDamping = 0.1;
+	float gravity = 0;
 
 	void readState (std::vector<float>& state);
 

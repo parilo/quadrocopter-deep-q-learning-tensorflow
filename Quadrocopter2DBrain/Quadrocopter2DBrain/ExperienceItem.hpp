@@ -24,12 +24,12 @@ class ExperienceItem {
 		long action
 	);
 
-//	ExperienceItem (
-//		const ObservationSeqLimited& prevStates,
-//		const ObservationSeqLimited& nextStates,
-//		double reward,
-//		const std::vector<float>& actionsScores
-//	);
+	ExperienceItem (
+		const ObservationSeqLimited& prevStates,
+		const ObservationSeqLimited& nextStates,
+		double reward,
+		const std::vector<float>& actionCont
+	);
 	
 	int id;
 	ObservationSeqLimited prevStates;
@@ -37,7 +37,7 @@ class ExperienceItem {
 	double reward;
 	double rewardLambda;
 	long action;
-//	std::vector<float> actionsScores;
+	std::vector<float> actionCont;
 
 };
 

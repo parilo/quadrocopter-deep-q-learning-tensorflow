@@ -162,7 +162,6 @@ void QuadrocopterDiscrete2DCtrl::storeExperience () {
 	calcReward();
 	
 	Quadrocopter2DBrain::storeQuadrocopterExperience(id, reward, action, prevState, nextState);
-
 }
 
 void QuadrocopterDiscrete2DCtrl::reset () {
@@ -203,4 +202,12 @@ void QuadrocopterDiscrete2DCtrl::setState (const std::vector<float> state) {
 	model.posX = state [0] * state [2] / 10 + model.targetX;
 	model.posY = state [1] * state [2] / 10 + model.targetY;
 	model.angle = atan2f(state [4], state [3]);
+}
+
+void QuadrocopterDiscrete2DCtrl::onSimulationStep (int stepIndex) {
+
+	if (fabsf(model.posX) > 200 || fabsf(model.posY) > 200) {
+		reset();
+		return;
+	}
 }

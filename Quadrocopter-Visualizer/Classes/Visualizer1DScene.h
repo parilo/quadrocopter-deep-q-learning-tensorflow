@@ -1,21 +1,22 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __Visualizer1DScene_H__
+#define __Visualizer1DScene_H__
 
 #include "cocos2d.h"
 #include "QuadrocopterSimulator.hpp"
 #include "main.h"
 
-class HelloWorld : public cocos2d::Layer
+class Visualizer1DScene : public cocos2d::Layer
 {
 public:
 	
 //	QuadrocopterSimulatorDiscrete sim;
-	QuadrocopterSimulator sim;
+//	QuadrocopterSimulator sim;
+	QuadrocopterSimulatorCont1D sim;
 	
 	std::vector<cocos2d::LayerColor*> qcopterNodes;
 	cocos2d::Vec2 centerPos;
 
-	HelloWorld ();
+	Visualizer1DScene ();
 	
 	void reset ();
 
@@ -29,7 +30,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(Visualizer1DScene);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __Visualizer1DScene_H__
