@@ -196,7 +196,12 @@ void Visualizer2DScene::update(float delta) {
 }
 
 void Visualizer2DScene::changeTarget() {
-	b2Vec2 newTarget(Lib::randFloat(-70, 70), Lib::randFloat(-70, 70));
+	
+	b2Vec2 newTarget;
+	do {
+		newTarget = b2Vec2(Lib::randFloat(-70, 70), Lib::randFloat(-70, 70));
+	} while (sim.getWorld().isPointInsideObstacles (newTarget));
+	
 	for (int i=0; i<quadrocoptersCount; i++) {
 		sim.getQuadrocopterCtrl(i).getModel().setTarget(newTarget);
 		sim.getQuadrocopterCtrl(i).resetAction();

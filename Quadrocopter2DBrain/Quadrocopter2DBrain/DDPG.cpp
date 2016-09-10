@@ -50,7 +50,7 @@ void DDPG::control (const ObservationSeqLimited& obs, std::vector<float>& action
 //		actionIndex = action ();
 //		std::cerr << "--- action: " << actionIndex << std::endl;
 
-	std::normal_distribution<float> normalNoise (0, randomness * 8);
+	std::normal_distribution<float> normalNoise (0, randomness * 2);
 	int ai = 0;
 	for (auto& actionItem : action) {
 		actionItem = outputs [0].matrix<float>()(0, ai++) + normalNoise (randomGenerator);

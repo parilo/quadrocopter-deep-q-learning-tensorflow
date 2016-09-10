@@ -31,6 +31,7 @@
 #include "QuadrocopterContActionCtrl.hpp"
 #include "Quadrocopter2DContActionCtrl.hpp"
 #include "Lib.h"
+#include "Quadrocopter2DContActionPIDCtrl.hpp"
 
 template <
 	typename WorldType,
@@ -53,6 +54,10 @@ public:
 	QuadrocopterCtrlType& getQuadrocopterCtrl (int index);
 	ObstacleType& getObstacle (int index) {
 		return simulation.getWorld().getObstacle (index);
+	}
+	
+	WorldType& getWorld () {
+		return simulation.getWorld();
 	}
 	
 	void setCollideListener (typename WorldType::CollideListener listener) {
@@ -302,5 +307,6 @@ typedef QuadrocopterSimulatorTmpl<WorldDiscrete2D, QuadrocopterDiscrete2DCtrl, Q
 
 typedef QuadrocopterSimulatorTmpl<World1D, QuadrocopterContActionCtrl, Quadrocopter1D, Obstacle1D> QuadrocopterSimulatorCont1D;
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorCont2D;
+typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionPIDCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContPID2D;
 
 #endif /* QuadrocopterSimulator_hpp */
