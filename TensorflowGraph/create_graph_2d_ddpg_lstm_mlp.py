@@ -5,7 +5,8 @@ import tensorflow as tf
 from tf_rl.controller import ContinuousDeepQ
 #from tf_rl.simulation import KarpathyGame
 from tf_rl import simulate
-from tf_rl.models import MLP
+from tf_rl.lstm_model import LSTMModel
+from tf_rl.lstm_mlp_model import LSTM_MLP
 
 #tf.ops.reset_default_graph()
 session = tf.Session()
@@ -21,19 +22,12 @@ input_size = observation_size*observations_in_seq;
 # actions
 num_actions = 2;
 
-#brain = MLP([input_size,], [5, 5, 5, num_actions], 
-#            [tf.tanh, tf.tanh, tf.tanh, tf.identity])
-#brain = MLP([input_size,], [20, 20, 20, 20, num_actions], 
-#            [tf.tanh, tf.tanh, tf.tanh, tf.tanh, tf.identity])
+minibatch_size = 32
 
-#brain = MLP([input_size,], [32, 32, 32, 32, 32, num_actions], 
-#            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
+#layer_size, layers_count, input_size, output_size, nonlinearity
 
-critic = MLP([input_size, num_actions*2], [512, 96, 1], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
-
-actor = MLP([input_size,], [512, 96, num_actions], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
+critic = LSTM_MLP(input_size + num_actions*2, 128, [128, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
+actor = LSTM_MLP(input_size, 128, [128, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
@@ -74,4 +68,4 @@ for variable in tf.trainable_variables():
     tf.identity (variable, name="readVariable")
     tf.assign (variable, tf.placeholder(tf.float32, variable.get_shape(), name="variableValue"), name="resoreVariable")
 
-tf.train.write_graph(session.graph_def, 'models/', 'graph-2d-ddpg.pb', as_text=False)
+tf.train.write_graph(session.graph_def, 'models/', 'graph-2d-ddpg-lstm-mlp.pb', as_text=False)

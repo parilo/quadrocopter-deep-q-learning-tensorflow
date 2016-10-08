@@ -31,6 +31,16 @@ namespace Quadrocopter2DBrain {
 		std::vector<float>& action
 	);
 	
+	void quadrocopterBrainActContLSTM(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		const std::vector<float>& lstmStateC,
+		const std::vector<float>& lstmStateH,
+		std::vector<float>& action,
+		std::vector<float>& outLstmStateC,
+		std::vector<float>& outLstmStateH
+	);
+	
 	bool quadrocopterBrainTrain ();
 
 	void storeQuadrocopterExperience (
@@ -47,6 +57,18 @@ namespace Quadrocopter2DBrain {
 		std::vector<float>& action,
 		const std::vector <float>& prevState,
 		const std::vector <float>& nextState
+	);
+
+	void storeQuadrocopterExperienceContLSTM (
+		int quadrocopterId,
+		double reward,
+		std::vector<float>& action,
+		const std::vector <float>& prevState,
+		const std::vector<float>& prevLstmStateC,
+		const std::vector<float>& prevLstmStateH,
+		const std::vector <float>& nextState,
+		const std::vector<float>& nextLstmStateC,
+		const std::vector<float>& nextLstmStateH
 	);
 	
 	bool getBigErrorExp (

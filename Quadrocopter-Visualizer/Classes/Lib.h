@@ -9,6 +9,7 @@
 #ifndef __QuizGeek__Lib__
 #define __QuizGeek__Lib__
 
+#include <vector>
 
 class Lib {
 
@@ -23,6 +24,8 @@ public:
 	static float radToDeg (float rad);
 	
 };
+
+void printVector (const std::vector<float>& v);
 
 //    std::string to_string(int value);
 //    std::string to_string(unsigned value);

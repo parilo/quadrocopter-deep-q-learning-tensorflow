@@ -86,7 +86,7 @@ using namespace tensorflow;
 	auto m = t.matrix<T>();
 	for (int i=0; i<sizei; i++) {
 		for (int j=0; j<sizej; j++) {
-			values.push_back(m (i, j));
+			values [i * sizei + j] = m (i, j);
 		}
 	}
 }
@@ -105,11 +105,21 @@ using namespace tensorflow;
 template<typename T>
 void getTensorVectorValues (const tensorflow::Tensor& t, std::vector<T>& values) {
 using namespace tensorflow;
+	values.clear ();
 	int64 sizei = t.shape().dim_size(0);
 	auto m = t.flat<T>();
 	for (int i=0; i<sizei; i++) {
 		values.push_back (m (i));
 	}
 }
+
+template<typename T>
+void fillTensor (tensorflow::Tensor& t, const std::vector<T>& values, int tensorIndex) {
+	int s = values.size ();
+	for (int i=0; i<s; i++) {
+		t.matrix<T>()(tensorIndex, i) = values [i];
+	}
+}
+
 
 #endif /* Tensors_hpp */

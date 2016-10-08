@@ -1,38 +1,42 @@
 //
-//  DDPG.cpp
+//  DDPG_LSTM.cpp
 //  Quadrocopter2DBrain
 //
-//  Created by anton on 13/08/16.
+//  Created by anton on 06/10/16.
 //  Copyright © 2016 anton. All rights reserved.
 //
 
 #include "QuadrocopterBrain.hpp"
-#include "DDPG.hpp"
+#include "DDPG_LSTM.hpp"
 
 using namespace tensorflow;
 
-DDPG::DDPG () : BrainDiscreteDeepQ(
-//	"graph-1d-ddpg.pb"
-	"graph-2d-ddpg.pb"
+DDPG_LSTM::DDPG_LSTM () : BrainDiscreteDeepQ(
+	"graph-2d-ddpg-lstm-mlp.pb"
 ) {}
 
-void DDPG::control (const ObservationSeqLimited& obs, std::vector<float>& action, double randomness) {
-	
-//	double explorationP = linearAnnealing (randomness);
-//std::cerr <<"--- explorationP: " << explorationP << " act: " << actionsExecutedSoFar <<  std::endl;
-
-//	actor/lstm/state_c
-//	actor/lstm/state_h
+void DDPG_LSTM::control (
+	const ObservationSeqLimited& obs,
+	const std::vector<float>& lstmStateC,
+	const std::vector<float>& lstmStateH,
+	std::vector<float>& action,
+	double randomness,
+	std::vector<float>& outLstmStateC,
+	std::vector<float>& outLstmStateH
+) {
 
 	Tensor observationSeq (DT_FLOAT, TensorShape({1, obs.getSize()}));
+	Tensor lstmC (DT_FLOAT, TensorShape({1, QuadrocopterBrain::lstmStateSize}));
+	Tensor lstmH (DT_FLOAT, TensorShape({1, QuadrocopterBrain::lstmStateSize}));
 	
 	fillTensor (obs, observationSeq, 0);
-	
-//		std::cerr << "--- BrainDiscreteDeepQ::control" << std::endl;
-//		printTensor(observationSeq);
+	fillTensor<float>(lstmC, lstmStateC, 0);
+	fillTensor<float>(lstmH, lstmStateH, 0);
 
 	std::vector<std::pair<string, tensorflow::Tensor>> inputs = {
-		{ "taking_action/observation", observationSeq }
+		{ "taking_action/observation", observationSeq },
+		{ "actor/lstm/state_c", lstmC },
+		{ "actor/lstm/state_h", lstmH }
 	};
 
 	// The session will initialize the outputs
@@ -40,30 +44,29 @@ void DDPG::control (const ObservationSeqLimited& obs, std::vector<float>& action
 
 	auto status = session->Run(
 		inputs, {
-			"taking_action/actor_action"
+			"taking_action/actor_action",
+			"taking_action/actor/lstm/read_state_c",
+			"taking_action/actor/lstm/read_state_h"
 		}, {}, &outputs
 	);
 	if (!status.ok()) {
 		std::cout << "tf error: " << status.ToString() << "\n";
 	}
-	
-//	std::cerr << "--- action scores: " << std::endl;
-//	printTensor<float>(outputs [0]);
-//		auto action = outputs [0].scalar<int>();
-//		actionIndex = action ();
-//		std::cerr << "--- action: " << actionIndex << std::endl;
 
 	std::normal_distribution<float> normalNoise (0, randomness * 2);
 	int ai = 0;
 	for (auto& actionItem : action) {
 		actionItem = outputs [0].matrix<float>()(0, ai++) + normalNoise (randomGenerator);
 	}
+	
+	getTensorValues<float>(outputs [1], outLstmStateC);
+	getTensorValues<float>(outputs [2], outLstmStateH);
 
 	actionsExecutedSoFar++;
 	if (explorationPeriod>0) explorationPeriod--;
 }
 
-float DDPG::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
+float DDPG_LSTM::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
 	std::lock_guard<std::mutex> lock (saveGraphMutex);
 
 	int minibatchSize = (int) minibatch.size();
@@ -73,6 +76,10 @@ float DDPG::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
 	Tensor newObservationsMasks (DT_FLOAT, TensorShape({minibatchSize, 1}));
 	Tensor rewards (DT_FLOAT, TensorShape({minibatchSize, 1}));
 	Tensor givenAction (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::contActionSize}));
+	Tensor prevLstmStateC (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
+	Tensor prevLstmStateH (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
+	Tensor nextLstmStateC (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
+	Tensor nextLstmStateH (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
 	int expI = 0;
 	for (auto expItem : minibatch) {
 	
@@ -87,6 +94,11 @@ float DDPG::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
 		
 		rewards.matrix<float>()(expI, 0) = (float) expItem->rewardLambda;
 		newObservationsMasks.matrix<float>()(expI, 0) = 1;
+		
+		fillTensor<float>(prevLstmStateC, expItem->prevLstmStateC, expI);
+		fillTensor<float>(prevLstmStateH, expItem->prevLstmStateH, expI);
+		fillTensor<float>(nextLstmStateC, expItem->nextLstmStateC, expI);
+		fillTensor<float>(nextLstmStateH, expItem->nextLstmStateH, expI);
 		
 		expI++;
 	}
@@ -107,7 +119,15 @@ float DDPG::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
 		{ "critic_update/given_action", givenAction },
 		{ "estimating_future_reward/rewards", rewards },
 		{ "estimating_future_reward/next_observation_mask", newObservationsMasks },
-		{ "estimating_future_reward/next_observation", newObservations }
+		{ "estimating_future_reward/next_observation", newObservations },
+		{ "critic/lstm/state_c", prevLstmStateC },
+		{ "critic/lstm/state_h", prevLstmStateH },
+		{ "actor/lstm/state_c", prevLstmStateC },
+		{ "actor/lstm/state_h", prevLstmStateH },
+		{ "target_actor/target_actor/lstm/state_c", nextLstmStateC },
+		{ "target_actor/target_actor/lstm/state_h", nextLstmStateH },
+		{ "target_critic/target_critic/lstm/state_c", nextLstmStateC },
+		{ "target_critic/target_critic/lstm/state_h", nextLstmStateH }
 	};
 	
 	std::vector<tensorflow::Tensor> outputTensors;

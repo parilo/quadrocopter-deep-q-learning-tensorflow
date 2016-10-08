@@ -1,3 +1,4 @@
+# https://webcache.googleusercontent.com/search?q=cache:GzD8Q2lTlCkJ:https://codesachin.wordpress.com/2015/11/28/self-organizing-maps-with-googles-tensorflow/+&cd=1&hl=ru&ct=clnk
 
 import tensorflow as tf
 import numpy as np
@@ -36,11 +37,14 @@ class SOM(object):
         else:
             alpha = float(alpha)
         if sigma is None:
-            sigma = max(m, n) / 2.0
+            sigma = 3.0 #max(m, n) / 8.0
         else:
             sigma = float(sigma)
         self._n_iterations = abs(int(n_iterations))
 
+        _alpha_op = alpha;
+        _sigma_op = sigma;
+        
         ##INITIALIZE GRAPH
         self._graph = tf.Graph()
 
@@ -92,10 +96,10 @@ class SOM(object):
 
             #To compute the alpha and sigma values based on iteration
             #number
-            learning_rate_op = tf.sub(1.0, tf.div(self._iter_input,
-                                                  self._n_iterations))
-            _alpha_op = tf.mul(alpha, learning_rate_op)
-            _sigma_op = tf.mul(sigma, learning_rate_op)
+#            learning_rate_op = tf.sub(1.0, tf.div(self._iter_input,
+#                                                  self._n_iterations))
+#            _alpha_op = tf.mul(alpha, learning_rate_op)
+#            _sigma_op = tf.mul(sigma, learning_rate_op)
 
             #Construct the op that will generate a vector with learning
             #rates for all neurons, based on iteration number and location
@@ -140,7 +144,7 @@ class SOM(object):
             for j in range(n):
                 yield np.array([i, j])
 
-    def train(self, input_vects):
+    def train(self, input_vects, iter_no):
         """
         Trains the SOM.
         'input_vects' should be an iterable of 1-D NumPy arrays with

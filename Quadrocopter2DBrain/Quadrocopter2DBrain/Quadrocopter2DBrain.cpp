@@ -17,6 +17,7 @@
 #include "QuadrocopterBrain.hpp"
 #include "ExpLambdaFilter.hpp"
 #include "DDPG.hpp"
+#include "DDPG_LSTM.hpp"
 
 using namespace std;
 
@@ -24,7 +25,7 @@ namespace Quadrocopter2DBrain {
 
 	const int numOfQuadrocopters = 50;
 
-	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
+	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
 //	QuadrocopterBrain quadrocopterBrain;
 //	vector<ObservationSeqLimited> currStateSeqs;
 //	vector<ObservationSeqLimited> prevStateSeqs;
@@ -68,6 +69,26 @@ namespace Quadrocopter2DBrain {
 		);
 	}
 
+	void quadrocopterBrainActContLSTM(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		const std::vector<float>& lstmStateC,
+		const std::vector<float>& lstmStateH,
+		std::vector<float>& action,
+		std::vector<float>& outLstmStateC,
+		std::vector<float>& outLstmStateH
+	) {
+		quadrocopterBrain.actContLSTM(
+			ObservationSeqLimited (state),
+			lstmStateC,
+			lstmStateC,
+			action,
+			randomnessOfQuadrocopter [quadrocopterId],
+			outLstmStateC,
+			outLstmStateH
+		);
+	}
+
 	void storeQuadrocopterExperience (
 		int quadrocopterId,
 		double reward,
@@ -99,6 +120,31 @@ namespace Quadrocopter2DBrain {
 			ObservationSeqLimited (nextState),
 			reward,
 			action
+		);
+		
+		quadrocopterBrain.storeExperience(expItem);
+	}
+
+	void storeQuadrocopterExperienceContLSTM (
+		int quadrocopterId,
+		double reward,
+		std::vector<float>& action,
+		const std::vector <float>& prevState,
+		const std::vector<float>& prevLstmStateC,
+		const std::vector<float>& prevLstmStateH,
+		const std::vector <float>& nextState,
+		const std::vector<float>& nextLstmStateC,
+		const std::vector<float>& nextLstmStateH
+	) {
+		ExperienceItem expItem (
+			ObservationSeqLimited (prevState),
+			ObservationSeqLimited (nextState),
+			reward,
+			action,
+			prevLstmStateC,
+			prevLstmStateH,
+			nextLstmStateC,
+			nextLstmStateH
 		);
 		
 		quadrocopterBrain.storeExperience(expItem);

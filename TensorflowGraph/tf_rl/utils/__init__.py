@@ -4,6 +4,10 @@ def base_name(var):
     """Extracts value passed to name= when creating a variable"""
     return var.name.split('/')[-1].split(':')[0]
 
+def base_name2(var):
+    """Extracts value passed to name= when creating a variable"""
+    return '/'.join(var.name.split('/')[1:]).split(':')[0]
+
 def copy_variables(variables):
     res = {}
     for v in variables:

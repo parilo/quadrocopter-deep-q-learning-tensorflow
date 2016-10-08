@@ -17,6 +17,8 @@
 		3A3534091CD94C67007DBB0B /* libtensorflow.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3534071CD94C58007DBB0B /* libtensorflow.so */; };
 		3A52D3B41C942122004AEBDA /* ObservationSeqLimited.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A52D3B21C942122004AEBDA /* ObservationSeqLimited.cpp */; };
 		3A85C5361C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A85C5341C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp */; };
+		3AD430FB1DA6E4AD007E4BB4 /* DDPG_LSTM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD430F91DA6E4AD007E4BB4 /* DDPG_LSTM.cpp */; };
+		3AD430FC1DA6E598007E4BB4 /* DDPG_LSTM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD430F91DA6E4AD007E4BB4 /* DDPG_LSTM.cpp */; };
 		3AE420C31CD2B09900702C1A /* BrainDiscreteDeepQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE0E1C8310BE00C8750E /* BrainDiscreteDeepQ.cpp */; };
 		3AE420C41CD2B09900702C1A /* ExperienceItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AEECE101C8310BE00C8750E /* ExperienceItem.cpp */; };
 		3AE420C51CD2B09900702C1A /* ExperienceBank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C52CC1CC39BA9002630ED /* ExperienceBank.cpp */; };
@@ -54,6 +56,8 @@
 		3A52D3B31C942122004AEBDA /* ObservationSeqLimited.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObservationSeqLimited.hpp; sourceTree = "<group>"; };
 		3A85C5341C9F0B0300A5F603 /* ApiDiscreteDeepQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ApiDiscreteDeepQ.cpp; sourceTree = "<group>"; };
 		3A85C5351C9F0B0300A5F603 /* ApiDiscreteDeepQ.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ApiDiscreteDeepQ.hpp; sourceTree = "<group>"; };
+		3AD430F91DA6E4AD007E4BB4 /* DDPG_LSTM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DDPG_LSTM.cpp; sourceTree = "<group>"; };
+		3AD430FA1DA6E4AD007E4BB4 /* DDPG_LSTM.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DDPG_LSTM.hpp; sourceTree = "<group>"; };
 		3AE420B91CD2B05800702C1A /* libQuadrocopter2DBrain-lib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libQuadrocopter2DBrain-lib.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AEECE021C830EE400C8750E /* Quadrocopter2DBrain.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Quadrocopter2DBrain.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AEECE051C830EE400C8750E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 				3AEECE0F1C8310BE00C8750E /* BrainDiscreteDeepQ.hpp */,
 				3A1F0C961D5F075D00368EA4 /* DDPG.cpp */,
 				3A1F0C971D5F075D00368EA4 /* DDPG.hpp */,
+				3AD430F91DA6E4AD007E4BB4 /* DDPG_LSTM.cpp */,
+				3AD430FA1DA6E4AD007E4BB4 /* DDPG_LSTM.hpp */,
 				3A1F0C9A1D5F128300368EA4 /* BrainAlgorithm.cpp */,
 				3A1F0C9B1D5F128300368EA4 /* BrainAlgorithm.hpp */,
 				3AEECE101C8310BE00C8750E /* ExperienceItem.cpp */,
@@ -276,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD430FC1DA6E598007E4BB4 /* DDPG_LSTM.cpp in Sources */,
 				3A1F0C991D5F0FD000368EA4 /* DDPG.cpp in Sources */,
 				3AFC7E3A1CD3D840006C74D3 /* Quadrocopter2DBrain.cpp in Sources */,
 				3AE420C31CD2B09900702C1A /* BrainDiscreteDeepQ.cpp in Sources */,
@@ -307,6 +314,7 @@
 				3AEECE231C8310E200C8750E /* Lib.cpp in Sources */,
 				3AEECE1C1C8310BE00C8750E /* QuadrocopterBrain.cpp in Sources */,
 				3A13FCBA1CA7123C00B1CFD7 /* ExperienceFilter.cpp in Sources */,
+				3AD430FB1DA6E4AD007E4BB4 /* DDPG_LSTM.cpp in Sources */,
 				3AEECE241C8310E200C8750E /* Main.cpp in Sources */,
 				3AEECE191C8310BE00C8750E /* BrainDiscreteDeepQ.cpp in Sources */,
 				3A1F0C9C1D5F128300368EA4 /* BrainAlgorithm.cpp in Sources */,

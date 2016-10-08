@@ -127,15 +127,23 @@ class ContinuousDeepQ(object):
     @staticmethod
     def update_target_network(source_network, target_network, update_rate):
         target_network_update = []
+        for v in source_network.variables():
+            # this is equivalent to target = (1-alpha) * target + alpha * source
+            print "source: " + v.name + " : " + str(v.get_shape())
+        for v in target_network.variables():
+            # this is equivalent to target = (1-alpha) * target + alpha * source
+            print "target: " + v.name + " : " + str(v.get_shape())
         for v_source, v_target in zip(source_network.variables(), target_network.variables()):
             # this is equivalent to target = (1-alpha) * target + alpha * source
             update_op = v_target.assign_sub(update_rate * (v_target - v_source))
             target_network_update.append(update_op)
         return tf.group(*target_network_update)
 
-    @staticmethod
-    def add_pow_values(values):
-        return tf.concat(1, [values, 0.01 * tf.pow(values, [2, 2])])
+    def concat_nn_input(self, input1, input2):
+        return tf.concat(1, [input1, input2])
+    
+    def add_pow_values(self, values):
+        return self.concat_nn_input(values, 0.01 * tf.pow(values, [2, 2]))
       
     def create_variables(self):
         self.target_actor  = self.actor.copy(scope="target_actor")
@@ -153,15 +161,16 @@ class ContinuousDeepQ(object):
             self.next_observation          = tf.placeholder(tf.float32, (None, self.observation_size), name="next_observation")
             self.next_observation_mask     = tf.placeholder(tf.float32, (None,), name="next_observation_mask")
             self.next_action               = self.target_actor(self.next_observation) # ST
+#            print "next action: " + str(self.next_action)
             tf.histogram_summary("target_actions", self.next_action)
-            self.next_value                = self.target_critic([self.next_observation, self.add_pow_values(self.next_action)]) # ST
+            self.next_value                = self.target_critic(self.concat_nn_input(self.next_observation, self.add_pow_values(self.next_action))) # ST
             self.rewards                   = tf.placeholder(tf.float32, (None,), name="rewards")
             self.future_reward             = self.rewards + self.discount_rate *  self.next_observation_mask * self.next_value
 
         with tf.name_scope("critic_update"):
             ##### ERROR FUNCTION #####
             self.given_action               = tf.placeholder(tf.float32, (None, self.action_size), name="given_action")
-            self.value_given_action         = self.critic([self.observation, self.add_pow_values(self.given_action)])
+            self.value_given_action         = self.critic(self.concat_nn_input(self.observation, self.add_pow_values(self.given_action)))
             tf.scalar_summary("value_for_given_action", tf.reduce_mean(self.value_given_action))
             temp_diff                       = self.value_given_action - self.future_reward
 
@@ -178,7 +187,7 @@ class ContinuousDeepQ(object):
 
         with tf.name_scope("actor_update"):
             ##### ERROR FUNCTION #####
-            self.actor_score = self.critic([self.observation, self.add_pow_values(self.actor_action)])
+            self.actor_score = self.critic(self.concat_nn_input(self.observation, self.add_pow_values(self.actor_action)))
 
             ##### OPTIMIZATION #####
             # here we are maximizing actor score.

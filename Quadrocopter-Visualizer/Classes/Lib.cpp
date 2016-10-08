@@ -16,6 +16,7 @@
 #include <cmath>
 //#include <string>
 //#include <sstream>
+#include <iostream>
 
 void Lib::randomize () {
     std::srand (time(NULL));
@@ -42,6 +43,13 @@ float Lib::degToRad (float deg) {
 
 float Lib::radToDeg (float rad) {
 	return 180 * rad / M_PI;
+}
+
+void printVector (const std::vector<float>& v) {
+	for (const auto& vi : v) {
+		std::cout << vi << " ";
+	}
+	std::cout << std::endl;
 }
 
 

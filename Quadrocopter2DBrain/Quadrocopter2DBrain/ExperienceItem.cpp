@@ -49,3 +49,24 @@ rewardLambda(reward),
 actionCont(actionCont)
 
 {}
+
+ExperienceItem::ExperienceItem (
+	const ObservationSeqLimited& prevStates,
+	const ObservationSeqLimited& nextStates,
+	double reward,
+	const std::vector<float>& actionCont,
+	const std::vector<float>& prevLstmStateC,
+	const std::vector<float>& prevLstmStateH,
+	const std::vector<float>& nextLstmStateC,
+	const std::vector<float>& nextLstmStateH
+) :
+	prevStates(prevStates),
+	nextStates(nextStates),
+	reward(reward),
+	rewardLambda(reward),
+	actionCont(actionCont),
+	prevLstmStateC(prevLstmStateC),
+	prevLstmStateH(prevLstmStateH),
+	nextLstmStateC(nextLstmStateC),
+	nextLstmStateH(nextLstmStateH)
+{}

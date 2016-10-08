@@ -19,7 +19,7 @@ public:
 	virtual void act ();
 	virtual void storeExperience ();
 	virtual void calcReward ();
-	void reset ();
+	virtual void reset ();
 	void resetAction ();
 	double getReward ();
 	void setState (const std::vector<float> state) {}
