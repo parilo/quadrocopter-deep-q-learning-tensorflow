@@ -3,6 +3,16 @@ set(CMAKE_CXX_STANDARD 11)
 SET_PROPERTY(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
 cmake_policy(SET CMP0015 NEW) #for relative paths in link_directories
 
+if(UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
+set(LINUX_LIBS "")
+if(LINUX)
+    set(LINUX_LIBS pthread)
+endif()
+
+
 #add_library(Box2D STATIC IMPORTED)
 #set_property(TARGET Box2D PROPERTY IMPORTED_LOCATION "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/lib/libBox2D.a")
 
@@ -40,7 +50,7 @@ WorldDiscrete.cpp
 main.cpp
 )
 
-target_link_libraries(QuadrocopterSimalator QuadrocopterBox2DSimulator Quadrocopter2DBrain)
+target_link_libraries(QuadrocopterSimalator QuadrocopterBox2DSimulator Quadrocopter2DBrain ${LINUX_LIBS})
 
 install(TARGETS QuadrocopterSimalator
         RUNTIME DESTINATION bin

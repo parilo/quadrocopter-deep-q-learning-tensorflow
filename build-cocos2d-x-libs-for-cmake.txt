@@ -3,8 +3,13 @@
 unpack cocos to
 ./builddir/cocos2d-x
 
-patch cocos with
+patch cocos with if on mac os
 https://github.com/MrCapone/cocos2d-x/commit/c6ddd498e3632653119ec7f731dc36af64be2a68
+
+edit cocos/base/ccConfig.h
+and switch off
+CC_USE_PHYSICS
+CC_USE_3D_PHYSICS
 
 mkdir ./builddir/cocos2d-x/builddir
 cd ./builddir/cocos2d-x/builddir

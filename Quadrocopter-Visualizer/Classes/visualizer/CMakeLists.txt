@@ -9,7 +9,17 @@ project (QuadrocopterVisualizer)
 #set_property(TARGET Box2D PROPERTY IMPORTED_LOCATION "/Users/anton/devel/unity/QuadrocopterHabr2D/console-box2d/box2d-install/lib/libBox2D.a")
 
 set(PLATFORM_SPECIFIC_LIBS)
-if(LINUX)
+if(UNIX AND NOT(MACOSX OR APPLE))
+    set(LINUX true)
+    add_definitions(-DLINUX)
+    set(PLATFORM_SPECIFIC_LIBS
+	glfw
+	pthread
+	X11
+	GL
+	GLEW
+	fontconfig
+    )
 #  foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
 #    cocos_use_pkg(cocos2dInternal ${_pkg})
 #  endforeach()
@@ -38,6 +48,8 @@ elseif(MACOSX OR APPLE)
     ${IOKIT_LIBRARY}
     ${FOUNDATION_LIBRARY}
     ${ICONV_LIBRARY}
+    glfw3
+    iconv
   )
 
 else()
@@ -88,10 +100,10 @@ main.cpp
 
 target_link_libraries(QuadrocopterVisualizer
 QuadrocopterBox2DSimulator
-Quadrocopter2DBrain png glfw3 jpeg ${PLATFORM_SPECIFIC_LIBS}
-bullet
+Quadrocopter2DBrain
 cocos2d
 cocos2dInternal
+bullet
 flatbuffers
 recast
 tinyxml2
@@ -102,7 +114,9 @@ tiff
 Box2D
 webp
 z
-iconv
+png
+jpeg
+${PLATFORM_SPECIFIC_LIBS}
 )
 
 install(TARGETS QuadrocopterVisualizer

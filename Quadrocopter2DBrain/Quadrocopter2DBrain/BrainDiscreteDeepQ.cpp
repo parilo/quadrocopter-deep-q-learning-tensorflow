@@ -8,6 +8,10 @@
 
 #include <fstream>
 
+#ifdef __gnu_linux__
+#include <unistd.h>
+#endif
+
 #include "BrainDiscreteDeepQ.hpp"
 #include "Lib.hpp"
 #include "Tensors.hpp"

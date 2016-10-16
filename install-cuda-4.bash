@@ -11,7 +11,7 @@ export PATH="${PATH}:${INSTALLDIR}/bin"
 BAZELDIR=${BUILDDIR}/bazel
 git clone https://github.com/bazelbuild/bazel.git ${BAZELDIR}
 cd ${BAZELDIR}
-git checkout tags/0.2.3
+git checkout tags/0.3.2
 cd ..
 cd ${BAZELDIR}
 ./compile.sh

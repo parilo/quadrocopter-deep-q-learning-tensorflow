@@ -12,7 +12,7 @@ session = tf.Session()
 
 # This little guy will let us run tensorboard
 #      tensorboard --logdir [LOG_DIR]
-journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/TensorflowLog")
+journalist = tf.train.SummaryWriter("/tmp")
 
 observation_size = 50;
 observations_in_seq = 1;
@@ -43,7 +43,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.97, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

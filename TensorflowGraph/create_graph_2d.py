@@ -13,7 +13,7 @@ session = tf.Session()
 
 # This little guy will let us run tensorboard
 #      tensorboard --logdir [LOG_DIR]
-journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/TensorflowLog")
+journalist = tf.train.SummaryWriter("/tmp")
 
 # Brain maps from observation to Q values for different actions.
 # Here it is a done using a multi layer perceptron with 2 hidden

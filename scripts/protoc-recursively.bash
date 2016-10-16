@@ -12,4 +12,4 @@ for i in `find tensorflow | grep .proto$`
 
 #echo $DIR
 echo $FILES
-./bazel-out/host/bin/google/protobuf/protoc --proto_path=./google/protobuf/src  --proto_path=. --cpp_out=protobuf-generated/ $FILES
+./bazel-out/host/bin/external/protobuf/protoc --proto_path=./bazel-Tensorflow/external/protobuf/src  --proto_path=. --cpp_out=protobuf-generated/ $FILES
