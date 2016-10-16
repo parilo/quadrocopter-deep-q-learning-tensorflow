@@ -73,27 +73,6 @@ void QuadrocopterBrain::actCont (const ObservationSeqLimited& state, std::vector
 	actExecuted++;
 }
 
-void QuadrocopterBrain::actContLSTM (
-	const ObservationSeqLimited& state,
-	const std::vector<float>& lstmStateC,
-	const std::vector<float>& lstmStateH,
-	std::vector<float>& action,
-	double randomness,
-	std::vector<float>& outLstmStateC,
-	std::vector<float>& outLstmStateH
-) {
-	brain->control (
-		state,
-		lstmStateC,
-		lstmStateH,
-		action,
-		randomness,
-		outLstmStateC,
-		outLstmStateH
-	);
-	actExecuted++;
-}
-
 std::vector<int> counts = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };

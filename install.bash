@@ -29,6 +29,9 @@ export PATH="${PATH}:${INSTALLDIR}/bin"
 #cd ${BASEDIR}
 
 
+#git clone https://github.com/tensorflow/tensorflow Tensorflow
+#git checkout tags/v0.10.0
+
 #tensorflow
 #cd ${BASEDIR}
 #git clone --recurse-submodules https://github.com/tensorflow/tensorflow Tensorflow

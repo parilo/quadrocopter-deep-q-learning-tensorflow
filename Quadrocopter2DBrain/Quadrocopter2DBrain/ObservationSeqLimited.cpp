@@ -49,7 +49,7 @@ void fillTensor (const ObservationSeqLimited& obs, tensorflow::Tensor& t, int te
 	int datai = 0;
 	for (int obFilled = 0; obFilled<obs.limit; obFilled++) {
 //std::cerr << "fill: obIndex: " << obIndex << " datai: " << datai << std::endl;
-		auto ob = obs.observations [obIndex];
+		auto& ob = obs.observations [obIndex];
 	
 		for (int i=0; i<observationSize; i++) {
 			t.matrix<float>()(tensorIndex, datai++) = ob.data [i];
@@ -59,6 +59,41 @@ void fillTensor (const ObservationSeqLimited& obs, tensorflow::Tensor& t, int te
 		obIndex++;
 		obIndex %= obs.limit;
 	}
+}
+
+void fillTensor3D (const ObservationSeqLimited& obs, tensorflow::Tensor& t, int tensorIndex) {
+	int obsS = obs.observations.size ();
+	int obS = obs.observations.front().getSize();
+	
+	int obIndex = obs.newItemPos;
+	for (int obsI=0; obsI < obsS; obsI++) {
+		auto& ob = obs.observations [obIndex];
+		for (int obI=0; obI < obS; obI++) {
+			t.tensor<float, 3>()(tensorIndex, obsI, obI) = ob.data[obI];
+		}
+		
+		obIndex++;
+		obIndex %= obs.limit;
+	}
+}
+
+void ObservationSeqLimited::print () const {
+	int obsS = observations.size ();
+	int obS = observations.front().getSize();
+	
+	int obIndex = newItemPos;
+	for (int obsI=0; obsI < obsS; obsI++) {
+		auto& ob = observations [obIndex];
+		for (int obI=0; obI < obS; obI++) {
+//			t.tensor<float, 3>()(tensorIndex, obsI, obI) = ob.data[obI];
+			std::cout << ob.data[obI] << " ";
+		}
+		std::cout << "." << std::endl;
+		
+		obIndex++;
+		obIndex %= limit;
+	}
+	std::cout << std::endl;
 }
 
 const Observation& ObservationSeqLimited::getObservation (int index) const {

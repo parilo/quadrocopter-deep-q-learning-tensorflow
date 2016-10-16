@@ -33,7 +33,7 @@ private:
 	
 	int size = 0;
 	int experienceI = 0;
-	static const int maxExperience = 1000;
+	static const int maxExperience = 3000000;
 
 };
 

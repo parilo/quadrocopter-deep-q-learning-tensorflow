@@ -10,6 +10,7 @@
 #define BrainAlgorithm_hpp
 
 #include "ObservationSeqLimited.hpp"
+#include "ExperienceItem.hpp"
 
 class BrainAlgorithm {
 public:
@@ -20,16 +21,6 @@ public:
 	virtual long control (const ObservationSeqLimited& ob, double randomness) = 0;
 	
 	virtual void control (const ObservationSeqLimited& ob, std::vector<float>& action, double randomness) = 0;
-
-	virtual void control (
-		const ObservationSeqLimited& ob,
-		const std::vector<float>& lstmStateC,
-		const std::vector<float>& lstmStateH,
-		std::vector<float>& action,
-		double randomness,
-		std::vector<float>& outLstmStateC,
-		std::vector<float>& outLstmStateH
-	) = 0;
 
 	/**
 		@return prediction error on choosed minibatch

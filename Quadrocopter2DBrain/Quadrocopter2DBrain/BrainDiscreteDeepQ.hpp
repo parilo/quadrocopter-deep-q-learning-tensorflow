@@ -32,16 +32,6 @@ public:
 	
 	void control (const ObservationSeqLimited& ob, std::vector<float>& action, double randomness) override {}
 	
-	void control (
-		const ObservationSeqLimited& ob,
-		const std::vector<float>& lstmStateC,
-		const std::vector<float>& lstmStateH,
-		std::vector<float>& action,
-		double randomness,
-		std::vector<float>& outLstmStateC,
-		std::vector<float>& outLstmStateH
-	) override {}
-	
 //	/**
 //		@return prediction error on choosed minibatch
 //	*/

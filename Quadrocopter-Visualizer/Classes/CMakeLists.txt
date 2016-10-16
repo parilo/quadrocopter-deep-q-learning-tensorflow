@@ -18,16 +18,25 @@ include_directories(
 ../../Quadrocopter-Visualizer/Classes
 )
 
-add_executable(
+add_executable(QuadrocopterSimalator
 #add_library(
-QuadrocopterSimalator
-Lib.cpp
-QuadrocopterCtrl.cpp
-QuadrocopterDiscreteCtrl.cpp
-Quadrocopter2DCtrl.cpp
-QuadrocopterSimulator.cpp
-QuadrocopterDiscreteSimulator.cpp
 ConsumerProducerSyncronizer.cpp
+Lib.cpp
+ObstacleDiscrete1D.cpp
+ObstacleDiscrete2D.cpp
+PID.cpp
+Quadrocopter2DContActionCtrl.cpp
+Quadrocopter2DContActionPIDCtrl.cpp
+Quadrocopter2DContActionPIDLSTMCtrl.cpp
+Quadrocopter2DCtrl.cpp
+QuadrocopterContActionCtrl.cpp
+QuadrocopterCtrl.cpp
+QuadrocopterDiscrete1D.cpp
+QuadrocopterDiscrete2D.cpp
+QuadrocopterDiscrete2DCtrl.cpp
+QuadrocopterDiscreteCtrl.cpp
+QuadrocopterSimulator.cpp
+WorldDiscrete.cpp
 main.cpp
 )
 

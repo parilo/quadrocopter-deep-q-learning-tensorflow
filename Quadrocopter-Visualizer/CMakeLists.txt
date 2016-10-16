@@ -25,7 +25,7 @@ cmake_policy(SET CMP0017 NEW)
 
 cmake_minimum_required(VERSION 2.8)
 
-set(APP_NAME MyGame)
+set(APP_NAME QuadrocopterVisualizer)
 project (${APP_NAME})
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
@@ -124,7 +124,25 @@ endif( WIN32 )
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
-  Classes/HelloWorldScene.cpp
+  Classes/ConsumerProducerSyncronizer.cpp
+  Classes/Lib.cpp
+  Classes/ObstacleDiscrete1D.cpp
+  Classes/ObstacleDiscrete2D.cpp
+  Classes/PID.cpp
+  Classes/Quadrocopter2DContActionCtrl.cpp
+  Classes/Quadrocopter2DContActionPIDCtrl.cpp
+  Classes/Quadrocopter2DContActionPIDLSTMCtrl.cpp
+  Classes/Quadrocopter2DCtrl.cpp
+  Classes/QuadrocopterContActionCtrl.cpp
+  Classes/QuadrocopterCtrl.cpp
+  Classes/QuadrocopterDiscrete1D.cpp
+  Classes/QuadrocopterDiscrete2D.cpp
+  Classes/QuadrocopterDiscrete2DCtrl.cpp
+  Classes/QuadrocopterDiscreteCtrl.cpp
+  Classes/QuadrocopterSimulator.cpp
+  Classes/Visualizer1DScene.cpp
+  Classes/Visualizer2DScene.cpp
+  Classes/WorldDiscrete.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 

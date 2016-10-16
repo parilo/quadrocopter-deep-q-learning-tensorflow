@@ -2,12 +2,10 @@ import numpy as np
 import tempfile
 import tensorflow as tf
 
-from tf_rl.controller import ContinuousDeepQ
-#from tf_rl.simulation import KarpathyGame
+from tf_rl.controller import ContinuousDeepQLSTMStepped
 from tf_rl import simulate
-from tf_rl.models import MLP
+from tf_rl.lstm_mlp_model import LSTMStepped_MLP
 
-#tf.ops.reset_default_graph()
 session = tf.Session()
 
 # This little guy will let us run tensorboard
@@ -17,23 +15,17 @@ journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/T
 observation_size = 50;
 observations_in_seq = 1;
 input_size = observation_size*observations_in_seq;
-
 # actions
 num_actions = 2;
+critic_input_size = input_size + num_actions*2
+steps_count = 20
 
-#brain = MLP([input_size,], [5, 5, 5, num_actions], 
-#            [tf.tanh, tf.tanh, tf.tanh, tf.identity])
-#brain = MLP([input_size,], [20, 20, 20, 20, num_actions], 
-#            [tf.tanh, tf.tanh, tf.tanh, tf.tanh, tf.identity])
+minibatch_size = 32
 
-#brain = MLP([input_size,], [32, 32, 32, 32, 32, num_actions], 
-#            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
+#layer_size, layers_count, input_size, output_size, nonlinearity
 
-critic = MLP([input_size, num_actions*2], [512, 96, 1], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
-
-actor = MLP([input_size,], [512, 96, num_actions], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
+critic = LSTMStepped_MLP (critic_input_size, 128, 1, steps_count, [1], [tf.identity], scope='critic')
+actor = LSTMStepped_MLP (input_size, 128, 1, steps_count, [num_actions], [tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
@@ -42,8 +34,12 @@ actor = MLP([input_size,], [512, 96, num_actions],
 optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
+state = tf.placeholder(tf.float32, [None, steps_count, input_size], name="observation")
+next_state = tf.placeholder(tf.float32, [None, steps_count, input_size], name="next_observation")
+action = tf.placeholder(tf.float32, [None, steps_count, num_actions], name="given_action")
+
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.97, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQLSTMStepped(state, next_state, action, input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.997, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,
@@ -74,4 +70,4 @@ for variable in tf.trainable_variables():
     tf.identity (variable, name="readVariable")
     tf.assign (variable, tf.placeholder(tf.float32, variable.get_shape(), name="variableValue"), name="resoreVariable")
 
-tf.train.write_graph(session.graph_def, 'models/', 'graph-2d-ddpg.pb', as_text=False)
+tf.train.write_graph(session.graph_def, 'models/', 'graph-2d-ddpg-lstm-stepped-mlp.pb', as_text=False)

@@ -10,28 +10,25 @@ link_directories (../../installdir/lib)
 
 #add_subdirectory("../../../Box2D/Box2D/Box2D" "${CMAKE_CURRENT_BINARY_DIR}/Box2D")
 
-#/Users/anton/devel/build/tensorflow /Users/anton/devel/build/tensorflow/google/protobuf/src /Users/anton/devel/build/tensorflow/protobuf-generated /Users/anton/devel/build/tensorflow/bazel-tensorflow /Users/anton/devel/build/tensorflow/third_party/eigen3 /Users/anton/devel/build/tensorflow/bazel-tensorflow/external/eigen_archive/eigen-eigen-d861b41b1996
-
 project (Quadrocopter2DBrain)
 
 include_directories(
-../../installdir/include
 ../../Tensorflow
-../../Tensorflow/google/protobuf/src
+../../Tensorflow/bazel-Tensorflow/external/protobuf/src
 ../../Tensorflow/protobuf-generated
 ../../Tensorflow/bazel-Tensorflow
-../../Tensorflow/bazel-Tensorflow/third_party/eigen3
 ../../Tensorflow/bazel-Tensorflow/external/eigen_archive
-../../Tensorflow/bazel-Tensorflow/external/eigen_archive/eigen-eigen-50812b426b7c
-../../Tensorflow/bazel-Tensorflow/external/eigen_archive/eigen-eigen-3f653ace7d28
 )
 
 #add_executable(QuadrocopterBox2DSimulator Quadrocopter1D.cpp Simulation.cpp World.cpp main.cpp)
 add_library(Quadrocopter2DBrain SHARED 
-BrainContinousDeepQ.cpp
+BrainAlgorithm.cpp
 BrainDiscreteDeepQ.cpp
+DDPG.cpp
+DDPG_LSTM.cpp
 ExpLambdaFilter.cpp
 ExperienceBank.cpp
+ExperienceBankRemovable.cpp
 ExperienceFilter.cpp
 ExperienceItem.cpp
 Lib.cpp

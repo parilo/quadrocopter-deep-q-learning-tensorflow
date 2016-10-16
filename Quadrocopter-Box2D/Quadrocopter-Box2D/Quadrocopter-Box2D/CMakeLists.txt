@@ -14,10 +14,16 @@ project (QuadrocopterBox2DSimulator)
 include_directories(../../../installdir/include)
 #add_executable(QuadrocopterBox2DSimulator Quadrocopter1D.cpp Simulation.cpp World.cpp main.cpp)
 add_library(QuadrocopterBox2DSimulator SHARED
+Obstacle1D.cpp
+Obstacle2D.cpp
+ObstacleModelIFace.cpp
 Quadrocopter1D.cpp
 Quadrocopter2D.cpp
+QuadrocopterModelIFace.cpp
 Simulation.cpp
-World.cpp)
+World.cpp
+WorldBase.cpp
+WorldObjectInfo.cpp)
 
 target_link_libraries(QuadrocopterBox2DSimulator Box2D)
 

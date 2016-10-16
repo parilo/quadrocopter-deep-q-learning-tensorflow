@@ -25,10 +25,11 @@ namespace Quadrocopter2DBrain {
 
 	const int numOfQuadrocopters = 50;
 
-	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
+	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
+//	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
 //	QuadrocopterBrain quadrocopterBrain;
-//	vector<ObservationSeqLimited> currStateSeqs;
-//	vector<ObservationSeqLimited> prevStateSeqs;
+	vector<ObservationSeqLimited> prevObsSeq;
+	vector<ObservationSeqLimited> nextObsSeq;
 	vector<ExpLambdaFilter> experienceFilters; //one filter for each quadrocopter;
 	vector<double> randomnessOfQuadrocopter;
 
@@ -72,20 +73,25 @@ namespace Quadrocopter2DBrain {
 	void quadrocopterBrainActContLSTM(
 		int quadrocopterId,
 		const std::vector<float>& state,
-		const std::vector<float>& lstmStateC,
-		const std::vector<float>& lstmStateH,
-		std::vector<float>& action,
-		std::vector<float>& outLstmStateC,
-		std::vector<float>& outLstmStateH
+		std::vector<float>& action
 	) {
-		quadrocopterBrain.actContLSTM(
-			ObservationSeqLimited (state),
-			lstmStateC,
-			lstmStateC,
+	
+//		ObservationSeqLimited obs(states.size());
+//		for (auto& s : states) {
+//			obs.push(Observation(*s));
+//		}
+//		
+//		obs.print();
+		
+//		std::cout << "q: " << quadrocopterId << std::endl;
+		auto& seq = prevObsSeq [quadrocopterId];
+		seq.push(Observation(state));
+//		seq.print();
+		
+		quadrocopterBrain.actCont (
+			seq,
 			action,
-			randomnessOfQuadrocopter [quadrocopterId],
-			outLstmStateC,
-			outLstmStateH
+			randomnessOfQuadrocopter [quadrocopterId]
 		);
 	}
 
@@ -155,26 +161,33 @@ namespace Quadrocopter2DBrain {
 //		prevStateSeqs.resize(numOfQuadrocopters);
 		experienceFilters.resize(numOfQuadrocopters);
 		randomnessOfQuadrocopter.clear ();
-//		Observation ob;
-//		ob.setZeros(QuadrocopterBrain::observationSize);
-//		
+		Observation ob;
+		ob.setZeros(QuadrocopterBrain::observationSize);
+
 //		ObservationSeqLimited obs;
 //		obs.setLimit(QuadrocopterBrain::observationsInSeq);
 //		obs.initWith(ob);
 
+		prevObsSeq.resize(numOfQuadrocopters);
+		nextObsSeq.resize(numOfQuadrocopters);
+
 		for (int i=0; i<numOfQuadrocopters; i++) {
-//			currStateSeqs [i] = obs;
-//			prevStateSeqs [i] = obs;
+		
+			prevObsSeq [i].setLimit(QuadrocopterBrain::lstmStepsCount);
+			prevObsSeq [i].initWith(ob);
+			nextObsSeq [i].setLimit(QuadrocopterBrain::lstmStepsCount);
+			nextObsSeq [i].initWith(ob);
+		
 			experienceFilters [i].setExperienceTarget(&quadrocopterBrain);
 			
 			if (i < 2) {
-				randomnessOfQuadrocopter.push_back(0.5);
+				randomnessOfQuadrocopter.push_back(0.1);
 			} else
 			if (i < 10) {
-				randomnessOfQuadrocopter.push_back(0.2);
+				randomnessOfQuadrocopter.push_back(0.05);
 			}
 			else {
-				randomnessOfQuadrocopter.push_back(0.05);
+				randomnessOfQuadrocopter.push_back(0.001);
 			}
 		}
 	}

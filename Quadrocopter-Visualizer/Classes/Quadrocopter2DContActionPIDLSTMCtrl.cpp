@@ -11,7 +11,7 @@
 #include "Lib.h"
 
 const int actionSize = 2;
-const int lstmStateSize = 128;
+const int lstmStepsCount = 20;
 
 Quadrocopter2DContActionPIDLSTMCtrl::Quadrocopter2DContActionPIDLSTMCtrl (
 	int id,
@@ -20,23 +20,18 @@ Quadrocopter2DContActionPIDLSTMCtrl::Quadrocopter2DContActionPIDLSTMCtrl (
 	Quadrocopter2DCtrl (id, simulationModel),
 	targetAngle(0),
 	throttle(6.5),
-	anglePID(0.4, 0, 0.08),
-	actionCont(actionSize, 0),
-	lstmStateC(lstmStateSize, 0),
-	lstmStateH(lstmStateSize, 0),
-	outLstmStateC(lstmStateSize, 0),
-	outLstmStateH(lstmStateSize, 0)
+	anglePID(8, 0, 1.6),
+	actionCont(actionSize, 0)
 {
-//	CCLOG("--- size: %ld %ld %ld %ld", lstmStateC.size(), lstmStateH.size(), outLstmStateC.size(), outLstmStateH.size());
 }
 
 void Quadrocopter2DContActionPIDLSTMCtrl::actPID (double& motor1power, double& motor2power) {
 
 	double angle = simulationModel.getRotation();
-	angle = angle>0?fmod(angle, 2*M_PI):2*M_PI-fmod(-angle, 2*M_PI);
-	angle -= M_PI;
-//CCLOG ("angles: %lf %lf", targetAngle, angle);
-	double dAngle = targetAngle - angle;
+//	angle = angle>0?fmod(angle, 2*M_PI):2*M_PI-fmod(-angle, 2*M_PI);
+//	angle -= M_PI;
+//if (id == 14) CCLOG ("angles: %lf %lf %lf", targetAngle, angle, simulationModel.getRotation());
+	double dAngle = - targetAngle + angle;
 
 //	dAngle -= Math.Ceiling (Math.Floor (dPitch / 180.0) / 2.0) * 360.0;
 
@@ -44,7 +39,7 @@ void Quadrocopter2DContActionPIDLSTMCtrl::actPID (double& motor1power, double& m
 	motor2power = throttle;
 
 	double angleForce = anglePID.calc (0, dAngle / M_PI);
-	angleForce = angleForce>5?5:angleForce;
+//	angleForce = angleForce>forceLimit?forceLimit:angleForce;
 	motor1power -=   angleForce;
 	motor2power +=   angleForce;
 }
@@ -70,9 +65,7 @@ void Quadrocopter2DContActionPIDLSTMCtrl::act () {
 	//getting prev state
 	readState(prevState);
 
-	lstmStateC.swap(outLstmStateC);
-	lstmStateH.swap(outLstmStateH);
-	Quadrocopter2DBrain::quadrocopterBrainActContLSTM(id, prevState, lstmStateC, lstmStateH, actionCont, outLstmStateC, outLstmStateH);
+	Quadrocopter2DBrain::quadrocopterBrainActContLSTM(id, prevState, actionCont);
 
 //	if (id == 0) {
 //		std::cout << "lstm c" << std::endl;
@@ -85,14 +78,20 @@ void Quadrocopter2DContActionPIDLSTMCtrl::act () {
 //		printVector(outLstmStateH);
 //	}
 
-////if (id == 14) CCLOG ("--- action: %f %f %f %f", prevState [8], prevState [9], actionCont [0], actionCont [1]);
 //	float p1 = fabs(actionCont [0]);
 //	float p2 = fabs(actionCont [1]);
 ////	p1 = p1>0?p1:0;
 ////	p2 = p2>0?p2:0;
 
-	throttle = fabs (actionCont [0]) * 10.0 / 15.0;
-	targetAngle = actionCont [1] * 2 * M_PI / 15.0; //normalization
+//	actionCont [0] = 11;
+//	actionCont [1] = 0;
+
+//	throttle = fabs (actionCont [0]) * 10.0 / 15.0;
+//	targetAngle = actionCont [1] * 2 * M_PI / 15.0; //normalization
+
+	throttle = fabs (actionCont [0]);
+
+//if (id == 14) CCLOG ("--- action: %f %f %lf %lf", actionCont [0], actionCont [1], throttle, targetAngle);
 	
 	double p1;
 	double p2;
@@ -117,13 +116,10 @@ void Quadrocopter2DContActionPIDLSTMCtrl::storeExperience () {
 	calcReward();
 	
 //	Quadrocopter2DBrain::storeQuadrocopterExperienceCont(id, reward, actionCont, prevState, nextState);
-	Quadrocopter2DBrain::storeQuadrocopterExperienceContLSTM(id, reward, actionCont, prevState, lstmStateC, lstmStateH, nextState, outLstmStateC, outLstmStateH);
+//	Quadrocopter2DBrain::storeQuadrocopterExperienceContLSTM(id, reward, actionCont, prevState, lstmStateC, lstmStateH, nextState, outLstmStateC, outLstmStateH);
 }
 
 void Quadrocopter2DContActionPIDLSTMCtrl::reset () {
 	Quadrocopter2DCtrl::reset();
-	std::fill(lstmStateC.begin(), lstmStateC.end(), 0);
-	std::fill(lstmStateH.begin(), lstmStateH.end(), 0);
-	std::fill(outLstmStateC.begin(), outLstmStateC.end(), 0);
-	std::fill(outLstmStateH.begin(), outLstmStateH.end(), 0);
+	//!! need to reinit lstm ObservationSeqs
 }

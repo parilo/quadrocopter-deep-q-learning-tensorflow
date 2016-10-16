@@ -41,7 +41,7 @@ bool Visualizer2DScene::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
@@ -66,13 +66,13 @@ bool Visualizer2DScene::init()
 
 	targetNode1 = LayerColor::create(Color4B::ORANGE);
 	targetNode1->setAnchorPoint(Vec2(0.5, 0.5));
-	targetNode1->setContentSize(Size(2, 80));
+	targetNode1->setContentSize(cocos2d::Size(2, 80));
 	targetNode1->setPosition (centerPos - targetNode1->getContentSize()/2);
 	addChild(targetNode1);
 
 	targetNode2 = LayerColor::create(Color4B::ORANGE);
 	targetNode2->setAnchorPoint(Vec2(0.5, 0.5));
-	targetNode2->setContentSize(Size(80, 2));
+	targetNode2->setContentSize(cocos2d::Size(80, 2));
 	targetNode2->setPosition (centerPos - targetNode2->getContentSize()/2);
 	addChild(targetNode2);
 	
@@ -229,22 +229,22 @@ void Visualizer2DScene::menuCloseCallback(Ref* pSender)
 void Quadrocopter2DView::init () {
 	body = LayerColor::create(Color4B(0, 0, 255, 255));
 //	body->setAnchorPoint(Vec2(0.5, 0.5));
-	body->setContentSize(Size(0.4, 0.1) * zoom);
+	body->setContentSize(cocos2d::Size(0.4, 0.1) * zoom);
 	bodyHalfCont = body->getContentSize()/2;
 
 	motor1 = LayerColor::create(Color4B(0, 255, 0, 255));
 	motor1->setAnchorPoint(Vec2(0.5, 0.5));
-	motor1->setContentSize(Size(0.1, 0.2) * zoom);
+	motor1->setContentSize(cocos2d::Size(0.1, 0.2) * zoom);
 	motor1HalfCont = motor1->getContentSize()/2;
 
 	motor2 = LayerColor::create(Color4B(255, 0, 0, 255));
 	motor2->setAnchorPoint(Vec2(0.5, 0.5));
-	motor2->setContentSize(Size(0.1, 0.2) * zoom);
+	motor2->setContentSize(cocos2d::Size(0.1, 0.2) * zoom);
 	motor2HalfCont = motor2->getContentSize()/2;
 	
 	sensors = DrawNode::create();
 //	sensors->setAnchorPoint(Vec2(0.5, 0.5));
-	sensors->setContentSize(Size(QuadrocopterModel2DIFace::sensorsLength * 2 * 4, QuadrocopterModel2DIFace::sensorsLength * 2 * 4));
+	sensors->setContentSize(cocos2d::Size(QuadrocopterModel2DIFace::sensorsLength * 2 * 4, QuadrocopterModel2DIFace::sensorsLength * 2 * 4));
 }
 
 void Quadrocopter2DView::addTo (cocos2d::Node* parent) {
@@ -357,7 +357,7 @@ void Obstacle2DView::setCoordsFrom (
 
 	Vec2 bPos (centerX, -centerY);
 	
-	body->setContentSize(Size(a, b) * visualizerZoom);
+	body->setContentSize(cocos2d::Size(a, b) * visualizerZoom);
 	body->setPosition(bPos * visualizerZoom - body->getContentSize() * 0.5 + centerPos);
 	body->setRotation(angle);
 }

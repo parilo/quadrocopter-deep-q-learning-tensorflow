@@ -202,6 +202,7 @@ QuadrocopterModel2DIFace& Quadrocopter2DCtrl::getModel () {
 }
 
 void Quadrocopter2DCtrl::resetAction () {
+	reseted = true;
 	action = -1;
 }
 

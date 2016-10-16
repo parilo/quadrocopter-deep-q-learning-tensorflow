@@ -11,6 +11,7 @@
 
 #include "Quadrocopter2DCtrl.hpp"
 #include "PID.hpp"
+#include <list>
 
 class Quadrocopter2DContActionPIDLSTMCtrl : public Quadrocopter2DCtrl {
 public:
@@ -29,10 +30,6 @@ protected:
 	double throttle;
 	double targetAngle;
 	PID anglePID;
-	std::vector<float> lstmStateC;
-	std::vector<float> lstmStateH;
-	std::vector<float> outLstmStateC;
-	std::vector<float> outLstmStateH;
 	
 	void actPID (double& motor1power, double& motor2power);
 	

@@ -7,8 +7,11 @@ import tensorflow as tf
 
 from collections import deque
 
-class ContinuousDeepQ(object):
-    def __init__(self, observation_size,
+class ContinuousDeepQLSTMStepped(object):
+    def __init__(self, observation_placeholder,
+                       next_observation_placeholder,
+                       given_action_placeholder,
+                       observation_size,
                        action_size,
                        actor,
                        critic,
@@ -113,6 +116,10 @@ class ContinuousDeepQ(object):
         self.number_of_times_store_called = 0
         self.number_of_times_train_called = 0
 
+        self.observation = observation_placeholder
+        self.next_observation = next_observation_placeholder
+        self.given_action = given_action_placeholder
+        
         self.create_variables()
 
     @staticmethod
@@ -139,11 +146,21 @@ class ContinuousDeepQ(object):
             target_network_update.append(update_op)
         return tf.group(*target_network_update)
 
-    def concat_nn_input(self, input1, input2):
-        return tf.concat(1, [input1, input2])
+    def concat_nn_lstm_input(self, input1, input2):
+        print "input1: " + str(input1)
+        print "input2: " + str(input2)
+        return tf.concat(2, [input1, input2])
     
     def add_pow_values(self, values):
-        return self.concat_nn_input(values, 0.01 * tf.pow(values, [2, 2]))
+        print "add_pow_values: " + str (values)
+        powed = 0.01 * tf.pow(values, [[2, 2] for i in range(values.get_shape()[1])])
+        print "powed: " + str (powed)
+        return self.concat_nn_lstm_input(values, powed)
+    
+    def get_last (self, values):
+        val = tf.transpose(values, [1, 0, 2])
+        return tf.gather(val, int(val.get_shape()[0]) - 1)
+
       
     def create_variables(self):
         self.target_actor  = self.actor.copy(scope="target_actor")
@@ -151,27 +168,29 @@ class ContinuousDeepQ(object):
 
         # FOR REGULAR ACTION SCORE COMPUTATION
         with tf.name_scope("taking_action"):
-            self.observation  = tf.placeholder(tf.float32, (None, self.observation_size), name="observation")
-#            self.actor_val = tf.nn.sigmoid(self.actor(self.observation)) * 40 - 20;
+#            self.observation  = tf.placeholder(tf.float32, (None, self.observation_size), name="observation")
             self.actor_val = self.actor(self.observation);
-            self.actor_action = tf.identity(self.actor_val, name="actor_action")
+#            self.actor_val = tf.placeholder(tf.float32, (None, 20, 2), name="asd")
+#            self.actor_action = tf.identity(self.get_last(self.actor_val), name="actor_action")
+            self.actor_action = tf.identity(self.actor.get_last(self.observation), name="actor_action")
+#            self.actor_action = tf.identity([[1.1, 1.1]], name="actor_action")
 #            tf.histogram_summary("actions", self.actor_action)
 
         # FOR PREDICTING TARGET FUTURE REWARDS
         with tf.name_scope("estimating_future_reward"):
-            self.next_observation          = tf.placeholder(tf.float32, (None, self.observation_size), name="next_observation")
+#            self.next_observation          = tf.placeholder(tf.float32, (None, self.observation_size), name="next_observation")
             self.next_observation_mask     = tf.placeholder(tf.float32, (None,), name="next_observation_mask")
             self.next_action               = self.target_actor(self.next_observation) # ST
 #            print "next action: " + str(self.next_action)
             tf.histogram_summary("target_actions", self.next_action)
-            self.next_value                = self.target_critic([self.next_observation, self.add_pow_values(self.next_action)]) # ST
+            self.next_value                = self.target_critic(self.concat_nn_lstm_input(self.next_observation, self.add_pow_values(self.next_action))) # ST
             self.rewards                   = tf.placeholder(tf.float32, (None,), name="rewards")
             self.future_reward             = self.rewards + self.discount_rate *  self.next_observation_mask * self.next_value
 
         with tf.name_scope("critic_update"):
             ##### ERROR FUNCTION #####
-            self.given_action               = tf.placeholder(tf.float32, (None, self.action_size), name="given_action")
-            self.value_given_action         = self.critic([self.observation, self.add_pow_values(self.given_action)])
+#            self.given_action               = tf.placeholder(tf.float32, (None, self.action_size), name="given_action")
+            self.value_given_action         = self.critic(self.concat_nn_lstm_input(self.observation, self.add_pow_values(self.given_action)))
             tf.scalar_summary("value_for_given_action", tf.reduce_mean(self.value_given_action))
             temp_diff                       = self.value_given_action - self.future_reward
 
@@ -183,12 +202,12 @@ class ContinuousDeepQ(object):
                 tf.histogram_summary('critic_update/' + var.name, var)
                 if grad is not None:
                     tf.histogram_summary('critic_update/' + var.name + '/gradients', grad)
-            self.critic_update              = self.optimizer.apply_gradients(critic_gradients, name='critic_train_op')
+#            self.critic_update              = self.optimizer.apply_gradients(critic_gradients, name='critic_train_op')
             tf.scalar_summary("critic_error", self.critic_error)
 
         with tf.name_scope("actor_update"):
             ##### ERROR FUNCTION #####
-            self.actor_score = self.critic([self.observation, self.add_pow_values(self.actor_action)])
+            self.actor_score = self.critic(self.concat_nn_lstm_input(self.observation, self.add_pow_values(self.actor_val)))
 
             ##### OPTIMIZATION #####
             # here we are maximizing actor score.
@@ -199,13 +218,13 @@ class ContinuousDeepQ(object):
                 tf.histogram_summary('actor_update/' + var.name, var)
                 if grad is not None:
                     tf.histogram_summary('actor_update/' + var.name + '/gradients', grad)
-            self.actor_update              = self.optimizer.apply_gradients(actor_gradients, name='actor_train_op')
+#            self.actor_update              = self.optimizer.apply_gradients(actor_gradients, name='actor_train_op')
             tf.scalar_summary("actor_score", tf.reduce_mean(self.actor_score))
 
         # UPDATE TARGET NETWORK
         with tf.name_scope("target_network_update"):
-            self.target_actor_update  = ContinuousDeepQ.update_target_network(self.actor, self.target_actor, self.target_actor_update_rate)
-            self.target_critic_update = ContinuousDeepQ.update_target_network(self.critic, self.target_critic, self.target_critic_update_rate)
+            self.target_actor_update  = ContinuousDeepQLSTMStepped.update_target_network(self.actor, self.target_actor, self.target_actor_update_rate)
+            self.target_critic_update = ContinuousDeepQLSTMStepped.update_target_network(self.critic, self.target_critic, self.target_critic_update_rate)
             self.update_all_targets = tf.group(self.target_actor_update, self.target_critic_update, name='target_networks_update')
 
         self.summarize = tf.merge_all_summaries()

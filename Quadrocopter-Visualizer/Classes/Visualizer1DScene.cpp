@@ -32,7 +32,7 @@ bool Visualizer1DScene::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
@@ -57,7 +57,7 @@ bool Visualizer1DScene::init()
 
 	LayerColor* targetNode = LayerColor::create(Color4B::ORANGE);
 	targetNode->setAnchorPoint(Vec2(0.5, 0.5));
-	targetNode->setContentSize(Size(2, 80));
+	targetNode->setContentSize(cocos2d::Size(2, 80));
 	targetNode->setPosition (centerPos);
 	addChild(targetNode);
 	
@@ -70,7 +70,7 @@ bool Visualizer1DScene::init()
 		LayerColor* qcopterNode = LayerColor::create(Color4B(0, 0, 255, 255));
 		qcopterNodes.push_back(qcopterNode);
 		qcopterNode->setAnchorPoint(Vec2(0.5, 0.5));
-		qcopterNode->setContentSize(Size(2, 20));
+		qcopterNode->setContentSize(cocos2d::Size(2, 20));
 		qcopterNode->setPosition (centerPos);
 		addChild(qcopterNode);
 	}

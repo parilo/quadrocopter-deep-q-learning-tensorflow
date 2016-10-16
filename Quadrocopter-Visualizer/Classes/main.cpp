@@ -11,7 +11,7 @@
 #include "main.h"
 #include "QuadrocopterSimulator.hpp"
 
-QuadrocopterSimulator2D sim;
+QuadrocopterSimulatorContPID2D sim;
 
 int main(int argc, const char * argv[]) {
 
@@ -20,6 +20,6 @@ int main(int argc, const char * argv[]) {
 	sim.startTrainWorkers();
 	sim.join();
 	
-	std::cout << "1Hello, World!\n";
+	std::cout << "execution ended\n";
     return 0;
 }

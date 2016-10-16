@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash +
 
 BASEDIR=`pwd`
 INSTALLDIR=${BASEDIR}/installdir

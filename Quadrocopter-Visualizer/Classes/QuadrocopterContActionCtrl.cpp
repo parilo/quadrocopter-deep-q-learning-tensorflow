@@ -36,7 +36,7 @@ void QuadrocopterContActionCtrl::act () {
 	
 	Quadrocopter2DBrain::quadrocopterBrainActCont(id, prevState, actionCont);
 //	actionCont [0] *= 100;
-if (id == 14) CCLOG ("--- action: %f %f", prevState [0], actionCont [0]);
+//if (id == 14) CCLOG ("--- action: %f %f", prevState [0], actionCont [0]);
 	simulationModel.setMotorPower(actionCont [0]);
 
 	reseted = false;

@@ -8,7 +8,6 @@
 
 #include "ObstacleDiscrete1D.hpp"
 
-void ObstacleDiscrete1D::act () {}
 void ObstacleDiscrete1D::reset () {}
 bool ObstacleDiscrete1D::isCollidedWith (const QuadrocopterDiscrete& q) {
 	return false;

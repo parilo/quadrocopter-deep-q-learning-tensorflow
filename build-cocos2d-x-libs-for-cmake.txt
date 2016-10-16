@@ -1,0 +1,15 @@
+#to build cocos2d-x libraries
+
+unpack cocos to
+./builddir/cocos2d-x
+
+patch cocos with
+https://github.com/MrCapone/cocos2d-x/commit/c6ddd498e3632653119ec7f731dc36af64be2a68
+
+mkdir ./builddir/cocos2d-x/builddir
+cd ./builddir/cocos2d-x/builddir
+
+cmake -G "Unix Makefiles" -DBUILD_CPP_EMPTY_TEST=OFF -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF -DBUILD_JS_LIBS=OFF ..
+make
+
+not needed to make install

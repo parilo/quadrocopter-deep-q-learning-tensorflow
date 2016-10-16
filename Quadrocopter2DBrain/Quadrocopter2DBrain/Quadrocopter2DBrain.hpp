@@ -10,6 +10,7 @@
 #define Quadrocopter2DBrain_hpp
 
 #include <vector>
+#include <list>
 
 namespace Quadrocopter2DBrain {
 
@@ -34,11 +35,7 @@ namespace Quadrocopter2DBrain {
 	void quadrocopterBrainActContLSTM(
 		int quadrocopterId,
 		const std::vector<float>& state,
-		const std::vector<float>& lstmStateC,
-		const std::vector<float>& lstmStateH,
-		std::vector<float>& action,
-		std::vector<float>& outLstmStateC,
-		std::vector<float>& outLstmStateH
+		std::vector<float>& action
 	);
 	
 	bool quadrocopterBrainTrain ();

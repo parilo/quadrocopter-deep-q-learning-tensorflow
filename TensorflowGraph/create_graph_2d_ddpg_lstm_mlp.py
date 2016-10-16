@@ -26,6 +26,10 @@ minibatch_size = 32
 
 #layer_size, layers_count, input_size, output_size, nonlinearity
 
+LSTMStepped_MLP (input_size, 128, 2, 10, [128, 1], [tf.nn.sigmoid, tf.identity], scope='test')
+print ""
+print ""
+
 critic = LSTM_MLP(input_size + num_actions*2, 128, [128, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
 actor = LSTM_MLP(input_size, 128, [128, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
 

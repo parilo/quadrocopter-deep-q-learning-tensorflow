@@ -144,10 +144,10 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 				for (int i=beginIndex; i<endIndex; i++) {
 					QuadrocopterCtrlType& q = qcopterCtrls [i];
 					q.storeExperience();
+					q.act();
 					mtxBox2DQCopterWorkers.lock();
 					q.onSimulationStep (stepIndex);
 					mtxBox2DQCopterWorkers.unlock();
-					q.act();
 				}
 
 				qcopterActSync.reportProducerDone(workerIndex);

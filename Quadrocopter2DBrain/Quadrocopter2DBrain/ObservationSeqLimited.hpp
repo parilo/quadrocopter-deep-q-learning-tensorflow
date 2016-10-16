@@ -28,8 +28,10 @@ public:
 	int getSize () const;
 	void initWith (const Observation& ob);
 	const Observation& getObservation (int index) const;
+	void print () const;
 
 	friend void fillTensor (const ObservationSeqLimited& obs, tensorflow::Tensor& t, int tensorIndex);
+	friend void fillTensor3D (const ObservationSeqLimited& obs, tensorflow::Tensor& t, int tensorIndex);
 	
 private:
 	
