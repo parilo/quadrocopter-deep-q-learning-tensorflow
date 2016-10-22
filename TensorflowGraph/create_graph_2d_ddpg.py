@@ -29,10 +29,10 @@ num_actions = 2;
 #brain = MLP([input_size,], [32, 32, 32, 32, 32, num_actions], 
 #            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
 
-critic = MLP([input_size, num_actions*2], [512, 96, 1], 
+critic = MLP([input_size, num_actions*2], [768, 128, 1], 
             [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
 
-actor = MLP([input_size,], [512, 96, num_actions], 
+actor = MLP([input_size,], [768, 128, num_actions], 
             [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
@@ -43,7 +43,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.99, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

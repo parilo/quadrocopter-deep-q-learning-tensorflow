@@ -53,8 +53,8 @@ public:
 	
 //	QuadrocopterSimulator2D sim;
 //	QuadrocopterSimulatorDiscrete2D sim;
-//	QuadrocopterSimulatorCont2D sim;
-	QuadrocopterSimulatorContPID2D sim;
+	QuadrocopterSimulatorCont2D sim;
+//	QuadrocopterSimulatorContPID2D sim;
 //	QuadrocopterSimulatorContPIDLSTM2D sim;
 	int simulationStep;
 	
