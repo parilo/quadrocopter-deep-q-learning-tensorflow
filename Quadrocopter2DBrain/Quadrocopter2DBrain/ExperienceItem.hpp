@@ -55,6 +55,16 @@ class ExperienceItem {
 	std::vector<float> prevLstmStateH;
 	std::vector<float> nextLstmStateC;
 	std::vector<float> nextLstmStateH;
+	
+	// lstm weak
+	std::vector<float> actorLstmStateC;
+	std::vector<float> actorLstmStateH;
+	std::vector<float> criticLstmStateC;
+	std::vector<float> criticLstmStateH;
+	std::vector<float> targetActorLstmStateC;
+	std::vector<float> targetActorLstmStateH;
+	std::vector<float> targetCriticLstmStateC;
+	std::vector<float> targetCriticLstmStateH;
 
 };
 

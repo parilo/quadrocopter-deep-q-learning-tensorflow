@@ -33,6 +33,8 @@
 #include "Lib.h"
 #include "Quadrocopter2DContActionPIDCtrl.hpp"
 #include "Quadrocopter2DContActionPIDLSTMCtrl.hpp"
+#include "Quadrocopter2DContActionLSTMWeakCtrl.hpp"
+#include "Quadrocopter2DContActionMLPSeqCtrl.hpp"
 
 template <
 	typename WorldType,
@@ -91,6 +93,8 @@ private:
 	
 	std::function<void ()> simulationUpdateCallback;
 	typename WorldType::CollideListener collideListener;
+	
+	const bool useOnlineTrain = false;
 
 };
 
@@ -145,9 +149,9 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
 					QuadrocopterCtrlType& q = qcopterCtrls [i];
 					q.storeExperience();
 					q.act();
-					mtxBox2DQCopterWorkers.lock();
-					q.onSimulationStep (stepIndex);
-					mtxBox2DQCopterWorkers.unlock();
+//					mtxBox2DQCopterWorkers.lock();
+//					q.onSimulationStep (stepIndex);
+//					mtxBox2DQCopterWorkers.unlock();
 				}
 
 				qcopterActSync.reportProducerDone(workerIndex);
@@ -164,13 +168,27 @@ void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType
         while (allowThreadsWork) {
 			qcopterActSync.waitProducers();
 
+			if (useOnlineTrain && stepIndex > 0) {
+				if (Quadrocopter2DBrain::quadrocopterBrainTrain()) {
+					for (auto& q : qcopterCtrls) {
+						q.onTrainStep (trainStepIndex);
+					}
+					trainStepIndex++;
+				}
+			}
+			
+			for (auto& q : qcopterCtrls) {
+				q.onSimulationStep (stepIndex);
+			}
+
+			if (stepIndex>0)
 			if (stepIndex % exerciseLengthInSteps == 0) {
 				reset ();
 			}
 
-			if (Lib::randFloat(0, 100) < 1) {
-				qcopterCtrls [Lib::randInt(0, quadrocoptersCount-1)].reset ();
-			}
+//			if (Lib::randFloat(0, 100) < 1) {
+//				qcopterCtrls [Lib::randInt(0, quadrocoptersCount-1)].reset ();
+//			}
 
 //			if (stepIndex % 2 == 0) {
 //				std::vector<float> state;
@@ -229,6 +247,11 @@ template <
 	typename ObstacleType
 	>
 void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType, ObstacleType>::startTrainWorkers () {
+	
+	//train will be executed in qcopterMainWorker
+	//when online training is used
+	if (useOnlineTrain) return;
+	
 	for (int i=0; i<quadrocoptersTrainWorkerThreads; i++) {
 		trainWorkerThreads.emplace_back(trainWorker);
 	}
@@ -271,11 +294,11 @@ template <
 	typename ObstacleType
 	>
 void QuadrocopterSimulatorTmpl<WorldType, QuadrocopterCtrlType, QuadrocopterType, ObstacleType>::reset () {
-	for (auto& qCtrl : qcopterCtrls) {
-		qCtrl.reset();
-	}
 	for (auto& o : simulation.getWorld().getObstacles()) {
 		o.reset ();
+	}
+	for (auto& qCtrl : qcopterCtrls) {
+		qCtrl.reset();
 	}
 }
 
@@ -308,7 +331,9 @@ typedef QuadrocopterSimulatorTmpl<WorldDiscrete2D, QuadrocopterDiscrete2DCtrl, Q
 
 typedef QuadrocopterSimulatorTmpl<World1D, QuadrocopterContActionCtrl, Quadrocopter1D, Obstacle1D> QuadrocopterSimulatorCont1D;
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorCont2D;
+typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionLSTMWeakCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContLSTMWeak2D;
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionPIDCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContPID2D;
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionPIDLSTMCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContPIDLSTM2D;
+typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionMLPSeqCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContMLPSeq2D;
 
 #endif /* QuadrocopterSimulator_hpp */

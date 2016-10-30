@@ -108,6 +108,7 @@ bool Visualizer2DScene::init()
 	sim.setSimulationUpdateCallback([this](){
 		update (0);
 		
+		if (simulationStep > 0)
 		if (simulationStep % changeTargetInSteps == 0) {
 			changeTarget ();
 		}

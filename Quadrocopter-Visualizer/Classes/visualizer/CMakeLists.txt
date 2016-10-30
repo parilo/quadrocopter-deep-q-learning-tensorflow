@@ -28,6 +28,10 @@ elseif(MACOSX OR APPLE)
 
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
+ link_directories (
+  /usr/local/lib
+ )
+
  FIND_LIBRARY(COCOA_LIBRARY Cocoa)
  FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
  FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
@@ -84,6 +88,8 @@ add_executable(QuadrocopterVisualizer
 ../Quadrocopter2DContActionCtrl.cpp
 ../Quadrocopter2DContActionPIDCtrl.cpp
 ../Quadrocopter2DContActionPIDLSTMCtrl.cpp
+../Quadrocopter2DContActionLSTMWeakCtrl.cpp
+../Quadrocopter2DContActionMLPSeqCtrl.cpp
 ../Quadrocopter2DCtrl.cpp
 ../QuadrocopterContActionCtrl.cpp
 ../QuadrocopterCtrl.cpp

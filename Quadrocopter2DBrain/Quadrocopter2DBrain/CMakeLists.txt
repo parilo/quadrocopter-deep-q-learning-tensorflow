@@ -26,6 +26,7 @@ BrainAlgorithm.cpp
 BrainDiscreteDeepQ.cpp
 DDPG.cpp
 DDPG_LSTM.cpp
+DDPG_LSTM_Weak.cpp
 ExpLambdaFilter.cpp
 ExperienceBank.cpp
 ExperienceBankRemovable.cpp

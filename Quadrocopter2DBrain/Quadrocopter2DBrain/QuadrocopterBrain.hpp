@@ -26,8 +26,12 @@ public:
 	//2d
 	static const int observationSize = 50;
 	static const int lstmStepsCount = 20;
+	static const int lstmStateSize = 128;
 	static const int numActions = 9;
 	static const int contActionSize = 2;
+	static const int mlpSeqSize = 4;
+	
+	static const bool useObsSeq = true;
 
 	//1d
 //	static const int observationSize = 4;
@@ -39,10 +43,20 @@ public:
 	
 	long act (const ObservationSeqLimited& state, double randomness);
 	void actCont (const ObservationSeqLimited& state, std::vector<float>& action, double randomness);
+	void actContLSTMWeak (
+		const ObservationSeqLimited& state,
+		const std::vector<float>& actorLstmStateC,
+		const std::vector<float>& actorLstmStateH,
+		double randomness,
+		std::vector<float>& action//,
+//		std::vector<float>& newLstmStateC,
+//		std::vector<float>& newLstmStateH
+	);
 	
 	void storeExperience (const ExperienceItem& expItem);
 	
 	bool train ();
+	bool trainOnMinibatch (std::vector<ExperienceItem*> minibatch);
 	
 	bool getMaxErrorExp (ExperienceItem& expItem);
 	

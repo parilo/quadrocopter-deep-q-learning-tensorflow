@@ -9,7 +9,7 @@
 #ifndef main_h
 #define main_h
 
-const int quadrocoptersCount = 20;
+const int quadrocoptersCount = 16;
 const int obstaclesCount = 20;
 const int exerciseLengthInSteps = 80 * 20 + 1;
 const int changeTargetInSteps = 15 * 20 + 1;

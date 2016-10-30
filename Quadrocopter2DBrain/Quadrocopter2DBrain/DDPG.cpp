@@ -13,7 +13,8 @@ using namespace tensorflow;
 
 DDPG::DDPG () : BrainDiscreteDeepQ(
 //	"graph-1d-ddpg.pb"
-	"graph-2d-ddpg.pb"
+//	"graph-2d-ddpg.pb"
+	"graph-2d-ddpg-mlp-seq.pb"
 ) {}
 
 void DDPG::control (const ObservationSeqLimited& obs, std::vector<float>& action, double randomness) {
@@ -67,7 +68,7 @@ float DDPG::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
 	std::lock_guard<std::mutex> lock (saveGraphMutex);
 
 	int minibatchSize = (int) minibatch.size();
-	int observationSize = QuadrocopterBrain::observationSize;
+	int observationSize = QuadrocopterBrain::observationSize * (QuadrocopterBrain::useObsSeq?QuadrocopterBrain::mlpSeqSize:1);
 	Tensor observations (DT_FLOAT, TensorShape({minibatchSize, observationSize}));
 	Tensor newObservations (DT_FLOAT, TensorShape({minibatchSize, observationSize}));
 	Tensor newObservationsMasks (DT_FLOAT, TensorShape({minibatchSize, 1}));

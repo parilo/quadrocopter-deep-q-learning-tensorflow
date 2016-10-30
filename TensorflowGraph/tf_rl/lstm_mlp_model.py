@@ -23,9 +23,12 @@ class LSTM_MLP(object):
         
         self.model_variables = self.mlp.variables () + self.lstm.variables ()
         
-    def __call__(self, xs):
+    def __call__(self, xs, states=None):
         with tf.variable_scope(self.scope) as sc:
-            return self.mlp(self.lstm(xs))
+            return self.mlp(self.lstm(xs, states))
+
+    def get_output_state (self):
+        return self.lstm.get_output_state ()
 
     def variables(self):
         return self.model_variables

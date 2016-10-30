@@ -28,14 +28,18 @@ class LSTMModel(object):
             for v in self.model_variables:
                 print "LSTMModel v: " + v.name
 
-    def __call__(self, xs):
+    def __call__(self, xs, states=None):
         with tf.variable_scope(self.scope, reuse=True) as vs:
+            input_states = states or self.states
             val, states = self.cell (xs, self.states)
-            aaa = tf.identity (states[0], name="read_state_c")
-            aaa2 = tf.identity (states[1], name="read_state_h")
-            print "read_state_c: " + str (aaa)
-            print "read_state_h: " + str (aaa2)
+            self.out_state_c = tf.identity (states[0], name="read_state_c")
+            self.out_state_h = tf.identity (states[1], name="read_state_h")
+            print "read_state_c: " + str (self.out_state_c)
+            print "read_state_h: " + str (self.out_state_h)
         return val
+    
+    def get_output_state (self):
+        return self.out_state_c, self.out_state_h
 
     def variables(self):
         return self.model_variables

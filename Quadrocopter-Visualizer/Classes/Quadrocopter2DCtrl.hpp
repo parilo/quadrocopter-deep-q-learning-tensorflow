@@ -20,7 +20,7 @@ public:
 	virtual void storeExperience ();
 	virtual void calcReward ();
 	virtual void reset ();
-	void resetAction ();
+	virtual void resetAction ();
 	double getReward ();
 	void setState (const std::vector<float> state) {}
 	QuadrocopterModel2DIFace& getModel ();

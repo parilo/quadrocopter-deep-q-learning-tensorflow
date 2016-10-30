@@ -73,6 +73,20 @@ void QuadrocopterBrain::actCont (const ObservationSeqLimited& state, std::vector
 	actExecuted++;
 }
 
+void QuadrocopterBrain::actContLSTMWeak (
+	const ObservationSeqLimited& state,
+	const std::vector<float>& actorLstmStateC,
+	const std::vector<float>& actorLstmStateH,
+	double randomness,
+	std::vector<float>& action//,
+//	std::vector<float>& newLstmStateC,
+//	std::vector<float>& newLstmStateH
+) {
+	brain->control (state, actorLstmStateC, actorLstmStateH, action, randomness);
+	
+	actExecuted++;
+}
+
 std::vector<int> counts = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
@@ -183,6 +197,44 @@ bool QuadrocopterBrain::train () {
 	
 //std::cerr << "--- train: " << trainExecuted++ << " : " << err << std::endl;
 //		brain.trainEnvModel(exp);
+
+	return true;
+}
+
+bool QuadrocopterBrain::trainOnMinibatch (std::vector<ExperienceItem*> minibatch) {
+
+	float err = brain->trainOnMinibatch(minibatch);
+	
+	for (auto expItem : minibatch) {
+		allReward += expItem->reward;
+	}
+	
+	countTrainErrorValuesMutex.lock();
+	for (int i=0; i<countsSize; i++) {
+		if (err > countsLimits [i]) {
+			counts [i] ++;
+			break;
+		}
+	}
+
+	if (trainExecuted % 50 == 0) {
+		std::cerr << "--- train: " << trainExecuted << " ( "
+			<< experienceLow.getCurrentIndex () << " / "
+			<< experienceLow.getSize() << " ) :";
+			
+		for (int i=0; i<countsSize; i++) {
+			std::cerr << " " << counts [i];
+		}
+		std::cerr << " err: " << err << " reward: " << allReward << std::endl;
+		allReward = 0;
+	}
+	countTrainErrorValuesMutex.unlock();
+
+	if (trainExecuted % 5000 == 0) {
+		brain->saveGraphState (to_string(trainExecuted));
+	}
+
+	trainExecuted++;
 
 	return true;
 }

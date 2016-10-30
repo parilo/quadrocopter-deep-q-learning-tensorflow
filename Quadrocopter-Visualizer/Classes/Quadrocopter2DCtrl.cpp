@@ -177,6 +177,8 @@ void Quadrocopter2DCtrl::storeExperience () {
 }
 
 void Quadrocopter2DCtrl::reset () {
+//if (id == 0)
+//std::cout << "--- reset" << std::endl;
 	reseted = true;
 	action = -1;
 //	time = 1;
@@ -202,6 +204,8 @@ QuadrocopterModel2DIFace& Quadrocopter2DCtrl::getModel () {
 }
 
 void Quadrocopter2DCtrl::resetAction () {
+//if (id == 0)
+//std::cout << "--- reset action" << std::endl;
 	reseted = true;
 	action = -1;
 }

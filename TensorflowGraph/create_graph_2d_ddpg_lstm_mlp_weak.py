@@ -2,7 +2,7 @@ import numpy as np
 import tempfile
 import tensorflow as tf
 
-from tf_rl.controller import ContinuousDeepQ
+from tf_rl.controller import ContinuousDeepQLSTMWeak
 #from tf_rl.simulation import KarpathyGame
 from tf_rl import simulate
 from tf_rl.lstm_model import LSTMModel
@@ -26,10 +26,6 @@ minibatch_size = 32
 
 #layer_size, layers_count, input_size, output_size, nonlinearity
 
-LSTMStepped_MLP (input_size, 128, 2, 10, [128, 1], [tf.nn.sigmoid, tf.identity], scope='test')
-print ""
-print ""
-
 critic = LSTM_MLP(input_size + num_actions*2, 128, [128, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
 actor = LSTM_MLP(input_size, 128, [128, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
 
@@ -41,7 +37,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.997, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQLSTMWeak(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.997, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,
@@ -72,4 +68,4 @@ for variable in tf.trainable_variables():
     tf.identity (variable, name="readVariable")
     tf.assign (variable, tf.placeholder(tf.float32, variable.get_shape(), name="variableValue"), name="resoreVariable")
 
-tf.train.write_graph(session.graph_def, 'models/', 'graph-2d-ddpg-lstm-mlp.pb', as_text=False)
+tf.train.write_graph(session.graph_def, 'models/', 'graph-2d-ddpg-lstm-mlp-weak.pb', as_text=False)

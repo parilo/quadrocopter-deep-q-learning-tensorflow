@@ -38,6 +38,18 @@ namespace Quadrocopter2DBrain {
 		std::vector<float>& action
 	);
 	
+	void quadrocopterBrainActContLSTMWeak(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		std::vector<float>& action
+	);
+	
+	void quadrocopterBrainActContMLPSeq(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		std::vector<float>& action
+	);
+	
 	bool quadrocopterBrainTrain ();
 
 	void storeQuadrocopterExperience (
@@ -56,6 +68,14 @@ namespace Quadrocopter2DBrain {
 		const std::vector <float>& nextState
 	);
 
+	void storeQuadrocopterExperienceContLSTMWeak (
+		int quadrocopterId,
+		double reward,
+		std::vector<float>& action,
+		const std::vector <float>& prevState,
+		const std::vector <float>& nextState
+	);
+
 	void storeQuadrocopterExperienceContLSTM (
 		int quadrocopterId,
 		double reward,
@@ -66,6 +86,24 @@ namespace Quadrocopter2DBrain {
 		const std::vector <float>& nextState,
 		const std::vector<float>& nextLstmStateC,
 		const std::vector<float>& nextLstmStateH
+	);
+
+	void storeQuadrocopterExperienceContMLPSeq (
+		int quadrocopterId,
+		double reward,
+		std::vector<float>& action,
+		const std::vector <float>& prevState,
+		const std::vector <float>& nextState
+	);
+	
+	void resetQuadrocopterLSTMWeak (
+		int quadrocopterId,
+		const std::vector <float>& copterState
+	);
+	
+	void resetQuadrocopterMLPSeq (
+		int quadrocopterId,
+		const std::vector <float>& copterState
 	);
 	
 	bool getBigErrorExp (

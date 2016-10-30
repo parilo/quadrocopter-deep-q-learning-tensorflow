@@ -22,10 +22,21 @@ public:
 	
 	virtual void control (const ObservationSeqLimited& ob, std::vector<float>& action, double randomness) = 0;
 
+	virtual void control (
+		const ObservationSeqLimited& ob,
+		const std::vector<float>& lstmStateC,
+		const std::vector<float>& lstmStateH,
+		std::vector<float>& action,
+		double randomness//,
+//		std::vector<float>& outLstmStateC,
+//		std::vector<float>& outLstmStateH
+	) = 0;
+
 	/**
 		@return prediction error on choosed minibatch
 	*/
 	virtual float trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) = 0;
+	virtual float trainOnMinibatch (std::vector<ExperienceItem*> minibatch) = 0;
 
 	virtual void setExplorationPeriod (int explorationPeriod) = 0;
 	virtual void saveGraphState (const std::string fileSuffix) = 0;

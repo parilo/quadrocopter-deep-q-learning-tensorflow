@@ -92,6 +92,16 @@ using namespace tensorflow;
 }
 
 template<typename T>
+void getTensorValues (const tensorflow::Tensor& t, std::vector<T>& values, int tensorIndex) {
+using namespace tensorflow;
+	int64 sizej = t.shape().dim_size(1);
+	auto m = t.matrix<T>();
+	for (int j=0; j<sizej; j++) {
+		values [j] = m (tensorIndex, j);
+	}
+}
+
+template<typename T>
 void printTensorVector (const tensorflow::Tensor& t) {
 using namespace tensorflow;
 	int64 sizei = t.shape().dim_size(0);
