@@ -30,6 +30,8 @@
 		3A58EF831CDE47AB002EABE2 /* QuadrocopterSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A58EF811CDE47AB002EABE2 /* QuadrocopterSimulator.cpp */; };
 		3A58EF841CDE4903002EABE2 /* QuadrocopterSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A58EF811CDE47AB002EABE2 /* QuadrocopterSimulator.cpp */; };
 		3A58EF851CDE4A7E002EABE2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A58EF671CDE4337002EABE2 /* main.cpp */; };
+		3A5CC1AB1DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CC1A91DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp */; };
+		3A5CC1AE1DCE023000B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CC1A91DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp */; };
 		3A797A441CFF84DE00F9A2C9 /* Quadrocopter2DCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AD49E461CF4DD7500DE121D /* Quadrocopter2DCtrl.cpp */; };
 		3A797A451CFF84DE00F9A2C9 /* QuadrocopterDiscreteCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A2429C01CF1DD1F00CC89D0 /* QuadrocopterDiscreteCtrl.cpp */; };
 		3A797A471CFF84DE00F9A2C9 /* ConsumerProducerSyncronizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB305061CFB1B2F007C6188 /* ConsumerProducerSyncronizer.cpp */; };
@@ -230,6 +232,8 @@
 		3A58EF701CDE4405002EABE2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A58EF811CDE47AB002EABE2 /* QuadrocopterSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadrocopterSimulator.cpp; sourceTree = "<group>"; };
 		3A58EF821CDE47AB002EABE2 /* QuadrocopterSimulator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QuadrocopterSimulator.hpp; sourceTree = "<group>"; };
+		3A5CC1A91DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quadrocopter2DContActionLSTMCtrl.cpp; sourceTree = "<group>"; };
+		3A5CC1AA1DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quadrocopter2DContActionLSTMCtrl.hpp; sourceTree = "<group>"; };
 		3A7C47C21D1B395500F8E8AA /* WorldDiscrete.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldDiscrete.cpp; sourceTree = "<group>"; };
 		3A7C47C31D1B395500F8E8AA /* WorldDiscrete.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WorldDiscrete.hpp; sourceTree = "<group>"; };
 		3A7C47C81D1B3DDA00F8E8AA /* ObstacleDiscrete2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObstacleDiscrete2D.cpp; sourceTree = "<group>"; };
@@ -539,6 +543,8 @@
 				3A52AA271D7CAAA900A60A2B /* Quadrocopter2DContActionPIDCtrl.hpp */,
 				3ABF08BC1DA5933F002F3F1E /* Quadrocopter2DContActionPIDLSTMCtrl.cpp */,
 				3ABF08BD1DA59340002F3F1E /* Quadrocopter2DContActionPIDLSTMCtrl.hpp */,
+				3A5CC1A91DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp */,
+				3A5CC1AA1DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.hpp */,
 				3A52AA291D7CAB8C00A60A2B /* PID.cpp */,
 				3A52AA2A1D7CAB8C00A60A2B /* PID.hpp */,
 				3A58EF671CDE4337002EABE2 /* main.cpp */,
@@ -804,6 +810,7 @@
 				3A9AD0951D1D083D00EF75ED /* ObstacleDiscrete1D.cpp in Sources */,
 				3A52AA281D7CAAA900A60A2B /* Quadrocopter2DContActionPIDCtrl.cpp in Sources */,
 				3AB305081CFB1B2F007C6188 /* ConsumerProducerSyncronizer.cpp in Sources */,
+				3A5CC1AB1DCE005E00B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp in Sources */,
 				3ABF08BE1DA59340002F3F1E /* Quadrocopter2DContActionPIDLSTMCtrl.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				3ADAE8FB1D5F89DC00BF80C2 /* QuadrocopterContActionCtrl.cpp in Sources */,
@@ -848,6 +855,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A5CC1AE1DCE023000B1DABD /* Quadrocopter2DContActionLSTMCtrl.cpp in Sources */,
 				3AA225CE1DC150EA00D135B0 /* Quadrocopter2DContActionMLPSeqCtrl.cpp in Sources */,
 				3AB194181DBC171900ED38F9 /* Quadrocopter2DContActionLSTMWeakCtrl.cpp in Sources */,
 				3ABF08C11DA59506002F3F1E /* Quadrocopter2DContActionPIDLSTMCtrl.cpp in Sources */,

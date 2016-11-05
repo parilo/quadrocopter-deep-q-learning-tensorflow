@@ -202,7 +202,7 @@ class ContinuousDeepQLSTMStepped(object):
                 tf.histogram_summary('critic_update/' + var.name, var)
                 if grad is not None:
                     tf.histogram_summary('critic_update/' + var.name + '/gradients', grad)
-#            self.critic_update              = self.optimizer.apply_gradients(critic_gradients, name='critic_train_op')
+            self.critic_update              = self.optimizer.apply_gradients(critic_gradients, name='critic_train_op')
             tf.scalar_summary("critic_error", self.critic_error)
 
         with tf.name_scope("actor_update"):
@@ -218,7 +218,7 @@ class ContinuousDeepQLSTMStepped(object):
                 tf.histogram_summary('actor_update/' + var.name, var)
                 if grad is not None:
                     tf.histogram_summary('actor_update/' + var.name + '/gradients', grad)
-#            self.actor_update              = self.optimizer.apply_gradients(actor_gradients, name='actor_train_op')
+            self.actor_update              = self.optimizer.apply_gradients(actor_gradients, name='actor_train_op')
             tf.scalar_summary("actor_score", tf.reduce_mean(self.actor_score))
 
         # UPDATE TARGET NETWORK

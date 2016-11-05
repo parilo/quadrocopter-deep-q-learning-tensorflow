@@ -57,34 +57,32 @@ float DDPG_LSTM::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch)
 
 	int minibatchSize = (int) minibatch.size();
 	int observationSize = QuadrocopterBrain::observationSize;
-	Tensor observations (DT_FLOAT, TensorShape({minibatchSize, observationSize}));
-	Tensor newObservations (DT_FLOAT, TensorShape({minibatchSize, observationSize}));
-	Tensor newObservationsMasks (DT_FLOAT, TensorShape({minibatchSize, 1}));
-	Tensor rewards (DT_FLOAT, TensorShape({minibatchSize, 1}));
-	Tensor givenAction (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::contActionSize}));
-//	Tensor prevLstmStateC (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
-//	Tensor prevLstmStateH (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
-//	Tensor nextLstmStateC (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
-//	Tensor nextLstmStateH (DT_FLOAT, TensorShape({minibatchSize, QuadrocopterBrain::lstmStateSize}));
+	int lstmStepSize = QuadrocopterBrain::lstmStepsCount;
+	Tensor observations (DT_FLOAT, TensorShape({minibatchSize, lstmStepSize, observationSize}));
+	Tensor newObservations (DT_FLOAT, TensorShape({minibatchSize, lstmStepSize, observationSize}));
+	Tensor newObservationsMasks (DT_FLOAT, TensorShape({minibatchSize, lstmStepSize, 1}));
+	Tensor rewards (DT_FLOAT, TensorShape({minibatchSize, lstmStepSize, 1}));
+	Tensor givenAction (DT_FLOAT, TensorShape({minibatchSize, lstmStepSize, QuadrocopterBrain::contActionSize}));
+
 	int expI = 0;
 	for (auto expItem : minibatch) {
 	
-		fillTensor (expItem->prevStates, observations, expI);
-		fillTensor (expItem->nextStates, newObservations, expI);
+		fillTensor3D (expItem->prevStates, observations, expI);
+		fillTensor3D (expItem->nextStates, newObservations, expI);
+		fillTensor3D (expItem->lstmActions, givenAction, expI);
+		fillTensor3D (expItem->lstmRewards, rewards, expI);
 		
-		int ai = 0;
-		for (auto& actionItem : expItem->actionCont) {
-			givenAction.matrix<float>()(expI, ai) = actionItem;
-			ai++;
-		}
+//		for (int lstmI=0; lstmI < lstmStepSize; lstmI++) {
+//			int ai = 0;
+//			for (auto& actionItem : expItem->actionCont) {
+//				givenAction.tensor<float, 3>()(expI, lstmI, ai) = actionItem;
+//				ai++;
+//			}
+//		}
 		
-		rewards.matrix<float>()(expI, 0) = (float) expItem->rewardLambda;
-		newObservationsMasks.matrix<float>()(expI, 0) = 1;
-		
-//		fillTensor<float>(prevLstmStateC, expItem->prevLstmStateC, expI);
-//		fillTensor<float>(prevLstmStateH, expItem->prevLstmStateH, expI);
-//		fillTensor<float>(nextLstmStateC, expItem->nextLstmStateC, expI);
-//		fillTensor<float>(nextLstmStateH, expItem->nextLstmStateH, expI);
+//		rewards.matrix<float>()(expI, 0) = (float) expItem->rewardLambda;
+		for (int lstmI=0; lstmI < lstmStepSize; lstmI++)
+			newObservationsMasks.tensor<float, 3>()(expI, lstmI, 0) = 1;
 		
 		expI++;
 	}
@@ -101,23 +99,15 @@ float DDPG_LSTM::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch)
 //	printTensor<float>(newObservationsMasks);
 	
 	std::vector<std::pair<string, tensorflow::Tensor>> inputs = {
-		{ "taking_action/observation", observations },
-		{ "critic_update/given_action", givenAction },
+		{ "observation", observations },
+		{ "given_action", givenAction },
 		{ "estimating_future_reward/rewards", rewards },
 		{ "estimating_future_reward/next_observation_mask", newObservationsMasks },
-		{ "estimating_future_reward/next_observation", newObservations },
-//		{ "critic/lstm/state_c", prevLstmStateC },
-//		{ "critic/lstm/state_h", prevLstmStateH },
-//		{ "actor/lstm/state_c", prevLstmStateC },
-//		{ "actor/lstm/state_h", prevLstmStateH },
-//		{ "target_actor/target_actor/lstm/state_c", nextLstmStateC },
-//		{ "target_actor/target_actor/lstm/state_h", nextLstmStateH },
-//		{ "target_critic/target_critic/lstm/state_c", nextLstmStateC },
-//		{ "target_critic/target_critic/lstm/state_h", nextLstmStateH }
+		{ "next_observation", newObservations },
 	};
 	
 	std::vector<tensorflow::Tensor> outputTensors;
-	
+
 	auto status = session->Run(inputs, {
 		"critic_update/critic_error"
 	}, {
@@ -129,7 +119,7 @@ float DDPG_LSTM::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch)
 		std::cerr << "tf error: " << status.ToString() << "\n";
 		return 0;
 	}
-//std::cerr << "--- train outputs: " << outputs [0].DebugString() << std::endl;
+std::cerr << "--- train outputs: " << outputTensors [0].DebugString() << std::endl;
 //	printTensor<float>(outputTensors [0]);
 //	std::vector<float> v;
 //	getTensorValues<float>(outputs [0], v);

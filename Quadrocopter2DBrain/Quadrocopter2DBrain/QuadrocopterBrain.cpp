@@ -133,6 +133,8 @@ bool QuadrocopterBrain::train () {
 
 	float err = brain->trainOnMinibatch(minibatch);
 
+trainExecuted++; return true;
+
 //	std::vector<tensorflow::Tensor> outputTensors;
 //	float err = brain.trainOnMinibatch(minibatch, outputTensors);
 //	lastErrs.push_back (err * 0.01);

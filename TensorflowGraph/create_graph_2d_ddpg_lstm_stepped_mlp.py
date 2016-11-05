@@ -10,7 +10,7 @@ session = tf.Session()
 
 # This little guy will let us run tensorboard
 #      tensorboard --logdir [LOG_DIR]
-journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/TensorflowLog")
+journalist = tf.train.SummaryWriter("/tmp")
 
 observation_size = 50;
 observations_in_seq = 1;

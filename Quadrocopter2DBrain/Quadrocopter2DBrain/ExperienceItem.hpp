@@ -34,12 +34,8 @@ class ExperienceItem {
 	ExperienceItem (
 		const ObservationSeqLimited& prevStates,
 		const ObservationSeqLimited& nextStates,
-		double reward,
-		const std::vector<float>& actionCont,
-		const std::vector<float>& prevLstmStateC,
-		const std::vector<float>& prevLstmStateH,
-		const std::vector<float>& nextLstmStateC,
-		const std::vector<float>& nextLstmStateH
+		const ObservationSeqLimited& reward,
+		const ObservationSeqLimited& actionCont
 	);
 	
 	int id;
@@ -51,10 +47,8 @@ class ExperienceItem {
 	std::vector<float> actionCont;
 
 	// lstm
-	std::vector<float> prevLstmStateC;
-	std::vector<float> prevLstmStateH;
-	std::vector<float> nextLstmStateC;
-	std::vector<float> nextLstmStateH;
+	ObservationSeqLimited lstmActions;
+	ObservationSeqLimited lstmRewards;
 	
 	// lstm weak
 	std::vector<float> actorLstmStateC;

@@ -33,7 +33,7 @@ public:
 	
 	static const bool useObsSeq = true;
 
-	static const int minibatchSize = 512;
+	static const int minibatchSize = 128;
 
 	//1d
 //	static const int observationSize = 4;
@@ -83,7 +83,7 @@ private:
 	static const int storeEveryNth = 5;
 	static const int trainEveryNth = 1000; //act
 	static const int trainCount = 1;
-	static const int trainAfter = 50000; //stored exp
+	static const int trainAfter = 200; //stored exp
 
 	//train
 	constexpr static float probHigh = 0.55;

@@ -35,6 +35,7 @@
 #include "Quadrocopter2DContActionPIDLSTMCtrl.hpp"
 #include "Quadrocopter2DContActionLSTMWeakCtrl.hpp"
 #include "Quadrocopter2DContActionMLPSeqCtrl.hpp"
+#include "Quadrocopter2DContActionLSTMCtrl.hpp"
 
 template <
 	typename WorldType,
@@ -336,5 +337,6 @@ typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionLSTMWeakCtrl,
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionPIDCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContPID2D;
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionPIDLSTMCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContPIDLSTM2D;
 typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionMLPSeqCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContMLPSeq2D;
+typedef QuadrocopterSimulatorTmpl<World2D, Quadrocopter2DContActionLSTMCtrl, Quadrocopter2D, Obstacle2D> QuadrocopterSimulatorContLSTM2D;
 
 #endif /* QuadrocopterSimulator_hpp */

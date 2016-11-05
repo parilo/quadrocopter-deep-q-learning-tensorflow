@@ -26,15 +26,19 @@ namespace Quadrocopter2DBrain {
 
 	const int numOfQuadrocopters = 64;
 
-	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
-//	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
+//	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
+	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
 //	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM_Weak ()));
 	
 	const bool useLstmWeak = false;
 //	const bool useLstmWeak = true;
 	
-	vector<ObservationSeqLimited> prevObsSeq; //lstm
-	vector<ObservationSeqLimited> nextObsSeq; //lstm
+	//lstm
+	vector<ObservationSeqLimited> prevObsSeq;
+	vector<ObservationSeqLimited> nextObsSeq;
+	vector<ObservationSeqLimited> lstmActions;
+	vector<ObservationSeqLimited> lstmRewards;
+	
 	vector<ExpLambdaFilter> experienceFilters; //one filter for each quadrocopter;
 	vector<double> randomnessOfQuadrocopter;
 	
@@ -77,31 +81,6 @@ namespace Quadrocopter2DBrain {
 	) {
 		quadrocopterBrain.actCont (
 			ObservationSeqLimited (state),
-			action,
-			randomnessOfQuadrocopter [quadrocopterId]
-		);
-	}
-
-	void quadrocopterBrainActContLSTM(
-		int quadrocopterId,
-		const std::vector<float>& state,
-		std::vector<float>& action
-	) {
-	
-//		ObservationSeqLimited obs(states.size());
-//		for (auto& s : states) {
-//			obs.push(Observation(*s));
-//		}
-//		
-//		obs.print();
-		
-//		std::cout << "q: " << quadrocopterId << std::endl;
-		auto& seq = prevObsSeq [quadrocopterId];
-		seq.push(Observation(state));
-//		seq.print();
-		
-		quadrocopterBrain.actCont (
-			seq,
 			action,
 			randomnessOfQuadrocopter [quadrocopterId]
 		);
@@ -202,26 +181,53 @@ namespace Quadrocopter2DBrain {
 //std::cout << "--- size: " << exp.prevStates.getSize() << " / " << lstmWeakExperienceMinibatch[quadrocopterId]->prevStates.getSize() << std::endl;
 	}
 
+	void quadrocopterBrainActContLSTM(
+		int quadrocopterId,
+		const std::vector<float>& state,
+		std::vector<float>& action
+	) {
+	
+//		ObservationSeqLimited obs(states.size());
+//		for (auto& s : states) {
+//			obs.push(Observation(*s));
+//		}
+//		
+//		obs.print();
+		
+//		std::cout << "q: " << quadrocopterId << std::endl;
+		auto& seq = prevObsSeq [quadrocopterId];
+		seq.push(Observation(state));
+//		seq.print();
+		
+		quadrocopterBrain.actCont (
+			seq,
+			action,
+			randomnessOfQuadrocopter [quadrocopterId]
+		);
+	}
+
 	void storeQuadrocopterExperienceContLSTM (
 		int quadrocopterId,
 		double reward,
 		std::vector<float>& action,
 		const std::vector <float>& prevState,
-		const std::vector<float>& prevLstmStateC,
-		const std::vector<float>& prevLstmStateH,
-		const std::vector <float>& nextState,
-		const std::vector<float>& nextLstmStateC,
-		const std::vector<float>& nextLstmStateH
+		const std::vector <float>& nextState
 	) {
+
+		auto& pSeq = prevObsSeq [quadrocopterId];
+		auto& nSeq = nextObsSeq [quadrocopterId];
+		auto& a = lstmActions [quadrocopterId];
+		auto& r = lstmRewards [quadrocopterId];
+		
+		nSeq.push(Observation(nextState));
+		a.push(Observation(action));
+		r.push(Observation(std::vector<float> (1, reward)));
+
 		ExperienceItem expItem (
-			ObservationSeqLimited (prevState),
-			ObservationSeqLimited (nextState),
-			reward,
-			action,
-			prevLstmStateC,
-			prevLstmStateH,
-			nextLstmStateC,
-			nextLstmStateH
+			pSeq,
+			nSeq,
+			r,
+			a
 		);
 		
 		quadrocopterBrain.storeExperience(expItem);
@@ -263,6 +269,10 @@ namespace Quadrocopter2DBrain {
 		randomnessOfQuadrocopter.clear ();
 		Observation ob;
 		ob.setZeros(QuadrocopterBrain::observationSize);
+		Observation action;
+		action.setZeros(QuadrocopterBrain::contActionSize);
+		Observation reward;
+		reward.setZeros(1);
 
 //		ObservationSeqLimited obs;
 //		obs.setLimit(QuadrocopterBrain::observationsInSeq);
@@ -270,6 +280,8 @@ namespace Quadrocopter2DBrain {
 
 		prevObsSeq.resize(numOfQuadrocopters);
 		nextObsSeq.resize(numOfQuadrocopters);
+		lstmActions.resize(numOfQuadrocopters);
+		lstmRewards.resize(numOfQuadrocopters);
 		
 		prevObsMLPSeq.resize(numOfQuadrocopters);
 		nextObsMLPSeq.resize(numOfQuadrocopters);
@@ -294,6 +306,10 @@ namespace Quadrocopter2DBrain {
 			prevObsSeq [i].initWith(ob);
 			nextObsSeq [i].setLimit(QuadrocopterBrain::lstmStepsCount);
 			nextObsSeq [i].initWith(ob);
+			lstmActions [i].setLimit(QuadrocopterBrain::lstmStepsCount);
+			lstmActions [i].initWith(action);
+			lstmRewards [i].setLimit(QuadrocopterBrain::lstmStepsCount);
+			lstmRewards [i].initWith(reward);
 
 			prevObsMLPSeq [i].setLimit(QuadrocopterBrain::mlpSeqSize);
 			prevObsMLPSeq [i].initWith(ob);
@@ -364,6 +380,15 @@ namespace Quadrocopter2DBrain {
 		
 		prevObsMLPSeq [quadrocopterId].initWith(ob);
 		nextObsMLPSeq [quadrocopterId].initWith(ob);
+	}
+	
+	void resetQuadrocopterLSTM (
+		int quadrocopterId
+	) {
+		Observation ob;
+		ob.setZeros(QuadrocopterBrain::observationSize);
+		prevObsSeq [quadrocopterId].initWith(ob);
+		nextObsSeq [quadrocopterId].initWith(ob);
 	}
 
 }

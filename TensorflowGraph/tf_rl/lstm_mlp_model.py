@@ -126,15 +126,15 @@ class LSTMStepped_MLP(object):
                 print "LSTMSteppedModel v: " + v.name
 
     def calc (self, xs):
-#        val, state = tf.nn.dynamic_rnn(tf.nn.rnn_cell.MultiRNNCell(self.layers, state_is_tuple=True), xs, dtype=tf.float32)
-#        val = tf.transpose(val, [1, 0, 2])
-#        results = []
-#        for i in range(self.lstm_steps_count):
-#            v = self.mlp (tf.gather(val, i))
-#            results.append (v)
-#        r = tf.transpose(tf.pack (results), [1, 0, 2])
-#        return r
-        return tf.identity(np.zeros ([1, 20, 2], dtype=np.float32))
+        val, state = tf.nn.dynamic_rnn(tf.nn.rnn_cell.MultiRNNCell(self.layers, state_is_tuple=True), xs, dtype=tf.float32)
+        val = tf.transpose(val, [1, 0, 2])
+        results = []
+        for i in range(self.lstm_steps_count):
+            v = self.mlp (tf.gather(val, i))
+            results.append (v)
+        r = tf.transpose(tf.pack (results), [1, 0, 2])
+        return r
+#        return tf.identity(np.zeros ([1, 20, 2], dtype=np.float32))
     
     def get_last (self, xs):
 #        xs = np.zeros([1, 1, 50], dtype=np.float32)
@@ -142,7 +142,7 @@ class LSTMStepped_MLP(object):
 #        val = tf.transpose(val, [1, 0, 2])
 #        return self.mlp(tf.gather(val, int(val.get_shape()[0]) - 1))
 
-        xs = np.zeros([1, 10, 50], dtype=np.float32)
+#        xs = np.zeros([1, 10, 50], dtype=np.float32)
         val, state = tf.nn.dynamic_rnn(self.cell, xs, dtype=tf.float32)
         val = tf.transpose(val, [1, 0, 2])
         return self.mlp_cell(tf.gather(val, int(val.get_shape()[0]) - 1))

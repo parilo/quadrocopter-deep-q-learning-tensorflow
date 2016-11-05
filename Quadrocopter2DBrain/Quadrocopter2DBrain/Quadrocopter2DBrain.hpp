@@ -81,11 +81,7 @@ namespace Quadrocopter2DBrain {
 		double reward,
 		std::vector<float>& action,
 		const std::vector <float>& prevState,
-		const std::vector<float>& prevLstmStateC,
-		const std::vector<float>& prevLstmStateH,
-		const std::vector <float>& nextState,
-		const std::vector<float>& nextLstmStateC,
-		const std::vector<float>& nextLstmStateH
+		const std::vector <float>& nextState
 	);
 
 	void storeQuadrocopterExperienceContMLPSeq (
@@ -104,6 +100,10 @@ namespace Quadrocopter2DBrain {
 	void resetQuadrocopterMLPSeq (
 		int quadrocopterId,
 		const std::vector <float>& copterState
+	);
+	
+	void resetQuadrocopterLSTM (
+		int quadrocopterId
 	);
 	
 	bool getBigErrorExp (

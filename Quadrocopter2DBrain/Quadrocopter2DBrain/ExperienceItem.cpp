@@ -42,6 +42,7 @@ ExperienceItem::ExperienceItem (
 	const std::vector<float>& actionCont
 ):
 
+id(idSeq++),
 prevStates(prevStates),
 nextStates(nextStates),
 reward(reward),
@@ -53,20 +54,12 @@ actionCont(actionCont)
 ExperienceItem::ExperienceItem (
 	const ObservationSeqLimited& prevStates,
 	const ObservationSeqLimited& nextStates,
-	double reward,
-	const std::vector<float>& actionCont,
-	const std::vector<float>& prevLstmStateC,
-	const std::vector<float>& prevLstmStateH,
-	const std::vector<float>& nextLstmStateC,
-	const std::vector<float>& nextLstmStateH
+	const ObservationSeqLimited& reward,
+	const ObservationSeqLimited& actionCont
 ) :
+	id(idSeq++),
 	prevStates(prevStates),
 	nextStates(nextStates),
-	reward(reward),
-	rewardLambda(reward),
-	actionCont(actionCont),
-	prevLstmStateC(prevLstmStateC),
-	prevLstmStateH(prevLstmStateH),
-	nextLstmStateC(nextLstmStateC),
-	nextLstmStateH(nextLstmStateH)
+	lstmRewards(reward),
+	lstmActions(actionCont)
 {}
