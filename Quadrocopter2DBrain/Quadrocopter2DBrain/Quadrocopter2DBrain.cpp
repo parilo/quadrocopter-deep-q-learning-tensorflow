@@ -24,13 +24,14 @@ using namespace std;
 
 namespace Quadrocopter2DBrain {
 
-	const int numOfQuadrocopters = 20;
+	const int numOfQuadrocopters = 64;
 
 	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
 //	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
 //	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM_Weak ()));
 	
 	const bool useLstmWeak = false;
+//	const bool useLstmWeak = true;
 	
 	vector<ObservationSeqLimited> prevObsSeq; //lstm
 	vector<ObservationSeqLimited> nextObsSeq; //lstm

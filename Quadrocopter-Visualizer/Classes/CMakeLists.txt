@@ -38,6 +38,7 @@ PID.cpp
 Quadrocopter2DContActionCtrl.cpp
 Quadrocopter2DContActionPIDCtrl.cpp
 Quadrocopter2DContActionPIDLSTMCtrl.cpp
+Quadrocopter2DContActionMLPSeqCtrl.cpp
 Quadrocopter2DCtrl.cpp
 QuadrocopterContActionCtrl.cpp
 QuadrocopterCtrl.cpp

@@ -26,8 +26,8 @@ void Quadrocopter2DContActionMLPSeqCtrl::calcReward () {
 	float prevR = prevState [2];
 	float nextR = nextState [2];
 
-	reward = 0.2 * (prevR - nextR);
-	if (reward > 0) reward *= 0.5;
+	reward = 0.1 * (prevR - nextR);
+	if (reward > 0) reward *= 0.9;
 
 	if (simulationModel.isCollided()) {
 //std::cout << "--- collided " << std::endl;

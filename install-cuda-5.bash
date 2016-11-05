@@ -11,16 +11,17 @@ export PATH="${PATH}:${INSTALLDIR}/bin"
 cd ${BASEDIR}
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
 export CUDA_HOME=/usr/local/cuda
-git clone --recurse-submodules https://github.com/tensorflow/tensorflow Tensorflow
+#git clone https://github.com/tensorflow/tensorflow Tensorflow
 cd Tensorflow
-git checkout tags/v0.8.0
-git submodule update --init
-TF_UNOFFICIAL_SETTING=1 ./configure
-##bazel build -c opt --config=cuda //tensorflow/cc:tutorials_example_trainer
-bazel build -c opt --config=cuda --spawn_strategy=standalone --genrule_strategy=standalone //tensorflow/tools/pip_package:build_pip_package
-cp -r bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/__main__/* bazel-bin/tensorflow/tools/pip_package/build_pip_package.runfiles/
-bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-sudo pip install /tmp/tensorflow_pkg/tensorflow-0.8.0-cp27-none-linux_x86_64.whl
-ln -s ../scripts/protoc-recursively.bash
-source ./protoc-recursively.bash
+#git checkout tags/v0.11.0rc2
+#./configure
+#bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+#bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+#sudo pip install /tmp/tensorflow_pkg/tensorflow-0.11.0rc2-py2-none-any.whl
+#ln -s ../scripts/protoc-recursively.bash
+#source ./protoc-recursively.bash
+
+bazel build -c opt --config=cuda //tensorflow:libtensorflow.so
+ln -s ${BASEDIR}/Tensorflow/bazel-bin/tensorflow/libtensorflow.so ${INSTALLDIR}/lib
+
 cd ${BASEDIR}

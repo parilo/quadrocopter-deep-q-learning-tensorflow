@@ -39,7 +39,7 @@ class LSTM_MLP(object):
         with tf.variable_scope(scope) as sc:
             for v in self.variables():
                 print "bn: " + base_name2(v) + " " + v.name
-                tf.get_variable(base_name2(v), v.get_shape(), initializer=lambda x,dtype=tf.float32: v.initialized_value())
+                tf.get_variable(base_name2(v), v.get_shape(), initializer=lambda x,dtype=tf.float32, partition_info=None: v.initialized_value())
             sc.reuse_variables()
             return LSTM_MLP(self.input_size, self.lstm_hidden_size, self.mlp_hiddens, self.nonlinearities, scope=sc)
 

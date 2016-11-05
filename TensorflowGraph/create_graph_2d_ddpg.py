@@ -29,10 +29,10 @@ num_actions = 2;
 #brain = MLP([input_size,], [32, 32, 32, 32, 32, num_actions], 
 #            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
 
-critic = MLP([input_size, num_actions*2], [768, 128, 1], 
+critic = MLP([input_size, num_actions*2], [2048, 1024, 1], 
             [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
 
-actor = MLP([input_size,], [768, 128, num_actions], 
+actor = MLP([input_size,], [2048, 1024, num_actions], 
             [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended

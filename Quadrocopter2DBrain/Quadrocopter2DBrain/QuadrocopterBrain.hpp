@@ -26,12 +26,14 @@ public:
 	//2d
 	static const int observationSize = 50;
 	static const int lstmStepsCount = 20;
-	static const int lstmStateSize = 128;
+	static const int lstmStateSize = 512;
 	static const int numActions = 9;
 	static const int contActionSize = 2;
-	static const int mlpSeqSize = 4;
+	static const int mlpSeqSize = 2;
 	
 	static const bool useObsSeq = true;
+
+	static const int minibatchSize = 512;
 
 	//1d
 //	static const int observationSize = 4;
@@ -84,7 +86,6 @@ private:
 	static const int trainAfter = 50000; //stored exp
 
 	//train
-	static const int minibatchSize = 32;
 	constexpr static float probHigh = 0.55;
 	constexpr static float probMid = 0.3;
 	constexpr static float probLow = 0.15;

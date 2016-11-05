@@ -95,6 +95,7 @@ private:
 	typename WorldType::CollideListener collideListener;
 	
 	const bool useOnlineTrain = false;
+	//const bool useOnlineTrain = true;
 
 };
 

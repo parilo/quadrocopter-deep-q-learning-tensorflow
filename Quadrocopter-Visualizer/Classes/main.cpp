@@ -11,7 +11,7 @@
 #include "main.h"
 #include "QuadrocopterSimulator.hpp"
 
-QuadrocopterSimulatorContPID2D sim;
+QuadrocopterSimulatorContMLPSeq2D sim;
 
 int main(int argc, const char * argv[]) {
 

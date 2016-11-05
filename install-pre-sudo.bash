@@ -36,12 +36,4 @@ sudo apt-get install oracle-java8-installer -y
 sudo update-alternatives --config java
 sudo update-alternatives --config javac
 
-
-libglew-dev
-libglfw3-dev
-libsqlite3-dev
-libfontconfig1-dev
-libgtk-3-dev
-libcurl4-openssl-dev
-libtiff-dev
-libwebp-dev
+sudo apt-get install libglew-dev libglfw3-dev libsqlite3-dev libfontconfig1-dev libgtk-3-dev libcurl4-openssl-dev libtiff-dev libwebp-dev

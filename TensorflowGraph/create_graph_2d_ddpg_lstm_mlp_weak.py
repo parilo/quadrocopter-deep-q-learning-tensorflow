@@ -13,7 +13,7 @@ session = tf.Session()
 
 # This little guy will let us run tensorboard
 #      tensorboard --logdir [LOG_DIR]
-journalist = tf.train.SummaryWriter("/Users/anton/devel/unity/QuadrocopterHabr/TensorflowLog")
+journalist = tf.train.SummaryWriter("/home/anton/devel/unity/QuadrocopterHabr/TensorflowLog")
 
 observation_size = 50;
 observations_in_seq = 1;
@@ -22,12 +22,12 @@ input_size = observation_size*observations_in_seq;
 # actions
 num_actions = 2;
 
-minibatch_size = 32
+minibatch_size = 128
 
 #layer_size, layers_count, input_size, output_size, nonlinearity
 
-critic = LSTM_MLP(input_size + num_actions*2, 128, [128, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
-actor = LSTM_MLP(input_size, 128, [128, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
+critic = LSTM_MLP(input_size + num_actions*2, 512, [512, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
+actor = LSTM_MLP(input_size, 512, [512, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
