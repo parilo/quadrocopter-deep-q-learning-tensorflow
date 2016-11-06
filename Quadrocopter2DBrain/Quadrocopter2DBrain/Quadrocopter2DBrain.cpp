@@ -229,6 +229,8 @@ namespace Quadrocopter2DBrain {
 			r,
 			a
 		);
+		expItem.reward = reward;
+		expItem.rewardLambda = reward;
 		
 		quadrocopterBrain.storeExperience(expItem);
 	}

@@ -119,12 +119,13 @@ float DDPG_LSTM::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch)
 		std::cerr << "tf error: " << status.ToString() << "\n";
 		return 0;
 	}
-std::cerr << "--- train outputs: " << outputTensors [0].DebugString() << std::endl;
+//std::cerr << "--- train outputs: " << outputTensors [0].DebugString() << std::endl;
 //	printTensor<float>(outputTensors [0]);
 //	std::vector<float> v;
 //	getTensorValues<float>(outputs [0], v);
 	auto predictionError = outputTensors [0].scalar<float>();
 	float err = predictionError ();
+//std::cerr << "--- train err: " << err << std::endl;
 
 	return err;
 }

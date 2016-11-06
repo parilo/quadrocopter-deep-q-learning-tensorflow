@@ -18,7 +18,7 @@ input_size = observation_size*observations_in_seq;
 # actions
 num_actions = 2;
 critic_input_size = input_size + num_actions*2
-steps_count = 20
+steps_count = 4
 
 minibatch_size = 32
 
@@ -39,7 +39,7 @@ next_state = tf.placeholder(tf.float32, [None, steps_count, input_size], name="n
 action = tf.placeholder(tf.float32, [None, steps_count, num_actions], name="given_action")
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQLSTMStepped(state, next_state, action, input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.997, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQLSTMStepped(state, next_state, action, input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.01, target_critic_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

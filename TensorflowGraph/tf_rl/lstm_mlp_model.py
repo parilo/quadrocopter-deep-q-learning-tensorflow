@@ -174,6 +174,6 @@ class LSTMStepped_MLP(object):
         with tf.variable_scope(scope) as sc:
             for v in self.variables():
                 print "bn: " + base_name2(v) + " " + v.name
-                tf.get_variable(base_name2(v), v.get_shape(), initializer=lambda x,dtype=tf.float32: v.initialized_value())
+                tf.get_variable(base_name2(v), v.get_shape(), initializer=lambda x,dtype=tf.float32, partition_info=None: v.initialized_value())
             sc.reuse_variables()
             return LSTMStepped_MLP(self.input_size, self.lstm_layer_size, self.lstm_layer_count, self.lstm_steps_count, self.mlp_hiddens, self.nonlinearities, scope=sc)
