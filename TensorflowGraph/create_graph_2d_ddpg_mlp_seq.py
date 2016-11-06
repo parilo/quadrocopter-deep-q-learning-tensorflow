@@ -15,7 +15,7 @@ session = tf.Session()
 journalist = tf.train.SummaryWriter("/tmp")
 
 observation_size = 50;
-observations_in_seq = 2;
+observations_in_seq = 4;
 input_size = observation_size*observations_in_seq;
 
 # actions
@@ -39,11 +39,11 @@ actor = MLP([input_size,], [1024, 512, num_actions],
 # by the publication
 #optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0001, decay=0.9)
 #optimizer = tf.train.RMSPropOptimizer(learning_rate= 0.0005, decay=0.9)
-optimizer = tf.train.AdamOptimizer(learning_rate= 0.00004)
+optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.01, target_critic_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

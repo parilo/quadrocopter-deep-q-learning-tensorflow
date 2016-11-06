@@ -26,14 +26,15 @@ public:
 	//2d
 	static const int observationSize = 50;
 	static const int lstmStepsCount = 20;
-	static const int lstmStateSize = 512;
+	static const int lstmStateSize = 128;
 	static const int numActions = 9;
 	static const int contActionSize = 2;
-	static const int mlpSeqSize = 2;
+	static const int mlpSeqSize = 4;
 	
-	static const bool useObsSeq = true;
+//	static const bool useObsSeq = true;
+	static const bool useObsSeq = false;
 
-	static const int minibatchSize = 512;
+	static const int minibatchSize = 128;
 
 	//1d
 //	static const int observationSize = 4;

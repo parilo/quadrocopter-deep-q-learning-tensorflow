@@ -26,8 +26,8 @@ minibatch_size = 128
 
 #layer_size, layers_count, input_size, output_size, nonlinearity
 
-critic = LSTM_MLP(input_size + num_actions*2, 512, [512, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
-actor = LSTM_MLP(input_size, 512, [512, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
+critic = LSTM_MLP(input_size + num_actions*2, 128, [128, 1], [tf.nn.sigmoid, tf.identity], scope='critic')
+actor = LSTM_MLP(input_size, 128, [128, num_actions], [tf.nn.sigmoid, tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
@@ -37,7 +37,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQLSTMWeak(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.997, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQLSTMWeak(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.01, target_critic_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

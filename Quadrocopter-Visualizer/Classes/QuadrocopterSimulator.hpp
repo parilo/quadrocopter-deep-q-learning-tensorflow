@@ -94,8 +94,8 @@ private:
 	std::function<void ()> simulationUpdateCallback;
 	typename WorldType::CollideListener collideListener;
 	
-	const bool useOnlineTrain = false;
-	//const bool useOnlineTrain = true;
+	//const bool useOnlineTrain = false;
+	const bool useOnlineTrain = true;
 
 };
 
