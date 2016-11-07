@@ -4,7 +4,7 @@ import tensorflow as tf
 
 from tf_rl.controller import ContinuousDeepQLSTMStepped
 from tf_rl import simulate
-from tf_rl.lstm_mlp_model import LSTMStepped_MLP
+from tf_rl.lstm_mlp_model import MLP_LSTM
 
 session = tf.Session()
 
@@ -24,8 +24,8 @@ minibatch_size = 32
 
 #layer_size, layers_count, input_size, output_size, nonlinearity
 
-critic = LSTMStepped_MLP (critic_input_size, 128, 1, steps_count, [1], [tf.identity], scope='critic')
-actor = LSTMStepped_MLP (input_size, 128, 1, steps_count, [num_actions], [tf.identity], scope='actor')
+critic = MLP_LSTM (critic_input_size, 1, 256, 1, steps_count, [512, 512], [tf.nn.tanh, tf.nn.tanh], scope='critic')
+actor = MLP_LSTM (input_size, num_actions, 256, 1, steps_count, [512, 512], [tf.nn.tanh, tf.nn.tanh], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication

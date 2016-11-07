@@ -327,7 +327,7 @@ namespace Quadrocopter2DBrain {
 				randomnessOfQuadrocopter.push_back(0.05);
 			}
 			else {
-				randomnessOfQuadrocopter.push_back(0.001);
+				randomnessOfQuadrocopter.push_back(0.0);
 			}
 		}
 	}

@@ -45,20 +45,11 @@ void Quadrocopter2DContActionLSTMCtrl::act () {
 
 	Quadrocopter2DBrain::quadrocopterBrainActContLSTM(id, prevState, actionCont);
 
-//	if (id == 0) {
-//		std::cout << "lstm c" << std::endl;
-//		printVector(lstmStateC);
-//		std::cout << "lstm h" << std::endl;
-//		printVector(lstmStateH);
-//		std::cout << "out lstm c" << std::endl;
-//		printVector(outLstmStateC);
-//		std::cout << "out lstm h" << std::endl;
-//		printVector(outLstmStateH);
-//	}
-
 	float p1 = fmin(15, fabs(actionCont [0]));
 	float p2 = fmin(15, fabs(actionCont [1]));
-
+//if (id == 15) {
+//    std::cout << "--- p1: " << p1 << " p1: " << p2 << std::endl;
+//}
 	simulationModel.setMotorPower(p1, p2);
 
 	reseted = false;
