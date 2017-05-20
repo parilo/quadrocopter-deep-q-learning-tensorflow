@@ -26,8 +26,8 @@ namespace Quadrocopter2DBrain {
 
 	const int numOfQuadrocopters = 64;
 
-//	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
-	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
+  QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG ()));
+//	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM ()));
 //	QuadrocopterBrain quadrocopterBrain (std::shared_ptr<BrainAlgorithm> (new DDPG_LSTM_Weak ()));
 	
 	const bool useLstmWeak = false;
@@ -389,8 +389,15 @@ namespace Quadrocopter2DBrain {
 	) {
 		Observation ob;
 		ob.setZeros(QuadrocopterBrain::observationSize);
+		Observation action;
+		action.setZeros(QuadrocopterBrain::contActionSize);
+		Observation reward;
+		reward.setZeros(1);
+
 		prevObsSeq [quadrocopterId].initWith(ob);
 		nextObsSeq [quadrocopterId].initWith(ob);
+		lstmActions [quadrocopterId].initWith(action);
+		lstmRewards [quadrocopterId].initWith(reward);
 	}
 
 }

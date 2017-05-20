@@ -25,7 +25,7 @@ public:
 
 	//2d
 	static const int observationSize = 50;
-	static const int lstmStepsCount = 4;
+	static const int lstmStepsCount = 6;
 	static const int lstmStateSize = 128;
 	static const int numActions = 9;
 	static const int contActionSize = 2;
@@ -84,7 +84,7 @@ private:
 	static const int storeEveryNth = 5;
 	static const int trainEveryNth = 1000; //act
 	static const int trainCount = 1;
-	static const int trainAfter = 50000; //stored exp
+  static const int trainAfter = 20000; //50000; //stored exp
 
 	//train
 	constexpr static float probHigh = 0.55;

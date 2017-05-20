@@ -21,19 +21,20 @@ input_size = observation_size*observations_in_seq;
 # actions
 num_actions = 2;
 
-#brain = MLP([input_size,], [5, 5, 5, num_actions], 
-#            [tf.tanh, tf.tanh, tf.tanh, tf.identity])
-#brain = MLP([input_size,], [20, 20, 20, 20, num_actions], 
-#            [tf.tanh, tf.tanh, tf.tanh, tf.tanh, tf.identity])
+#critic = MLP([input_size, num_actions*2], [2048, 1024, 1], 
+#            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
+#
+#actor = MLP([input_size,], [2048, 1024, num_actions], 
+#            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
 
-#brain = MLP([input_size,], [32, 32, 32, 32, 32, num_actions], 
-#            [tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.nn.relu, tf.identity])
+r = tf.nn.relu
+t = tf.nn.tanh
 
-critic = MLP([input_size, num_actions*2], [2048, 1024, 1], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
+critic = MLP([input_size, num_actions], [2048, 512, 256, 256, 1],
+            [t, t, t, t, tf.identity], scope='critic')
 
-actor = MLP([input_size,], [2048, 1024, num_actions], 
-            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
+actor = MLP([input_size,], [2048, 512, 256, 256, num_actions],
+            [t, t, t, t, tf.identity], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication

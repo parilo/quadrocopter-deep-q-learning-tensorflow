@@ -13,8 +13,8 @@ using namespace tensorflow;
 
 DDPG::DDPG () : BrainDiscreteDeepQ(
 //	"graph-1d-ddpg.pb"
-//	"graph-2d-ddpg.pb"
-	"graph-2d-ddpg-mlp-seq.pb"
+  "graph-2d-ddpg.pb"
+//	"graph-2d-ddpg-mlp-seq.pb"
 ) {}
 
 void DDPG::control (const ObservationSeqLimited& obs, std::vector<float>& action, double randomness) {

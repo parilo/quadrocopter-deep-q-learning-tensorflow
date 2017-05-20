@@ -20,6 +20,7 @@ public:
 	void calcReward () override;
 	void storeExperience () override;
 	void reset () override;
+	void resetAction () override;
 	
 protected:
 

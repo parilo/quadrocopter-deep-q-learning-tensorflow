@@ -18,14 +18,14 @@ input_size = observation_size*observations_in_seq;
 # actions
 num_actions = 2;
 critic_input_size = input_size + num_actions*2
-steps_count = 4
+steps_count = 6
 
-minibatch_size = 32
+#minibatch_size = 32
 
 #layer_size, layers_count, input_size, output_size, nonlinearity
 
-critic = MLP_LSTM (critic_input_size, 1, 256, 1, steps_count, [512, 512], [tf.nn.tanh, tf.nn.tanh], scope='critic')
-actor = MLP_LSTM (input_size, num_actions, 256, 1, steps_count, [512, 512], [tf.nn.tanh, tf.nn.tanh], scope='actor')
+critic = MLP_LSTM (critic_input_size, 1, 64, 1, steps_count, [1024, 512], [tf.nn.tanh, tf.nn.tanh], scope='critic')
+actor = MLP_LSTM (input_size, num_actions, 64, 1, steps_count, [1024, 512], [tf.nn.tanh, tf.nn.tanh], scope='actor')
 
 # The optimizer to use. Here we use RMSProp as recommended
 # by the publication
@@ -39,7 +39,7 @@ next_state = tf.placeholder(tf.float32, [None, steps_count, input_size], name="n
 action = tf.placeholder(tf.float32, [None, steps_count, num_actions], name="given_action")
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQLSTMStepped(state, next_state, action, input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.98, target_actor_update_rate=0.01, target_critic_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQLSTMStepped(state, next_state, action, input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.99, target_actor_update_rate=0.01, target_critic_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

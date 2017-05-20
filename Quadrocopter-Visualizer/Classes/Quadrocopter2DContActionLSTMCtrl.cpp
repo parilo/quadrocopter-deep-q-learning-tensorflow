@@ -33,7 +33,7 @@ void Quadrocopter2DContActionLSTMCtrl::calcReward () {
 
 	if (simulationModel.isCollided()) {
 //std::cout << "--- collided " << std::endl;
-		reward -= 1.0;
+		reward -= 2.0;
 	}
 
 }
@@ -71,5 +71,10 @@ void Quadrocopter2DContActionLSTMCtrl::storeExperience () {
 
 void Quadrocopter2DContActionLSTMCtrl::reset () {
 	Quadrocopter2DCtrl::reset();
+	Quadrocopter2DBrain::resetQuadrocopterLSTM (id);
+}
+
+void Quadrocopter2DContActionLSTMCtrl::resetAction () {
+	Quadrocopter2DCtrl::resetAction();
 	Quadrocopter2DBrain::resetQuadrocopterLSTM (id);
 }
