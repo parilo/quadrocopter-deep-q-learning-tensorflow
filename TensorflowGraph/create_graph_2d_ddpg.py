@@ -21,10 +21,10 @@ input_size = observation_size*observations_in_seq;
 # actions
 num_actions = 2;
 
-#critic = MLP([input_size, num_actions*2], [2048, 1024, 1], 
+#critic = MLP([input_size, num_actions*2], [2048, 1024, 1],
 #            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='critic')
 #
-#actor = MLP([input_size,], [2048, 1024, num_actions], 
+#actor = MLP([input_size,], [2048, 1024, num_actions],
 #            [tf.nn.sigmoid, tf.nn.sigmoid, tf.identity], scope='actor')
 
 r = tf.nn.relu
@@ -44,7 +44,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate= 0.0001)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate= 0.001)
 
 # DiscreteDeepQ object
-current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.99, target_actor_update_rate=0.001, target_critic_update_rate=0.001, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
+current_controller = ContinuousDeepQ(input_size, num_actions, actor, critic, optimizer, session, discount_rate=0.99, target_actor_update_rate=0.01, target_critic_update_rate=0.01, exploration_period=5000, max_experience=10000, store_every_nth=4, train_every_nth=4, summary_writer=journalist)
 
 #class ContinuousDeepQ
 #                       observation_size,

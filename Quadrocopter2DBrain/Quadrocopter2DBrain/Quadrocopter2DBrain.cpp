@@ -84,7 +84,10 @@ namespace Quadrocopter2DBrain {
 			action,
 			randomnessOfQuadrocopter [quadrocopterId]
 		);
-	}
+    if (quadrocopterId == 0) {
+      std::cout << "val: " << action[0] << " : " << action[1] << std::endl;
+    }
+  }
 
 	void quadrocopterBrainActContLSTMWeak(
 		int quadrocopterId,

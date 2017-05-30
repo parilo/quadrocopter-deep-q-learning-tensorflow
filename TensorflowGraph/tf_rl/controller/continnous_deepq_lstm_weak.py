@@ -112,7 +112,7 @@ class ContinuousDeepQLSTMWeak(object):
 
         self.number_of_times_store_called = 0
         self.number_of_times_train_called = 0
-        
+
         self.create_variables()
 
     @staticmethod
@@ -129,10 +129,12 @@ class ContinuousDeepQLSTMWeak(object):
         target_network_update = []
         for v in source_network.variables():
             # this is equivalent to target = (1-alpha) * target + alpha * source
-            print "source: " + v.name + " : " + str(v.get_shape())
+            #print "source: " + v.name + " : " + str(v.get_shape())
+            pass
         for v in target_network.variables():
             # this is equivalent to target = (1-alpha) * target + alpha * source
-            print "target: " + v.name + " : " + str(v.get_shape())
+            #print "target: " + v.name + " : " + str(v.get_shape())
+            pass
         for v_source, v_target in zip(source_network.variables(), target_network.variables()):
             # this is equivalent to target = (1-alpha) * target + alpha * source
             update_op = v_target.assign_sub(update_rate * (v_target - v_source))
@@ -141,11 +143,11 @@ class ContinuousDeepQLSTMWeak(object):
 
     def concat_nn_input(self, input1, input2):
         return tf.concat(1, [input1, input2])
-    
+
     def add_pow_values(self, values):
         return self.concat_nn_input(values, 0.01 * tf.pow(values, [2, 2]))
 
-      
+
     def create_variables(self):
         self.target_actor  = self.actor.copy(scope="target_actor")
         self.target_critic = self.critic.copy(scope="target_critic")
@@ -164,21 +166,22 @@ class ContinuousDeepQLSTMWeak(object):
         with tf.name_scope("estimating_future_reward"):
             self.next_observation          = tf.placeholder(tf.float32, (None, self.observation_size), name="next_observation")
             self.next_observation_mask     = tf.placeholder(tf.float32, (None,), name="next_observation_mask")
-            
+
             target_actor_action = self.target_actor(self.observation)
             target_actor_state = self.target_actor.get_output_state ()
             tf.identity (target_actor_state [0], name="read_target_actor_state_c")
             tf.identity (target_actor_state [1], name="read_target_actor_state_h")
-            
-            self.next_action               = self.target_actor(self.next_observation, target_actor_state) # ST
+
+            self.next_action               = tf.stop_gradient(self.target_actor(self.next_observation, target_actor_state)) # ST
 #            print "next action: " + str(self.next_action)
             tf.histogram_summary("target_actions", self.next_action)
-    
-            target_critic_value = self.target_critic(self.concat_nn_input(self.observation, self.add_pow_values(target_actor_action)))
+
+            #possible needed reshape to tf.reshape(target_critic_value, [-1])
+            target_critic_value = tf.stop_gradient(self.target_critic(self.concat_nn_input(self.observation, self.add_pow_values(target_actor_action))))
             target_critic_state = self.target_critic.get_output_state ()
             tf.identity (target_critic_state [0], name="read_target_critic_state_c")
             tf.identity (target_critic_state [1], name="read_target_critic_state_h")
-        
+
             self.next_value                = self.target_critic(self.concat_nn_input(self.next_observation, self.add_pow_values(self.next_action)), target_critic_state) # ST
             self.rewards                   = tf.placeholder(tf.float32, (None,), name="rewards")
             self.future_reward             = self.rewards + self.discount_rate *  self.next_observation_mask * self.next_value
@@ -186,6 +189,8 @@ class ContinuousDeepQLSTMWeak(object):
         with tf.name_scope("critic_update"):
             ##### ERROR FUNCTION #####
             self.given_action               = tf.placeholder(tf.float32, (None, self.action_size), name="given_action")
+            
+            #possible needed reshape to tf.reshape(self.value_given_action, [-1])
             self.value_given_action         = self.critic(self.concat_nn_input(self.observation, self.add_pow_values(self.given_action)))
             tf.scalar_summary("value_for_given_action", tf.reduce_mean(self.value_given_action))
             temp_diff                       = self.value_given_action - self.future_reward

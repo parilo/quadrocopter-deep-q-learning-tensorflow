@@ -33,7 +33,7 @@ void DDPG::control (const ObservationSeqLimited& obs, std::vector<float>& action
 //		printTensor(observationSeq);
 
 	std::vector<std::pair<string, tensorflow::Tensor>> inputs = {
-		{ "taking_action/observation", observationSeq }
+		{ "observation_for_act", observationSeq }
 	};
 
 	// The session will initialize the outputs
@@ -96,19 +96,19 @@ float DDPG::trainOnMinibatch (std::vector<const ExperienceItem*> minibatch) {
 //	printTensor<float>(observations);
 //	std::cerr << "newObservations: " << std:: endl;
 //	printTensor<float>(newObservations);
-//	std::cerr << "givenAction: " << std:: endl;
-//	printTensor<float>(givenAction);
-//	std::cerr << "rewards: " << std:: endl;
-//	printTensor<float>(rewards);
+//  std::cerr << "givenAction: " << std:: endl;
+//  printTensor<float>(givenAction);
+//  std::cerr << "rewards: " << std:: endl;
+//  printTensor<float>(rewards);
 //	std::cerr << "newObservationsMasks: " << std:: endl;
 //	printTensor<float>(newObservationsMasks);
 	
 	std::vector<std::pair<string, tensorflow::Tensor>> inputs = {
-		{ "taking_action/observation", observations },
-		{ "critic_update/given_action", givenAction },
-		{ "estimating_future_reward/rewards", rewards },
-		{ "estimating_future_reward/next_observation_mask", newObservationsMasks },
-		{ "estimating_future_reward/next_observation", newObservations }
+    { "observation", observations },
+    { "given_action", givenAction },
+    { "rewards", rewards },
+    { "next_observation_mask", newObservationsMasks },
+    { "next_observation", newObservations }
 	};
 	
 	std::vector<tensorflow::Tensor> outputTensors;

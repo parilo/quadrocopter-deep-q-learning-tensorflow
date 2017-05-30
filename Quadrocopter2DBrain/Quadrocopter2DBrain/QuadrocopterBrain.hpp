@@ -81,7 +81,7 @@ private:
 	std::list<ExperienceItem> maxErrorExp;
 	std::mutex mtxMaxErrorExp;
 	
-	static const int storeEveryNth = 5;
+  static const int storeEveryNth = 5;
 	static const int trainEveryNth = 1000; //act
 	static const int trainCount = 1;
   static const int trainAfter = 20000; //50000; //stored exp
